@@ -1,0 +1,10 @@
+T__0=1
+T__1=2
+TOKEN_NAME=3
+REGEXP=4
+QUOTE=5
+WHITESPACES=6
+NEWLINE=7
+':'=1
+';'=2
+'\''=5
