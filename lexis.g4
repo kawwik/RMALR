@@ -4,8 +4,9 @@ start
     : EOF 
     | (token NEWLINE*)* EOF;
 
-token: TOKEN_NAME ':' token_pattern ';';
-token_pattern: (TOKEN_NAME | REGEXP)+;
+token: TOKEN_NAME ':' token_patterns ';';
+token_patterns: token_pattern+;
+token_pattern: TOKEN_NAME | REGEXP;
 
 TOKEN_NAME: [A-Z][A-Za-z_]*;
 REGEXP: QUOTE .+? QUOTE;

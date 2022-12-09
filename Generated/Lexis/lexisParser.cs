@@ -39,9 +39,9 @@ public partial class lexisParser : Parser {
 	public const int
 		T__0=1, T__1=2, TOKEN_NAME=3, REGEXP=4, QUOTE=5, WHITESPACES=6, NEWLINE=7;
 	public const int
-		RULE_start = 0, RULE_token = 1, RULE_token_pattern = 2;
+		RULE_start = 0, RULE_token = 1, RULE_token_patterns = 2, RULE_token_pattern = 3;
 	public static readonly string[] ruleNames = {
-		"start", "token", "token_pattern"
+		"start", "token", "token_patterns", "token_pattern"
 	};
 
 	private static readonly string[] _LiteralNames = {
@@ -113,48 +113,48 @@ public partial class lexisParser : Parser {
 		EnterRule(_localctx, 0, RULE_start);
 		int _la;
 		try {
-			State = 20;
+			State = 22;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,2,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 6;
+				State = 8;
 				Match(Eof);
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 16;
+				State = 18;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				while (_la==TOKEN_NAME) {
 					{
 					{
-					State = 7;
+					State = 9;
 					token();
-					State = 11;
+					State = 13;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
 					while (_la==NEWLINE) {
 						{
 						{
-						State = 8;
+						State = 10;
 						Match(NEWLINE);
 						}
 						}
-						State = 13;
+						State = 15;
 						ErrorHandler.Sync(this);
 						_la = TokenStream.LA(1);
 					}
 					}
 					}
-					State = 18;
+					State = 20;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
 				}
-				State = 19;
+				State = 21;
 				Match(Eof);
 				}
 				break;
@@ -173,8 +173,8 @@ public partial class lexisParser : Parser {
 
 	public partial class TokenContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOKEN_NAME() { return GetToken(lexisParser.TOKEN_NAME, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Token_patternContext token_pattern() {
-			return GetRuleContext<Token_patternContext>(0);
+		[System.Diagnostics.DebuggerNonUserCode] public Token_patternsContext token_patterns() {
+			return GetRuleContext<Token_patternsContext>(0);
 		}
 		public TokenContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -196,13 +196,13 @@ public partial class lexisParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 22;
-			Match(TOKEN_NAME);
-			State = 23;
-			Match(T__0);
 			State = 24;
-			token_pattern();
+			Match(TOKEN_NAME);
 			State = 25;
+			Match(T__0);
+			State = 26;
+			token_patterns();
+			State = 27;
 			Match(T__1);
 			}
 		}
@@ -217,54 +217,45 @@ public partial class lexisParser : Parser {
 		return _localctx;
 	}
 
-	public partial class Token_patternContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] TOKEN_NAME() { return GetTokens(lexisParser.TOKEN_NAME); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOKEN_NAME(int i) {
-			return GetToken(lexisParser.TOKEN_NAME, i);
+	public partial class Token_patternsContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public Token_patternContext[] token_pattern() {
+			return GetRuleContexts<Token_patternContext>();
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] REGEXP() { return GetTokens(lexisParser.REGEXP); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode REGEXP(int i) {
-			return GetToken(lexisParser.REGEXP, i);
+		[System.Diagnostics.DebuggerNonUserCode] public Token_patternContext token_pattern(int i) {
+			return GetRuleContext<Token_patternContext>(i);
 		}
-		public Token_patternContext(ParserRuleContext parent, int invokingState)
+		public Token_patternsContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_token_pattern; } }
+		public override int RuleIndex { get { return RULE_token_patterns; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IlexisVisitor<TResult> typedVisitor = visitor as IlexisVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitToken_pattern(this);
+			if (typedVisitor != null) return typedVisitor.VisitToken_patterns(this);
 			else return visitor.VisitChildren(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public Token_patternContext token_pattern() {
-		Token_patternContext _localctx = new Token_patternContext(Context, State);
-		EnterRule(_localctx, 4, RULE_token_pattern);
+	public Token_patternsContext token_patterns() {
+		Token_patternsContext _localctx = new Token_patternsContext(Context, State);
+		EnterRule(_localctx, 4, RULE_token_patterns);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 28;
+			State = 30;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 27;
-				_la = TokenStream.LA(1);
-				if ( !(_la==TOKEN_NAME || _la==REGEXP) ) {
-				ErrorHandler.RecoverInline(this);
-				}
-				else {
-					ErrorHandler.ReportMatch(this);
-				    Consume();
+				State = 29;
+				token_pattern();
 				}
 				}
-				}
-				State = 30;
+				State = 32;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			} while ( _la==TOKEN_NAME || _la==REGEXP );
@@ -281,17 +272,64 @@ public partial class lexisParser : Parser {
 		return _localctx;
 	}
 
+	public partial class Token_patternContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOKEN_NAME() { return GetToken(lexisParser.TOKEN_NAME, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode REGEXP() { return GetToken(lexisParser.REGEXP, 0); }
+		public Token_patternContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_token_pattern; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IlexisVisitor<TResult> typedVisitor = visitor as IlexisVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitToken_pattern(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Token_patternContext token_pattern() {
+		Token_patternContext _localctx = new Token_patternContext(Context, State);
+		EnterRule(_localctx, 6, RULE_token_pattern);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 34;
+			_la = TokenStream.LA(1);
+			if ( !(_la==TOKEN_NAME || _la==REGEXP) ) {
+			ErrorHandler.RecoverInline(this);
+			}
+			else {
+				ErrorHandler.ReportMatch(this);
+			    Consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
 	private static int[] _serializedATN = {
-		4,1,7,33,2,0,7,0,2,1,7,1,2,2,7,2,1,0,1,0,1,0,5,0,10,8,0,10,0,12,0,13,9,
-		0,5,0,15,8,0,10,0,12,0,18,9,0,1,0,3,0,21,8,0,1,1,1,1,1,1,1,1,1,1,1,2,4,
-		2,29,8,2,11,2,12,2,30,1,2,0,0,3,0,2,4,0,1,1,0,3,4,33,0,20,1,0,0,0,2,22,
-		1,0,0,0,4,28,1,0,0,0,6,21,5,0,0,1,7,11,3,2,1,0,8,10,5,7,0,0,9,8,1,0,0,
-		0,10,13,1,0,0,0,11,9,1,0,0,0,11,12,1,0,0,0,12,15,1,0,0,0,13,11,1,0,0,0,
-		14,7,1,0,0,0,15,18,1,0,0,0,16,14,1,0,0,0,16,17,1,0,0,0,17,19,1,0,0,0,18,
-		16,1,0,0,0,19,21,5,0,0,1,20,6,1,0,0,0,20,16,1,0,0,0,21,1,1,0,0,0,22,23,
-		5,3,0,0,23,24,5,1,0,0,24,25,3,4,2,0,25,26,5,2,0,0,26,3,1,0,0,0,27,29,7,
-		0,0,0,28,27,1,0,0,0,29,30,1,0,0,0,30,28,1,0,0,0,30,31,1,0,0,0,31,5,1,0,
-		0,0,4,11,16,20,30
+		4,1,7,37,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,1,0,1,0,1,0,5,0,12,8,0,10,0,12,
+		0,15,9,0,5,0,17,8,0,10,0,12,0,20,9,0,1,0,3,0,23,8,0,1,1,1,1,1,1,1,1,1,
+		1,1,2,4,2,31,8,2,11,2,12,2,32,1,3,1,3,1,3,0,0,4,0,2,4,6,0,1,1,0,3,4,36,
+		0,22,1,0,0,0,2,24,1,0,0,0,4,30,1,0,0,0,6,34,1,0,0,0,8,23,5,0,0,1,9,13,
+		3,2,1,0,10,12,5,7,0,0,11,10,1,0,0,0,12,15,1,0,0,0,13,11,1,0,0,0,13,14,
+		1,0,0,0,14,17,1,0,0,0,15,13,1,0,0,0,16,9,1,0,0,0,17,20,1,0,0,0,18,16,1,
+		0,0,0,18,19,1,0,0,0,19,21,1,0,0,0,20,18,1,0,0,0,21,23,5,0,0,1,22,8,1,0,
+		0,0,22,18,1,0,0,0,23,1,1,0,0,0,24,25,5,3,0,0,25,26,5,1,0,0,26,27,3,4,2,
+		0,27,28,5,2,0,0,28,3,1,0,0,0,29,31,3,6,3,0,30,29,1,0,0,0,31,32,1,0,0,0,
+		32,30,1,0,0,0,32,33,1,0,0,0,33,5,1,0,0,0,34,35,7,0,0,0,35,7,1,0,0,0,4,
+		13,18,22,32
 	};
 
 	public static readonly ATN _ATN =
