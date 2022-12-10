@@ -2,5 +2,5 @@
 
 public enum TokenType
 {
-    Finish = 0
+    Finish = 0,
 }
