@@ -1,0 +1,3 @@
+﻿WORD: "\w+";
+
+SPACES: " +" -> skip;

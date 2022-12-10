@@ -1,14 +1,13 @@
-﻿using Antlr4.Runtime;
-using Lab4.Generated.Lexis;
-using Lab4.Lexis;
+﻿using Lab4.Lexis;
 using Lab4.Lexis.Examples;
 using Lab4.Lexis.Tokens;
+using Lab4.RecognizerGenerators;
 
-var lexer = new lexisLexer(CharStreams.fromString("WordToken: \"\\w+\";\r\nSPACES: \" +\" -> skip;"));
-var parser = new lexisParser(new CommonTokenStream(lexer));
-
-var lexisVisitor = new LexisVisitor();
-var result = lexisVisitor.Visit(parser.start());
+var lexerGenerator = new LexerGenerator();
+var recognizerGenerator = new RecognizerGenerator(lexerGenerator);
+recognizerGenerator.Generate(
+    @"C:\Users\79148\RiderProjects\Lab4\Lab4\input.rma",
+    @"C:\Users\79148\RiderProjects\Lab4\Lab4\GeneratedExample");
 
 var tokenizer = new ExampleTokenizer();
 var tokenStream = tokenizer.GetTokenStream("word   worda");
