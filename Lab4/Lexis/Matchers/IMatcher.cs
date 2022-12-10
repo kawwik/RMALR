@@ -1,6 +1,8 @@
-﻿namespace Lab4.Lexis.Matchers;
+﻿using Lab4.Lexis.Tokens;
+
+namespace Lab4.Lexis.Matchers;
 
 public interface IMatcher
 {
-    public int GetMatchingOffset(string str);
+    public IToken MatchToken(string str);
 }

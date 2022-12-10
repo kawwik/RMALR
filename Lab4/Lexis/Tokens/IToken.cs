@@ -2,5 +2,5 @@
 
 public interface IToken
 {
-    
+    public int Length { get; }
 }

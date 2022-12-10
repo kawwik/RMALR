@@ -17,7 +17,7 @@ public class RegexMatcherTests
         var sut = new RegexMatcher(pattern);
         
         // Act.
-        var offset = sut.GetMatchingOffset(str);
+        var offset = sut.MatchToken(str);
         
         // Assert.
         offset.Should().Be(expectedOffset);
@@ -33,7 +33,7 @@ public class RegexMatcherTests
         var sut = new RegexMatcher(pattern);
         
         // Act.
-        var offset = sut.GetMatchingOffset(str);
+        var offset = sut.MatchToken(str);
         
         // Assert.
         offset.Should().Be(0);

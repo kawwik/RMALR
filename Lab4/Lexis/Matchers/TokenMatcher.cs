@@ -1,4 +1,6 @@
-﻿namespace Lab4.Lexis.Matchers;
+﻿using Lab4.Lexis.Tokens;
+
+namespace Lab4.Lexis.Matchers;
 
 public class TokenMatcher<TTokenType> : IMatcher where TTokenType : Enum
 {
@@ -12,19 +14,19 @@ public class TokenMatcher<TTokenType> : IMatcher where TTokenType : Enum
     
     public TTokenType TokenType { get; }
 
-    public int GetMatchingOffset(string str)
+    public IToken MatchToken(string str)
     {
         int currentIndex = 0;
 
         foreach (var matcher in _matchers)
         {
-            var offset = matcher.GetMatchingOffset(str[currentIndex..]);
-            if (offset == 0)
-                return 0;
+            var token = matcher.MatchToken(str[currentIndex..]);
 
-            currentIndex += offset;
+            if (token is ErrorToken) return token;
+            
+            currentIndex += token.Length;
         }
 
-        return currentIndex > str.Length ? 0 : currentIndex;
+        return new Token<TTokenType>(str[..currentIndex], TokenType);
     }
 }

@@ -12,6 +12,9 @@ public class TokenStream<TTokenType> : ITokenStream where TTokenType : Enum
 
     public TokenStream(List<TokenMatcher<TTokenType>> tokenMatchers, string str)
     {
+        if (!tokenMatchers.Any()) 
+            throw new ArgumentException(nameof(tokenMatchers));
+        
         _tokenMatchers = tokenMatchers;
         _str = str;
     }
@@ -20,16 +23,16 @@ public class TokenStream<TTokenType> : ITokenStream where TTokenType : Enum
     {
         if (_currentPosition == _str.Length)
             return new FinishToken();
-        
-        var maxMatcher = _tokenMatchers.MaxBy(x => x.GetMatchingOffset(_str[_currentPosition..]))!;
-        var offset = maxMatcher.GetMatchingOffset(_str[_currentPosition..]);
 
-        if (offset == 0)
+        var token = _tokenMatchers
+            .Select(x => x.MatchToken(_str[_currentPosition..]))
+            .MaxBy(x => x.Length)!;
+
+        if (token is ErrorToken)
             throw new Exception("Неожиданный символ");
 
-        var tokenValue = _str.Substring(_currentPosition, offset);
-        _currentPosition += offset;
+        _currentPosition += token.Length;
 
-        return new Token<TTokenType>(tokenValue, maxMatcher.TokenType);
+        return token;
     }
 }

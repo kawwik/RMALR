@@ -2,5 +2,5 @@
 
 public class FinishToken : IToken
 {
-    
+    public int Length => 0;
 }

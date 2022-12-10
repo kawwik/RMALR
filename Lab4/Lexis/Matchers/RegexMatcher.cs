@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Lab4.Lexis.Tokens;
 
 namespace Lab4.Lexis.Matchers;
 
@@ -11,10 +12,14 @@ public class RegexMatcher : IMatcher
         _regex = new Regex(pattern, RegexOptions.Compiled);
     }
     
-    public int GetMatchingOffset(string str)
+    public IToken MatchToken(string str)
     {
         var match = _regex.Match(str);
 
-        return match.Index == 0 ? match.Length : 0;
+        return match.Index switch
+        {
+            0 => new RegexToken(match.Length),
+            _ => new ErrorToken(match.Length)
+        };
     }
 }
