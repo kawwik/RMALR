@@ -45,16 +45,16 @@ public interface IlexisVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitToken([NotNull] lexisParser.TokenContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="lexisParser.token_patterns"/>.
+	/// Visit a parse tree produced by <see cref="lexisParser.patterns"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitToken_patterns([NotNull] lexisParser.Token_patternsContext context);
+	Result VisitPatterns([NotNull] lexisParser.PatternsContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="lexisParser.token_pattern"/>.
+	/// Visit a parse tree produced by <see cref="lexisParser.pattern"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitToken_pattern([NotNull] lexisParser.Token_patternContext context);
+	Result VisitPattern([NotNull] lexisParser.PatternContext context);
 }
 } // namespace Lab4.Generated.Lexis

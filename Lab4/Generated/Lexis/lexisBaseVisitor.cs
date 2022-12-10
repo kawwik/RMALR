@@ -56,7 +56,7 @@ public partial class lexisBaseVisitor<Result> : AbstractParseTreeVisitor<Result>
 	/// <return>The visitor result.</return>
 	public virtual Result VisitToken([NotNull] lexisParser.TokenContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="lexisParser.token_patterns"/>.
+	/// Visit a parse tree produced by <see cref="lexisParser.patterns"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -64,9 +64,9 @@ public partial class lexisBaseVisitor<Result> : AbstractParseTreeVisitor<Result>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitToken_patterns([NotNull] lexisParser.Token_patternsContext context) { return VisitChildren(context); }
+	public virtual Result VisitPatterns([NotNull] lexisParser.PatternsContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="lexisParser.token_pattern"/>.
+	/// Visit a parse tree produced by <see cref="lexisParser.pattern"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -74,6 +74,6 @@ public partial class lexisBaseVisitor<Result> : AbstractParseTreeVisitor<Result>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitToken_pattern([NotNull] lexisParser.Token_patternContext context) { return VisitChildren(context); }
+	public virtual Result VisitPattern([NotNull] lexisParser.PatternContext context) { return VisitChildren(context); }
 }
 } // namespace Lab4.Generated.Lexis

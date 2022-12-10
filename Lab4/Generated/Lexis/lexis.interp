@@ -21,8 +21,8 @@ NEWLINE
 rule names:
 start
 token
-token_patterns
-token_pattern
+patterns
+pattern
 
 
 atn:

@@ -39,9 +39,9 @@ public partial class lexisParser : Parser {
 	public const int
 		T__0=1, T__1=2, TOKEN_NAME=3, REGEXP=4, QUOTE=5, WHITESPACES=6, NEWLINE=7;
 	public const int
-		RULE_start = 0, RULE_token = 1, RULE_token_patterns = 2, RULE_token_pattern = 3;
+		RULE_start = 0, RULE_token = 1, RULE_patterns = 2, RULE_pattern = 3;
 	public static readonly string[] ruleNames = {
-		"start", "token", "token_patterns", "token_pattern"
+		"start", "token", "patterns", "pattern"
 	};
 
 	private static readonly string[] _LiteralNames = {
@@ -173,8 +173,8 @@ public partial class lexisParser : Parser {
 
 	public partial class TokenContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOKEN_NAME() { return GetToken(lexisParser.TOKEN_NAME, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Token_patternsContext token_patterns() {
-			return GetRuleContext<Token_patternsContext>(0);
+		[System.Diagnostics.DebuggerNonUserCode] public PatternsContext patterns() {
+			return GetRuleContext<PatternsContext>(0);
 		}
 		public TokenContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -201,7 +201,7 @@ public partial class lexisParser : Parser {
 			State = 25;
 			Match(T__0);
 			State = 26;
-			token_patterns();
+			patterns();
 			State = 27;
 			Match(T__1);
 			}
@@ -217,30 +217,30 @@ public partial class lexisParser : Parser {
 		return _localctx;
 	}
 
-	public partial class Token_patternsContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public Token_patternContext[] token_pattern() {
-			return GetRuleContexts<Token_patternContext>();
+	public partial class PatternsContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public PatternContext[] pattern() {
+			return GetRuleContexts<PatternContext>();
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public Token_patternContext token_pattern(int i) {
-			return GetRuleContext<Token_patternContext>(i);
+		[System.Diagnostics.DebuggerNonUserCode] public PatternContext pattern(int i) {
+			return GetRuleContext<PatternContext>(i);
 		}
-		public Token_patternsContext(ParserRuleContext parent, int invokingState)
+		public PatternsContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_token_patterns; } }
+		public override int RuleIndex { get { return RULE_patterns; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IlexisVisitor<TResult> typedVisitor = visitor as IlexisVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitToken_patterns(this);
+			if (typedVisitor != null) return typedVisitor.VisitPatterns(this);
 			else return visitor.VisitChildren(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public Token_patternsContext token_patterns() {
-		Token_patternsContext _localctx = new Token_patternsContext(Context, State);
-		EnterRule(_localctx, 4, RULE_token_patterns);
+	public PatternsContext patterns() {
+		PatternsContext _localctx = new PatternsContext(Context, State);
+		EnterRule(_localctx, 4, RULE_patterns);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
@@ -252,7 +252,7 @@ public partial class lexisParser : Parser {
 				{
 				{
 				State = 29;
-				token_pattern();
+				pattern();
 				}
 				}
 				State = 32;
@@ -272,26 +272,26 @@ public partial class lexisParser : Parser {
 		return _localctx;
 	}
 
-	public partial class Token_patternContext : ParserRuleContext {
+	public partial class PatternContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOKEN_NAME() { return GetToken(lexisParser.TOKEN_NAME, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode REGEXP() { return GetToken(lexisParser.REGEXP, 0); }
-		public Token_patternContext(ParserRuleContext parent, int invokingState)
+		public PatternContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_token_pattern; } }
+		public override int RuleIndex { get { return RULE_pattern; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IlexisVisitor<TResult> typedVisitor = visitor as IlexisVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitToken_pattern(this);
+			if (typedVisitor != null) return typedVisitor.VisitPattern(this);
 			else return visitor.VisitChildren(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public Token_patternContext token_pattern() {
-		Token_patternContext _localctx = new Token_patternContext(Context, State);
-		EnterRule(_localctx, 6, RULE_token_pattern);
+	public PatternContext pattern() {
+		PatternContext _localctx = new PatternContext(Context, State);
+		EnterRule(_localctx, 6, RULE_pattern);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
