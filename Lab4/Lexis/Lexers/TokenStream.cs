@@ -3,14 +3,14 @@ using Lab4.Lexis.Tokens;
 
 namespace Lab4.Lexis.Lexers;
 
-public class TokenStream : ITokenStream
+public class TokenStream<TTokenType> : ITokenStream where TTokenType : Enum
 {
-    private readonly List<TokenMatcher> _tokenMatchers;
+    private readonly List<TokenMatcher<TTokenType>> _tokenMatchers;
 
     private readonly string _str;
     private int _currentPosition;
 
-    public TokenStream(List<TokenMatcher> tokenMatchers, string str)
+    public TokenStream(List<TokenMatcher<TTokenType>> tokenMatchers, string str)
     {
         _tokenMatchers = tokenMatchers;
         _str = str;
@@ -19,7 +19,7 @@ public class TokenStream : ITokenStream
     public IToken NextToken()
     {
         if (_currentPosition == _str.Length)
-            return new Token(String.Empty, TokenType.Finish);
+            return new FinishToken();
         
         var maxMatcher = _tokenMatchers.MaxBy(x => x.GetMatchingOffset(_str[_currentPosition..]))!;
         var offset = maxMatcher.GetMatchingOffset(_str[_currentPosition..]);
@@ -30,6 +30,6 @@ public class TokenStream : ITokenStream
         var tokenValue = _str.Substring(_currentPosition, offset);
         _currentPosition += offset;
 
-        return new Token(tokenValue, maxMatcher.TokenType);
+        return new Token<TTokenType>(tokenValue, maxMatcher.TokenType);
     }
 }

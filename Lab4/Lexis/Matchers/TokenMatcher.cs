@@ -1,18 +1,16 @@
-﻿using Lab4.Lexis.Tokens;
+﻿namespace Lab4.Lexis.Matchers;
 
-namespace Lab4.Lexis.Matchers;
-
-public class TokenMatcher : IMatcher
+public class TokenMatcher<TTokenType> : IMatcher where TTokenType : Enum
 {
     private readonly List<IMatcher> _matchers;
 
-    public TokenMatcher(TokenType tokenType, params IMatcher[] matchers)
+    public TokenMatcher(TTokenType tokenType, params IMatcher[] matchers)
     {
         _matchers = matchers.ToList();
         TokenType = tokenType;
     }
     
-    public TokenType TokenType { get; }
+    public TTokenType TokenType { get; }
 
     public int GetMatchingOffset(string str)
     {
