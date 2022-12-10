@@ -6,9 +6,9 @@ public class TokenMatcher : IMatcher
 {
     private readonly List<IMatcher> _matchers;
 
-    public TokenMatcher(List<IMatcher> matchers, TokenType tokenType)
+    public TokenMatcher(TokenType tokenType, params IMatcher[] matchers)
     {
-        _matchers = matchers;
+        _matchers = matchers.ToList();
         TokenType = tokenType;
     }
     

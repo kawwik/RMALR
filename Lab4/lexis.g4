@@ -11,7 +11,7 @@ pattern: TOKEN_NAME | REGEXP;
 TOKEN_NAME: [A-Z][A-Za-z_]*;
 REGEXP: QUOTE .+? QUOTE;
 
-QUOTE: '\'';
+QUOTE: '"';
 
 WHITESPACES: ' '+ -> skip;
 NEWLINE: '\r'? '\n';

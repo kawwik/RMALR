@@ -7,4 +7,4 @@ WHITESPACES=6
 NEWLINE=7
 ':'=1
 ';'=2
-'\''=5
+'"'=5

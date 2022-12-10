@@ -45,7 +45,7 @@ public partial class lexisParser : Parser {
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "':'", "';'", null, null, "'''"
+		null, "':'", "';'", null, null, "'\"'"
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, null, null, "TOKEN_NAME", "REGEXP", "QUOTE", "WHITESPACES", "NEWLINE"
