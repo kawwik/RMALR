@@ -19,7 +19,7 @@ public class LexisVisitor : lexisBaseVisitor<string>
         
         BuildTokenTypeEnum(stringBuilder, tokenNames);
 
-        stringBuilder.Append($"public class ExampleTokenizer : TokenizerBase\n" +
+        stringBuilder.Append($"public class ExampleTokenizer : TokenizerBase<TokenType>\n" +
                              $"{{\n{_indent}public ExampleTokenizer()\n{_indent}{{\n");
         
         context.token().Aggregate(stringBuilder, (sb, token) => sb.Append(VisitToken(token)));
@@ -32,7 +32,7 @@ public class LexisVisitor : lexisBaseVisitor<string>
 
     private void BuildTokenTypeEnum(StringBuilder stringBuilder, string[] tokenNames)
     {
-        stringBuilder.Append($"public enum TokenType\n{{\n{_indent}Finish = 0," + "\n");
+        stringBuilder.Append("public enum TokenType\n{\n");
 
         foreach (var tokenName in tokenNames)
         {
@@ -47,7 +47,7 @@ public class LexisVisitor : lexisBaseVisitor<string>
         var tokenName = context.TOKEN_NAME().Symbol.Text;
 
         var stringBuilder = new StringBuilder();
-        stringBuilder.Append($"{_indent}{_indent}var {tokenName} = new TokenMatcher(TokenType.{tokenName}, ");
+        stringBuilder.Append($"{_indent}{_indent}var {tokenName} = new TokenMatcher<TokenType>(TokenType.{tokenName}, ");
         foreach (var pattern in context.patterns().pattern())
         {
             if (pattern.TOKEN_NAME() is not null)
@@ -57,7 +57,7 @@ public class LexisVisitor : lexisBaseVisitor<string>
 
             if (pattern.REGEXP() is not null)
             {
-                stringBuilder.Append($"new RegexMatcher({pattern.REGEXP()}), ");
+                stringBuilder.Append($"new RegexMatcher(@{pattern.REGEXP()}), ");
             }
         }
 
