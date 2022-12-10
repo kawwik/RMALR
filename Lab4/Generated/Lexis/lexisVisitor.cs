@@ -56,5 +56,11 @@ public interface IlexisVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitPattern([NotNull] lexisParser.PatternContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="lexisParser.rule"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitRule([NotNull] lexisParser.RuleContext context);
 }
 } // namespace Lab4.Generated.Lexis

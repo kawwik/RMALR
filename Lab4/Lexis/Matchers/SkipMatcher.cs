@@ -16,7 +16,7 @@ public class SkipMatcher : IMatcher
         var token = _matcher.MatchToken(str);
 
         if (token is ErrorToken)
-            throw new Exception();
+            return new ErrorToken(token.Length);
 
         return new SkipToken(token.Length);
     }

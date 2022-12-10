@@ -6,7 +6,7 @@ namespace Lab4.Lexis;
 public class LexisVisitor : lexisBaseVisitor<string>
 {
     private const string _indent = "    ";
-    
+
     public override string VisitStart(lexisParser.StartContext context)
     {
         var stringBuilder = new StringBuilder();
@@ -16,14 +16,14 @@ public class LexisVisitor : lexisBaseVisitor<string>
         stringBuilder.Append("namespace Lab4.Lexis.Examples;\n\n");
 
         var tokenNames = context.token().Select(x => x.TOKEN_NAME().Symbol.Text).ToArray();
-        
+
         BuildTokenTypeEnum(stringBuilder, tokenNames);
 
-        stringBuilder.Append($"public class ExampleTokenizer : TokenizerBase<TokenType>\n" +
+        stringBuilder.Append("public class ExampleTokenizer : TokenizerBase\n" +
                              $"{{\n{_indent}public ExampleTokenizer()\n{_indent}{{\n");
-        
+
         context.token().Aggregate(stringBuilder, (sb, token) => sb.Append(VisitToken(token)));
-        
+
         stringBuilder.Append($"{_indent}}}\n");
         stringBuilder.Append("}");
 
@@ -41,7 +41,7 @@ public class LexisVisitor : lexisBaseVisitor<string>
 
         stringBuilder.Append("}\n\n");
     }
-    
+
     public override string VisitToken(lexisParser.TokenContext context)
     {
         var tokenName = context.TOKEN_NAME().Symbol.Text;
@@ -64,7 +64,15 @@ public class LexisVisitor : lexisBaseVisitor<string>
         stringBuilder.Length -= 2;
         stringBuilder.Append(");" + "\n");
 
-        stringBuilder.Append($"{_indent}{_indent}Matchers.Add({tokenName});" + "\n");
+        var matcherName = tokenName;
+        var rules = context.rule();
+        if (context.rule() is { Length: > 0 })
+        {
+            matcherName = $"{tokenName}_SKIPPER";
+            stringBuilder.Append($"{_indent}{_indent}var {matcherName} = new SkipMatcher({tokenName});\n");
+        }
+
+        stringBuilder.Append($"{_indent}{_indent}Matchers.Add({matcherName});" + "\n");
 
         return stringBuilder.ToString();
     }

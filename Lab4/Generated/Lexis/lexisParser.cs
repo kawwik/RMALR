@@ -37,18 +37,20 @@ public partial class lexisParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		T__0=1, T__1=2, TOKEN_NAME=3, REGEXP=4, QUOTE=5, WHITESPACES=6, NEWLINE=7;
+		T__0=1, T__1=2, T__2=3, TOKEN_NAME=4, REGEXP=5, QUOTE=6, SKIP_RULE=7, 
+		WHITESPACES=8, NEWLINE=9;
 	public const int
-		RULE_start = 0, RULE_token = 1, RULE_patterns = 2, RULE_pattern = 3;
+		RULE_start = 0, RULE_token = 1, RULE_patterns = 2, RULE_pattern = 3, RULE_rule = 4;
 	public static readonly string[] ruleNames = {
-		"start", "token", "patterns", "pattern"
+		"start", "token", "patterns", "pattern", "rule"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "':'", "';'", null, null, "'\"'"
+		null, "':'", "'->'", "';'", null, null, "'\"'", "'skip'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, null, null, "TOKEN_NAME", "REGEXP", "QUOTE", "WHITESPACES", "NEWLINE"
+		null, null, null, null, "TOKEN_NAME", "REGEXP", "QUOTE", "SKIP_RULE", 
+		"WHITESPACES", "NEWLINE"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -113,48 +115,48 @@ public partial class lexisParser : Parser {
 		EnterRule(_localctx, 0, RULE_start);
 		int _la;
 		try {
-			State = 22;
+			State = 24;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,2,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 8;
+				State = 10;
 				Match(Eof);
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 18;
+				State = 20;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				while (_la==TOKEN_NAME) {
 					{
 					{
-					State = 9;
+					State = 11;
 					token();
-					State = 13;
+					State = 15;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
 					while (_la==NEWLINE) {
 						{
 						{
-						State = 10;
+						State = 12;
 						Match(NEWLINE);
 						}
 						}
-						State = 15;
+						State = 17;
 						ErrorHandler.Sync(this);
 						_la = TokenStream.LA(1);
 					}
 					}
 					}
-					State = 20;
+					State = 22;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
 				}
-				State = 21;
+				State = 23;
 				Match(Eof);
 				}
 				break;
@@ -176,6 +178,12 @@ public partial class lexisParser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public PatternsContext patterns() {
 			return GetRuleContext<PatternsContext>(0);
 		}
+		[System.Diagnostics.DebuggerNonUserCode] public RuleContext[] rule() {
+			return GetRuleContexts<RuleContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public RuleContext rule(int i) {
+			return GetRuleContext<RuleContext>(i);
+		}
 		public TokenContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -193,17 +201,42 @@ public partial class lexisParser : Parser {
 	public TokenContext token() {
 		TokenContext _localctx = new TokenContext(Context, State);
 		EnterRule(_localctx, 2, RULE_token);
+		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 24;
-			Match(TOKEN_NAME);
-			State = 25;
-			Match(T__0);
 			State = 26;
-			patterns();
+			Match(TOKEN_NAME);
 			State = 27;
-			Match(T__1);
+			Match(T__0);
+			State = 28;
+			patterns();
+			State = 35;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			if (_la==T__1) {
+				{
+				State = 29;
+				Match(T__1);
+				State = 31;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+				do {
+					{
+					{
+					State = 30;
+					rule();
+					}
+					}
+					State = 33;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+				} while ( _la==SKIP_RULE );
+				}
+			}
+
+			State = 37;
+			Match(T__2);
 			}
 		}
 		catch (RecognitionException re) {
@@ -245,17 +278,17 @@ public partial class lexisParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 30;
+			State = 40;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 29;
+				State = 39;
 				pattern();
 				}
 				}
-				State = 32;
+				State = 42;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			} while ( _la==TOKEN_NAME || _la==REGEXP );
@@ -296,7 +329,7 @@ public partial class lexisParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 34;
+			State = 44;
 			_la = TokenStream.LA(1);
 			if ( !(_la==TOKEN_NAME || _la==REGEXP) ) {
 			ErrorHandler.RecoverInline(this);
@@ -318,18 +351,58 @@ public partial class lexisParser : Parser {
 		return _localctx;
 	}
 
+	public partial class RuleContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SKIP_RULE() { return GetToken(lexisParser.SKIP_RULE, 0); }
+		public RuleContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_rule; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IlexisVisitor<TResult> typedVisitor = visitor as IlexisVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitRule(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public RuleContext rule() {
+		RuleContext _localctx = new RuleContext(Context, State);
+		EnterRule(_localctx, 8, RULE_rule);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 46;
+			Match(SKIP_RULE);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
 	private static int[] _serializedATN = {
-		4,1,7,37,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,1,0,1,0,1,0,5,0,12,8,0,10,0,12,
-		0,15,9,0,5,0,17,8,0,10,0,12,0,20,9,0,1,0,3,0,23,8,0,1,1,1,1,1,1,1,1,1,
-		1,1,2,4,2,31,8,2,11,2,12,2,32,1,3,1,3,1,3,0,0,4,0,2,4,6,0,1,1,0,3,4,36,
-		0,22,1,0,0,0,2,24,1,0,0,0,4,30,1,0,0,0,6,34,1,0,0,0,8,23,5,0,0,1,9,13,
-		3,2,1,0,10,12,5,7,0,0,11,10,1,0,0,0,12,15,1,0,0,0,13,11,1,0,0,0,13,14,
-		1,0,0,0,14,17,1,0,0,0,15,13,1,0,0,0,16,9,1,0,0,0,17,20,1,0,0,0,18,16,1,
-		0,0,0,18,19,1,0,0,0,19,21,1,0,0,0,20,18,1,0,0,0,21,23,5,0,0,1,22,8,1,0,
-		0,0,22,18,1,0,0,0,23,1,1,0,0,0,24,25,5,3,0,0,25,26,5,1,0,0,26,27,3,4,2,
-		0,27,28,5,2,0,0,28,3,1,0,0,0,29,31,3,6,3,0,30,29,1,0,0,0,31,32,1,0,0,0,
-		32,30,1,0,0,0,32,33,1,0,0,0,33,5,1,0,0,0,34,35,7,0,0,0,35,7,1,0,0,0,4,
-		13,18,22,32
+		4,1,9,49,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,1,0,1,0,1,0,5,0,14,8,
+		0,10,0,12,0,17,9,0,5,0,19,8,0,10,0,12,0,22,9,0,1,0,3,0,25,8,0,1,1,1,1,
+		1,1,1,1,1,1,4,1,32,8,1,11,1,12,1,33,3,1,36,8,1,1,1,1,1,1,2,4,2,41,8,2,
+		11,2,12,2,42,1,3,1,3,1,4,1,4,1,4,0,0,5,0,2,4,6,8,0,1,1,0,4,5,49,0,24,1,
+		0,0,0,2,26,1,0,0,0,4,40,1,0,0,0,6,44,1,0,0,0,8,46,1,0,0,0,10,25,5,0,0,
+		1,11,15,3,2,1,0,12,14,5,9,0,0,13,12,1,0,0,0,14,17,1,0,0,0,15,13,1,0,0,
+		0,15,16,1,0,0,0,16,19,1,0,0,0,17,15,1,0,0,0,18,11,1,0,0,0,19,22,1,0,0,
+		0,20,18,1,0,0,0,20,21,1,0,0,0,21,23,1,0,0,0,22,20,1,0,0,0,23,25,5,0,0,
+		1,24,10,1,0,0,0,24,20,1,0,0,0,25,1,1,0,0,0,26,27,5,4,0,0,27,28,5,1,0,0,
+		28,35,3,4,2,0,29,31,5,2,0,0,30,32,3,8,4,0,31,30,1,0,0,0,32,33,1,0,0,0,
+		33,31,1,0,0,0,33,34,1,0,0,0,34,36,1,0,0,0,35,29,1,0,0,0,35,36,1,0,0,0,
+		36,37,1,0,0,0,37,38,5,3,0,0,38,3,1,0,0,0,39,41,3,6,3,0,40,39,1,0,0,0,41,
+		42,1,0,0,0,42,40,1,0,0,0,42,43,1,0,0,0,43,5,1,0,0,0,44,45,7,0,0,0,45,7,
+		1,0,0,0,46,47,5,7,0,0,47,9,1,0,0,0,6,15,20,24,33,35,42
 	};
 
 	public static readonly ATN _ATN =

@@ -21,17 +21,22 @@ public class TokenStream : ITokenStream
 
     public IToken NextToken()
     {
-        if (_currentPosition == _str.Length)
-            return new FinishToken();
+        IToken token;
+        do
+        {
+            if (_currentPosition == _str.Length)
+                return new FinishToken();
 
-        var token = _tokenMatchers
-            .Select(x => x.MatchToken(_str[_currentPosition..]))
-            .MaxBy(x => x.Length)!;
+            token = _tokenMatchers
+                .Select(x => x.MatchToken(_str[_currentPosition..]))
+                .Where(x => x is not ErrorToken)
+                .MaxBy(x => x.Length)!;
 
-        if (token is ErrorToken)
-            throw new Exception("Неожиданный символ");
+            if (token is null)
+                throw new Exception("Неожиданный символ");
 
-        _currentPosition += token.Length;
+            _currentPosition += token.Length;
+        } while (token is SkipToken);
 
         return token;
     }
