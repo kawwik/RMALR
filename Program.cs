@@ -5,6 +5,6 @@ using Lab4.Lexis;
 var helloMatcher = new RegexMatcher("hello");
 var worldMatcher = new RegexMatcher("World");
 
-var helloWorldMatcher = new TokenMatcherBase(new List<IMatcher> {helloMatcher, worldMatcher});
+var helloWorldMatcher = new TokenMatcher(new List<IMatcher> {helloMatcher, worldMatcher});
 
 Console.WriteLine(helloWorldMatcher.GetMatchingOffset("helloWorld"));
