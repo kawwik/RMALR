@@ -3,14 +3,14 @@ using Lab4.Lexis.Tokens;
 
 namespace Lab4.Lexis.Lexers;
 
-public class TokenStream<TTokenType> : ITokenStream where TTokenType : Enum
+public class TokenStream : ITokenStream
 {
-    private readonly List<TokenMatcher<TTokenType>> _tokenMatchers;
+    private readonly List<IMatcher> _tokenMatchers;
 
     private readonly string _str;
     private int _currentPosition;
 
-    public TokenStream(List<TokenMatcher<TTokenType>> tokenMatchers, string str)
+    public TokenStream(List<IMatcher> tokenMatchers, string str)
     {
         if (!tokenMatchers.Any()) 
             throw new ArgumentException(nameof(tokenMatchers));

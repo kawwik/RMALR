@@ -2,9 +2,9 @@
 
 namespace Lab4.Lexis.Lexers;
 
-public abstract class TokenizerBase<TTokenType> : ITokenizer where TTokenType : Enum
+public abstract class TokenizerBase
 {
-    protected readonly List<TokenMatcher<TTokenType>> Matchers = new();
+    protected readonly List<IMatcher> Matchers = new();
 
-    public ITokenStream GetTokenStream(string str) => new TokenStream<TTokenType>(Matchers, str);
+    public ITokenStream GetTokenStream(string str) => new TokenStream(Matchers, str);
 }

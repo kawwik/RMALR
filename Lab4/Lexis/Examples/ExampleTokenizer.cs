@@ -8,7 +8,7 @@ public enum TokenType
     ZhopaToken,
 }
 
-public class ExampleTokenizer : TokenizerBase<TokenType>
+public class ExampleTokenizer : TokenizerBase
 {
     public ExampleTokenizer()
     {
