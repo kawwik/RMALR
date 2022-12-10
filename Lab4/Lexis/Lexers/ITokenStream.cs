@@ -2,7 +2,7 @@
 
 namespace Lab4.Lexis.Lexers;
 
-public interface ITokenStream
+public interface ITokenStream : IEnumerable<IToken>
 {
     IToken NextToken();
 }

@@ -1,4 +1,5 @@
-﻿using Lab4.Lexis.Matchers;
+﻿using System.Collections;
+using Lab4.Lexis.Matchers;
 using Lab4.Lexis.Tokens;
 
 namespace Lab4.Lexis.Lexers;
@@ -39,5 +40,20 @@ public class TokenStream : ITokenStream
         } while (token is SkipToken);
 
         return token;
+    }
+
+    public IEnumerator<IToken> GetEnumerator()
+    {
+        IToken token;
+        do
+        {
+            token = NextToken();
+            yield return token;
+        } while (token is not FinishToken);
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }
