@@ -1,4 +1,6 @@
-﻿namespace Lab4.Lexis.Lexers;
+﻿using Lab4.Lexis.Matchers;
+
+namespace Lab4.Lexis.Lexers;
 
 public class Tokenizer : ITokenizer
 {

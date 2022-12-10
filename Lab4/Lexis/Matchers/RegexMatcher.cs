@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Lab4.Lexis;
+namespace Lab4.Lexis.Matchers;
 
 public class RegexMatcher : IMatcher
 {

@@ -1,5 +1,6 @@
 using FluentAssertions;
-using Lab4.Lexis;
+
+using Lab4.Lexis.Matchers;
 
 namespace Lab4.Tests;
 

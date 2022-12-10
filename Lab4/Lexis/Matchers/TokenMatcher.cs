@@ -1,6 +1,6 @@
 ﻿using Lab4.Lexis.Tokens;
 
-namespace Lab4.Lexis;
+namespace Lab4.Lexis.Matchers;
 
 public class TokenMatcher : IMatcher
 {

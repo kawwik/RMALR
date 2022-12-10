@@ -1,4 +1,4 @@
-﻿namespace Lab4.Lexis;
+﻿namespace Lab4.Lexis.Matchers;
 
 public interface IMatcher
 {
