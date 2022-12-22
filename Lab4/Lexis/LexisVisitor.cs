@@ -1,79 +1,94 @@
-﻿using System.Text;
-using Lab4.Generated.Lexis;
+﻿using Lab4.Generated.Lexis;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
+using static Lab4.SyntaxFactory;
 
 namespace Lab4.Lexis;
 
-public class LexisVisitor : lexisBaseVisitor<string>
+public class LexisVisitor : lexisBaseVisitor<SyntaxNode>
 {
-    private const string _indent = "    ";
-
-    public override string VisitStart(lexisParser.StartContext context)
+    public override SyntaxNode VisitStart(lexisParser.StartContext context)
     {
-        var stringBuilder = new StringBuilder();
-
-        stringBuilder.Append("using Lab4.Lexis.Lexers;\nusing Lab4.Lexis.Matchers;\n\n");
-
-        stringBuilder.Append("namespace Lab4.Lexis.Examples;\n\n");
-
         var tokenNames = context.token().Select(x => x.TOKEN_NAME().Symbol.Text).ToArray();
 
-        BuildTokenTypeEnum(stringBuilder, tokenNames);
+        var compilationUnit = CompilationUnit()
+            .AddUsings(
+                UsingDirective(ParseName("Lab4.Lexis.Lexers")),
+                UsingDirective(ParseName("Lab4.Lexis.Matchers"))
+            )
+            .AddMembers(
+                FileScopedNamespaceDeclaration(ParseName("Lab4.Lexis.Examples")),
+                EnumDeclaration("TokenType")
+                    .AddMembers(tokenNames.Select(EnumMemberDeclaration).ToArray())
+                    .AddModifiers(PublicKeyword())
+            );
 
-        stringBuilder.Append("public class ExampleTokenizer : TokenizerBase\n" +
-                             $"{{\n{_indent}public ExampleTokenizer()\n{_indent}{{\n");
+        var matcherDeclarations =
+            context.token().Select(VisitToken)
+                .Cast<VariableDeclarationSyntax>()
+                .Select(LocalDeclarationStatement)
+                .Cast<StatementSyntax>()
+                .ToArray();
 
-        context.token().Aggregate(stringBuilder, (sb, token) => sb.Append(VisitToken(token)));
+        var addMatcherStatements = tokenNames
+            .Select(x => InvocationStatement("Matchers", "Add", Argument(IdentifierName(x))))
+            .Cast<StatementSyntax>()
+            .ToArray();
 
-        stringBuilder.Append($"{_indent}}}\n");
-        stringBuilder.Append("}");
+        var lexerConstructor = ConstructorDeclaration("ExampleTokenizer")
+            .AddBodyStatements(matcherDeclarations)
+            .AddBodyStatements(addMatcherStatements)
+            .AddModifiers(PublicKeyword());
 
-        return stringBuilder.ToString();
+        var lexerClass = ClassDeclaration("ExampleTokenizer")
+            .AddBaseListTypes(SimpleBaseType(ParseName("TokenizerBase")))
+            .AddMembers(lexerConstructor)
+            .AddModifiers(PublicKeyword());
+
+        return compilationUnit.AddMembers(lexerClass);
     }
 
-    private void BuildTokenTypeEnum(StringBuilder stringBuilder, string[] tokenNames)
-    {
-        stringBuilder.Append("public enum TokenType\n{\n");
-
-        foreach (var tokenName in tokenNames)
-        {
-            stringBuilder.Append($"{_indent}{tokenName},\n");
-        }
-
-        stringBuilder.Append("}\n\n");
-    }
-
-    public override string VisitToken(lexisParser.TokenContext context)
+    public override SyntaxNode VisitToken(lexisParser.TokenContext context)
     {
         var tokenName = context.TOKEN_NAME().Symbol.Text;
 
-        var stringBuilder = new StringBuilder();
-        stringBuilder.Append($"{_indent}{_indent}var {tokenName} = new TokenMatcher<TokenType>(TokenType.{tokenName}, ");
+        var arguments = new List<ArgumentSyntax>
+        {
+            Argument(MemberAccessExpression(
+                SyntaxKind.SimpleMemberAccessExpression,
+                IdentifierName("TokenType"),
+                IdentifierName(tokenName)))
+        };
+
         foreach (var pattern in context.patterns().pattern())
         {
-            if (pattern.TOKEN_NAME() is not null)
+            var argument = (pattern.TOKEN_NAME(), pattern.REGEXP()) switch
             {
-                stringBuilder.Append(pattern.TOKEN_NAME().Symbol.Text + ", ");
-            }
+                ({ }, null) => Argument(ParseName(pattern.TOKEN_NAME().Symbol.Text)),
+                (null, { }) => Argument(
+                    ObjectCreationExpression(ParseTypeName("RegexMatcher"))
+                        .AddArgumentListArguments(
+                            Argument(StringLiteralExpression(pattern.REGEXP().GetText().Trim('"')))))
+            };
 
-            if (pattern.REGEXP() is not null)
-            {
-                stringBuilder.Append($"new RegexMatcher(@{pattern.REGEXP()}), ");
-            }
+            arguments.Add(argument);
         }
 
-        stringBuilder.Length -= 2;
-        stringBuilder.Append(");" + "\n");
+        var matcherCreation = ObjectCreationExpression(ParseTypeName("TokenMatcher<TokenType>"))
+            .AddArgumentListArguments(arguments.ToArray());
 
-        var matcherName = tokenName;
-        var rules = context.rule();
-        if (context.rule() is { Length: > 0 })
+        if (context.rule().Any())
         {
-            matcherName = $"{tokenName}_SKIPPER";
-            stringBuilder.Append($"{_indent}{_indent}var {matcherName} = new SkipMatcher({tokenName});\n");
+            matcherCreation = ObjectCreationExpression(ParseTypeName("SkipMatcher"))
+                .AddArgumentListArguments(Argument(matcherCreation));
         }
 
-        stringBuilder.Append($"{_indent}{_indent}Matchers.Add({matcherName});" + "\n");
-
-        return stringBuilder.ToString();
+        return VariableDeclaration(ParseTypeName("var"))
+            .AddVariables(
+                VariableDeclarator(tokenName)
+                    .WithInitializer(EqualsValueClause(matcherCreation))
+            );
     }
 }
