@@ -1,6 +1,8 @@
-﻿namespace Lab4.Lexis;
+﻿using Lab4.Generated;
+
+namespace Lab4.Lexis;
 
 public interface ILexerGenerator
 {
-    string CreateLexerFromGrammar(string lexisCode);
+    string CreateLexer(RMALRParser.StartContext tree);
 }

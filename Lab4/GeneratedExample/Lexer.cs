@@ -6,9 +6,11 @@ public class ExampleTokenizer : TokenizerBase
 {
     public ExampleTokenizer()
     {
-        var WORD = new TokenMatcher("WORD", new RegexMatcher("\\w+"));
+        var DIGIT = new TokenMatcher("DIGIT", new RegexMatcher("\\d"));
+        var PLUS = new TokenMatcher("PLUS", new RegexMatcher("\\+"));
         var SPACES = new SkipMatcher(new TokenMatcher("SPACES", new RegexMatcher(" +")));
-        Matchers.Add(WORD);
+        Matchers.Add(DIGIT);
+        Matchers.Add(PLUS);
         Matchers.Add(SPACES);
     }
 }

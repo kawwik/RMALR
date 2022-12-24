@@ -1,3 +1,6 @@
-﻿WORD: "\w+";
+﻿sum: DIGIT PLUS DIGIT;
+
+DIGIT: "\d";
+PLUS: "\+";
 
 SPACES: " +" -> @skip;
