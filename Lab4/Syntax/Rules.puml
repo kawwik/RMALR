@@ -1,0 +1,19 @@
+@startuml
+class OptionRule {
+    List<Rule> Options
+}
+
+class CompositeRule {
+    List<Rule> Rules
+}
+
+class TokenRule {
+    string TokenType
+}
+
+Rule <|-- OptionRule
+Rule <|-- CompositeRule
+Rule <|-- TokenRule
+
+
+@enduml

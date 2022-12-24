@@ -37,8 +37,8 @@ public partial class RMALRParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		T__0=1, T__1=2, T__2=3, RULE_NAME=4, TOKEN_NAME=5, REGEXP=6, QUOTE=7, 
-		SKIP_RULE=8, WHITESPACES=9, NEWLINE=10;
+		T__0=1, T__1=2, T__2=3, T__3=4, RULE_NAME=5, TOKEN_NAME=6, REGEXP=7, QUOTE=8, 
+		SKIP_RULE=9, WHITESPACES=10, NEWLINE=11;
 	public const int
 		RULE_start = 0, RULE_rule = 1, RULE_rule_option = 2, RULE_rule_part = 3, 
 		RULE_token = 4, RULE_patterns = 5, RULE_pattern = 6, RULE_lexer_rule = 7;
@@ -48,10 +48,10 @@ public partial class RMALRParser : Parser {
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "';'", "':'", "'->'", null, null, null, "'\"'", "'@skip'"
+		null, "';'", "':'", "'|'", "'->'", null, null, null, "'\"'", "'@skip'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, null, null, null, "RULE_NAME", "TOKEN_NAME", "REGEXP", "QUOTE", 
+		null, null, null, null, null, "RULE_NAME", "TOKEN_NAME", "REGEXP", "QUOTE", 
 		"SKIP_RULE", "WHITESPACES", "NEWLINE"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
@@ -188,8 +188,11 @@ public partial class RMALRParser : Parser {
 
 	public partial class RuleContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode RULE_NAME() { return GetToken(RMALRParser.RULE_NAME, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Rule_optionContext rule_option() {
-			return GetRuleContext<Rule_optionContext>(0);
+		[System.Diagnostics.DebuggerNonUserCode] public Rule_optionContext[] rule_option() {
+			return GetRuleContexts<Rule_optionContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public Rule_optionContext rule_option(int i) {
+			return GetRuleContext<Rule_optionContext>(i);
 		}
 		public RuleContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -208,6 +211,7 @@ public partial class RMALRParser : Parser {
 	public RuleContext rule() {
 		RuleContext _localctx = new RuleContext(Context, State);
 		EnterRule(_localctx, 2, RULE_rule);
+		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
@@ -217,6 +221,22 @@ public partial class RMALRParser : Parser {
 			Match(T__1);
 			State = 36;
 			rule_option();
+			State = 41;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			while (_la==T__2) {
+				{
+				{
+				State = 37;
+				Match(T__2);
+				State = 38;
+				rule_option();
+				}
+				}
+				State = 43;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -258,17 +278,17 @@ public partial class RMALRParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 39;
+			State = 45;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 38;
+				State = 44;
 				rule_part();
 				}
 				}
-				State = 41;
+				State = 47;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			} while ( _la==RULE_NAME || _la==TOKEN_NAME );
@@ -309,7 +329,7 @@ public partial class RMALRParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 43;
+			State = 49;
 			_la = TokenStream.LA(1);
 			if ( !(_la==RULE_NAME || _la==TOKEN_NAME) ) {
 			ErrorHandler.RecoverInline(this);
@@ -360,20 +380,20 @@ public partial class RMALRParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 45;
+			State = 51;
 			Match(TOKEN_NAME);
-			State = 46;
+			State = 52;
 			Match(T__1);
-			State = 47;
+			State = 53;
 			patterns();
-			State = 50;
+			State = 56;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			if (_la==T__2) {
+			if (_la==T__3) {
 				{
-				State = 48;
-				Match(T__2);
-				State = 49;
+				State = 54;
+				Match(T__3);
+				State = 55;
 				lexer_rule();
 				}
 			}
@@ -419,17 +439,17 @@ public partial class RMALRParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 53;
+			State = 59;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 52;
+				State = 58;
 				pattern();
 				}
 				}
-				State = 55;
+				State = 61;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			} while ( _la==TOKEN_NAME || _la==REGEXP );
@@ -470,7 +490,7 @@ public partial class RMALRParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 57;
+			State = 63;
 			_la = TokenStream.LA(1);
 			if ( !(_la==TOKEN_NAME || _la==REGEXP) ) {
 			ErrorHandler.RecoverInline(this);
@@ -514,7 +534,7 @@ public partial class RMALRParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 59;
+			State = 65;
 			Match(SKIP_RULE);
 			}
 		}
@@ -530,23 +550,25 @@ public partial class RMALRParser : Parser {
 	}
 
 	private static int[] _serializedATN = {
-		4,1,10,62,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		4,1,11,68,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
 		7,7,1,0,1,0,3,0,19,8,0,1,0,1,0,5,0,23,8,0,10,0,12,0,26,9,0,5,0,28,8,0,
-		10,0,12,0,31,9,0,1,0,1,0,1,1,1,1,1,1,1,1,1,2,4,2,40,8,2,11,2,12,2,41,1,
-		3,1,3,1,4,1,4,1,4,1,4,1,4,3,4,51,8,4,1,5,4,5,54,8,5,11,5,12,5,55,1,6,1,
-		6,1,7,1,7,1,7,0,0,8,0,2,4,6,8,10,12,14,0,2,1,0,4,5,1,0,5,6,59,0,29,1,0,
-		0,0,2,34,1,0,0,0,4,39,1,0,0,0,6,43,1,0,0,0,8,45,1,0,0,0,10,53,1,0,0,0,
-		12,57,1,0,0,0,14,59,1,0,0,0,16,19,3,8,4,0,17,19,3,2,1,0,18,16,1,0,0,0,
-		18,17,1,0,0,0,19,20,1,0,0,0,20,24,5,1,0,0,21,23,5,10,0,0,22,21,1,0,0,0,
-		23,26,1,0,0,0,24,22,1,0,0,0,24,25,1,0,0,0,25,28,1,0,0,0,26,24,1,0,0,0,
-		27,18,1,0,0,0,28,31,1,0,0,0,29,27,1,0,0,0,29,30,1,0,0,0,30,32,1,0,0,0,
-		31,29,1,0,0,0,32,33,5,0,0,1,33,1,1,0,0,0,34,35,5,4,0,0,35,36,5,2,0,0,36,
-		37,3,4,2,0,37,3,1,0,0,0,38,40,3,6,3,0,39,38,1,0,0,0,40,41,1,0,0,0,41,39,
-		1,0,0,0,41,42,1,0,0,0,42,5,1,0,0,0,43,44,7,0,0,0,44,7,1,0,0,0,45,46,5,
-		5,0,0,46,47,5,2,0,0,47,50,3,10,5,0,48,49,5,3,0,0,49,51,3,14,7,0,50,48,
-		1,0,0,0,50,51,1,0,0,0,51,9,1,0,0,0,52,54,3,12,6,0,53,52,1,0,0,0,54,55,
-		1,0,0,0,55,53,1,0,0,0,55,56,1,0,0,0,56,11,1,0,0,0,57,58,7,1,0,0,58,13,
-		1,0,0,0,59,60,5,8,0,0,60,15,1,0,0,0,6,18,24,29,41,50,55
+		10,0,12,0,31,9,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,5,1,40,8,1,10,1,12,1,43,9,
+		1,1,2,4,2,46,8,2,11,2,12,2,47,1,3,1,3,1,4,1,4,1,4,1,4,1,4,3,4,57,8,4,1,
+		5,4,5,60,8,5,11,5,12,5,61,1,6,1,6,1,7,1,7,1,7,0,0,8,0,2,4,6,8,10,12,14,
+		0,2,1,0,5,6,1,0,6,7,66,0,29,1,0,0,0,2,34,1,0,0,0,4,45,1,0,0,0,6,49,1,0,
+		0,0,8,51,1,0,0,0,10,59,1,0,0,0,12,63,1,0,0,0,14,65,1,0,0,0,16,19,3,8,4,
+		0,17,19,3,2,1,0,18,16,1,0,0,0,18,17,1,0,0,0,19,20,1,0,0,0,20,24,5,1,0,
+		0,21,23,5,11,0,0,22,21,1,0,0,0,23,26,1,0,0,0,24,22,1,0,0,0,24,25,1,0,0,
+		0,25,28,1,0,0,0,26,24,1,0,0,0,27,18,1,0,0,0,28,31,1,0,0,0,29,27,1,0,0,
+		0,29,30,1,0,0,0,30,32,1,0,0,0,31,29,1,0,0,0,32,33,5,0,0,1,33,1,1,0,0,0,
+		34,35,5,5,0,0,35,36,5,2,0,0,36,41,3,4,2,0,37,38,5,3,0,0,38,40,3,4,2,0,
+		39,37,1,0,0,0,40,43,1,0,0,0,41,39,1,0,0,0,41,42,1,0,0,0,42,3,1,0,0,0,43,
+		41,1,0,0,0,44,46,3,6,3,0,45,44,1,0,0,0,46,47,1,0,0,0,47,45,1,0,0,0,47,
+		48,1,0,0,0,48,5,1,0,0,0,49,50,7,0,0,0,50,7,1,0,0,0,51,52,5,6,0,0,52,53,
+		5,2,0,0,53,56,3,10,5,0,54,55,5,4,0,0,55,57,3,14,7,0,56,54,1,0,0,0,56,57,
+		1,0,0,0,57,9,1,0,0,0,58,60,3,12,6,0,59,58,1,0,0,0,60,61,1,0,0,0,61,59,
+		1,0,0,0,61,62,1,0,0,0,62,11,1,0,0,0,63,64,7,1,0,0,64,13,1,0,0,0,65,66,
+		5,9,0,0,66,15,1,0,0,0,7,18,24,29,41,47,56,61
 	};
 
 	public static readonly ATN _ATN =

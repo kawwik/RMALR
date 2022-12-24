@@ -3,7 +3,7 @@ grammar RMALR;
 start: ((token | rule) ';' NEWLINE*)* EOF;
 
 // Grammar
-rule: RULE_NAME ':' rule_option; // Задел на несколько options
+rule: RULE_NAME ':' rule_option ('|' rule_option)*;
 rule_option: rule_part+;
 rule_part: RULE_NAME | TOKEN_NAME;
 
