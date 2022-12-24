@@ -1,4 +1,4 @@
-grammar lexis;
+grammar RMALR;
 
 start
     : EOF 

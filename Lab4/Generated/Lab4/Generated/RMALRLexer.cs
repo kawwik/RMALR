@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:/Users/79148/RiderProjects/Lab4/Lab4\lexis.g4 by ANTLR 4.10.1
+// Generated from C:/Users/79148/RiderProjects/Lab4/Lab4\RMALR.g4 by ANTLR 4.10.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -19,7 +19,7 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-namespace Lab4.Generated.Lexis {
+namespace Lab4.Generated {
 using System;
 using System.IO;
 using System.Text;
@@ -30,7 +30,7 @@ using DFA = Antlr4.Runtime.Dfa.DFA;
 
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.10.1")]
 [System.CLSCompliant(false)]
-public partial class lexisLexer : Lexer {
+public partial class RMALRLexer : Lexer {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
@@ -50,10 +50,10 @@ public partial class lexisLexer : Lexer {
 	};
 
 
-	public lexisLexer(ICharStream input)
+	public RMALRLexer(ICharStream input)
 	: this(input, Console.Out, Console.Error) { }
 
-	public lexisLexer(ICharStream input, TextWriter output, TextWriter errorOutput)
+	public RMALRLexer(ICharStream input, TextWriter output, TextWriter errorOutput)
 	: base(input, output, errorOutput)
 	{
 		Interpreter = new LexerATNSimulator(this, _ATN, decisionToDFA, sharedContextCache);
@@ -77,7 +77,7 @@ public partial class lexisLexer : Lexer {
 		}
 	}
 
-	public override string GrammarFileName { get { return "lexis.g4"; } }
+	public override string GrammarFileName { get { return "RMALR.g4"; } }
 
 	public override string[] RuleNames { get { return ruleNames; } }
 
@@ -87,7 +87,7 @@ public partial class lexisLexer : Lexer {
 
 	public override int[] SerializedAtn { get { return _serializedATN; } }
 
-	static lexisLexer() {
+	static RMALRLexer() {
 		decisionToDFA = new DFA[_ATN.NumberOfDecisions];
 		for (int i = 0; i < _ATN.NumberOfDecisions; i++) {
 			decisionToDFA[i] = new DFA(_ATN.GetDecisionState(i), i);
@@ -119,4 +119,4 @@ public partial class lexisLexer : Lexer {
 
 
 }
-} // namespace Lab4.Generated.Lexis
+} // namespace Lab4.Generated

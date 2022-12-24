@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:/Users/79148/RiderProjects/Lab4/Lab4\lexis.g4 by ANTLR 4.10.1
+// Generated from C:/Users/79148/RiderProjects/Lab4/Lab4\RMALR.g4 by ANTLR 4.10.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -19,14 +19,14 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-namespace Lab4.Generated.Lexis {
+namespace Lab4.Generated {
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using IToken = Antlr4.Runtime.IToken;
 using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 
 /// <summary>
-/// This class provides an empty implementation of <see cref="IlexisVisitor{Result}"/>,
+/// This class provides an empty implementation of <see cref="IRMALRVisitor{Result}"/>,
 /// which can be extended to create a visitor which only needs to handle a subset
 /// of the available methods.
 /// </summary>
@@ -34,9 +34,9 @@ using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.10.1")]
 [System.Diagnostics.DebuggerNonUserCode]
 [System.CLSCompliant(false)]
-public partial class lexisBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, IlexisVisitor<Result> {
+public partial class RMALRBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, IRMALRVisitor<Result> {
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="lexisParser.start"/>.
+	/// Visit a parse tree produced by <see cref="RMALRParser.start"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -44,9 +44,9 @@ public partial class lexisBaseVisitor<Result> : AbstractParseTreeVisitor<Result>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitStart([NotNull] lexisParser.StartContext context) { return VisitChildren(context); }
+	public virtual Result VisitStart([NotNull] RMALRParser.StartContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="lexisParser.token"/>.
+	/// Visit a parse tree produced by <see cref="RMALRParser.token"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -54,9 +54,9 @@ public partial class lexisBaseVisitor<Result> : AbstractParseTreeVisitor<Result>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitToken([NotNull] lexisParser.TokenContext context) { return VisitChildren(context); }
+	public virtual Result VisitToken([NotNull] RMALRParser.TokenContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="lexisParser.patterns"/>.
+	/// Visit a parse tree produced by <see cref="RMALRParser.patterns"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -64,9 +64,9 @@ public partial class lexisBaseVisitor<Result> : AbstractParseTreeVisitor<Result>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPatterns([NotNull] lexisParser.PatternsContext context) { return VisitChildren(context); }
+	public virtual Result VisitPatterns([NotNull] RMALRParser.PatternsContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="lexisParser.pattern"/>.
+	/// Visit a parse tree produced by <see cref="RMALRParser.pattern"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -74,9 +74,9 @@ public partial class lexisBaseVisitor<Result> : AbstractParseTreeVisitor<Result>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPattern([NotNull] lexisParser.PatternContext context) { return VisitChildren(context); }
+	public virtual Result VisitPattern([NotNull] RMALRParser.PatternContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="lexisParser.rule"/>.
+	/// Visit a parse tree produced by <see cref="RMALRParser.rule"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -84,6 +84,6 @@ public partial class lexisBaseVisitor<Result> : AbstractParseTreeVisitor<Result>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitRule([NotNull] lexisParser.RuleContext context) { return VisitChildren(context); }
+	public virtual Result VisitRule([NotNull] RMALRParser.RuleContext context) { return VisitChildren(context); }
 }
-} // namespace Lab4.Generated.Lexis
+} // namespace Lab4.Generated

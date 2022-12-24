@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:/Users/79148/RiderProjects/Lab4/Lab4\lexis.g4 by ANTLR 4.10.1
+// Generated from C:/Users/79148/RiderProjects/Lab4/Lab4\RMALR.g4 by ANTLR 4.10.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -19,48 +19,48 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-namespace Lab4.Generated.Lexis {
+namespace Lab4.Generated {
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using IToken = Antlr4.Runtime.IToken;
 
 /// <summary>
 /// This interface defines a complete generic visitor for a parse tree produced
-/// by <see cref="lexisParser"/>.
+/// by <see cref="RMALRParser"/>.
 /// </summary>
 /// <typeparam name="Result">The return type of the visit operation.</typeparam>
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.10.1")]
 [System.CLSCompliant(false)]
-public interface IlexisVisitor<Result> : IParseTreeVisitor<Result> {
+public interface IRMALRVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="lexisParser.start"/>.
+	/// Visit a parse tree produced by <see cref="RMALRParser.start"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitStart([NotNull] lexisParser.StartContext context);
+	Result VisitStart([NotNull] RMALRParser.StartContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="lexisParser.token"/>.
+	/// Visit a parse tree produced by <see cref="RMALRParser.token"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitToken([NotNull] lexisParser.TokenContext context);
+	Result VisitToken([NotNull] RMALRParser.TokenContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="lexisParser.patterns"/>.
+	/// Visit a parse tree produced by <see cref="RMALRParser.patterns"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPatterns([NotNull] lexisParser.PatternsContext context);
+	Result VisitPatterns([NotNull] RMALRParser.PatternsContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="lexisParser.pattern"/>.
+	/// Visit a parse tree produced by <see cref="RMALRParser.pattern"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPattern([NotNull] lexisParser.PatternContext context);
+	Result VisitPattern([NotNull] RMALRParser.PatternContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="lexisParser.rule"/>.
+	/// Visit a parse tree produced by <see cref="RMALRParser.rule"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitRule([NotNull] lexisParser.RuleContext context);
+	Result VisitRule([NotNull] RMALRParser.RuleContext context);
 }
-} // namespace Lab4.Generated.Lexis
+} // namespace Lab4.Generated

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:/Users/79148/RiderProjects/Lab4/Lab4\lexis.g4 by ANTLR 4.10.1
+// Generated from C:/Users/79148/RiderProjects/Lab4/Lab4\RMALR.g4 by ANTLR 4.10.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -19,7 +19,7 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-namespace Lab4.Generated.Lexis {
+namespace Lab4.Generated {
 using System;
 using System.IO;
 using System.Text;
@@ -33,7 +33,7 @@ using DFA = Antlr4.Runtime.Dfa.DFA;
 
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.10.1")]
 [System.CLSCompliant(false)]
-public partial class lexisParser : Parser {
+public partial class RMALRParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
@@ -63,38 +63,38 @@ public partial class lexisParser : Parser {
 		}
 	}
 
-	public override string GrammarFileName { get { return "lexis.g4"; } }
+	public override string GrammarFileName { get { return "RMALR.g4"; } }
 
 	public override string[] RuleNames { get { return ruleNames; } }
 
 	public override int[] SerializedAtn { get { return _serializedATN; } }
 
-	static lexisParser() {
+	static RMALRParser() {
 		decisionToDFA = new DFA[_ATN.NumberOfDecisions];
 		for (int i = 0; i < _ATN.NumberOfDecisions; i++) {
 			decisionToDFA[i] = new DFA(_ATN.GetDecisionState(i), i);
 		}
 	}
 
-		public lexisParser(ITokenStream input) : this(input, Console.Out, Console.Error) { }
+		public RMALRParser(ITokenStream input) : this(input, Console.Out, Console.Error) { }
 
-		public lexisParser(ITokenStream input, TextWriter output, TextWriter errorOutput)
+		public RMALRParser(ITokenStream input, TextWriter output, TextWriter errorOutput)
 		: base(input, output, errorOutput)
 	{
 		Interpreter = new ParserATNSimulator(this, _ATN, decisionToDFA, sharedContextCache);
 	}
 
 	public partial class StartContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Eof() { return GetToken(lexisParser.Eof, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Eof() { return GetToken(RMALRParser.Eof, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public TokenContext[] token() {
 			return GetRuleContexts<TokenContext>();
 		}
 		[System.Diagnostics.DebuggerNonUserCode] public TokenContext token(int i) {
 			return GetRuleContext<TokenContext>(i);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] NEWLINE() { return GetTokens(lexisParser.NEWLINE); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] NEWLINE() { return GetTokens(RMALRParser.NEWLINE); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NEWLINE(int i) {
-			return GetToken(lexisParser.NEWLINE, i);
+			return GetToken(RMALRParser.NEWLINE, i);
 		}
 		public StartContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -103,7 +103,7 @@ public partial class lexisParser : Parser {
 		public override int RuleIndex { get { return RULE_start; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IlexisVisitor<TResult> typedVisitor = visitor as IlexisVisitor<TResult>;
+			IRMALRVisitor<TResult> typedVisitor = visitor as IRMALRVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitStart(this);
 			else return visitor.VisitChildren(this);
 		}
@@ -174,7 +174,7 @@ public partial class lexisParser : Parser {
 	}
 
 	public partial class TokenContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOKEN_NAME() { return GetToken(lexisParser.TOKEN_NAME, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOKEN_NAME() { return GetToken(RMALRParser.TOKEN_NAME, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public PatternsContext patterns() {
 			return GetRuleContext<PatternsContext>(0);
 		}
@@ -191,7 +191,7 @@ public partial class lexisParser : Parser {
 		public override int RuleIndex { get { return RULE_token; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IlexisVisitor<TResult> typedVisitor = visitor as IlexisVisitor<TResult>;
+			IRMALRVisitor<TResult> typedVisitor = visitor as IRMALRVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitToken(this);
 			else return visitor.VisitChildren(this);
 		}
@@ -264,7 +264,7 @@ public partial class lexisParser : Parser {
 		public override int RuleIndex { get { return RULE_patterns; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IlexisVisitor<TResult> typedVisitor = visitor as IlexisVisitor<TResult>;
+			IRMALRVisitor<TResult> typedVisitor = visitor as IRMALRVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitPatterns(this);
 			else return visitor.VisitChildren(this);
 		}
@@ -306,8 +306,8 @@ public partial class lexisParser : Parser {
 	}
 
 	public partial class PatternContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOKEN_NAME() { return GetToken(lexisParser.TOKEN_NAME, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode REGEXP() { return GetToken(lexisParser.REGEXP, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOKEN_NAME() { return GetToken(RMALRParser.TOKEN_NAME, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode REGEXP() { return GetToken(RMALRParser.REGEXP, 0); }
 		public PatternContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -315,7 +315,7 @@ public partial class lexisParser : Parser {
 		public override int RuleIndex { get { return RULE_pattern; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IlexisVisitor<TResult> typedVisitor = visitor as IlexisVisitor<TResult>;
+			IRMALRVisitor<TResult> typedVisitor = visitor as IRMALRVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitPattern(this);
 			else return visitor.VisitChildren(this);
 		}
@@ -352,7 +352,7 @@ public partial class lexisParser : Parser {
 	}
 
 	public partial class RuleContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SKIP_RULE() { return GetToken(lexisParser.SKIP_RULE, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SKIP_RULE() { return GetToken(RMALRParser.SKIP_RULE, 0); }
 		public RuleContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -360,7 +360,7 @@ public partial class lexisParser : Parser {
 		public override int RuleIndex { get { return RULE_rule; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IlexisVisitor<TResult> typedVisitor = visitor as IlexisVisitor<TResult>;
+			IRMALRVisitor<TResult> typedVisitor = visitor as IRMALRVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitRule(this);
 			else return visitor.VisitChildren(this);
 		}
@@ -410,4 +410,4 @@ public partial class lexisParser : Parser {
 
 
 }
-} // namespace Lab4.Generated.Lexis
+} // namespace Lab4.Generated

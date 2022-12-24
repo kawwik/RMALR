@@ -1,4 +1,4 @@
-﻿using Lab4.Generated.Lexis;
+﻿using Lab4.Generated;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -7,9 +7,9 @@ using static Lab4.SyntaxFactory;
 
 namespace Lab4.Lexis;
 
-public class LexisVisitor : lexisBaseVisitor<SyntaxNode>
+public class LexisVisitor : RMALRBaseVisitor<SyntaxNode>
 {
-    public override SyntaxNode VisitStart(lexisParser.StartContext context)
+    public override SyntaxNode VisitStart(RMALRParser.StartContext context)
     {
         var tokenNames = context.token().Select(x => x.TOKEN_NAME().Symbol.Text).ToArray();
 
@@ -50,7 +50,7 @@ public class LexisVisitor : lexisBaseVisitor<SyntaxNode>
         return compilationUnit.AddMembers(lexerClass);
     }
 
-    public override SyntaxNode VisitToken(lexisParser.TokenContext context)
+    public override SyntaxNode VisitToken(RMALRParser.TokenContext context)
     {
         var tokenName = context.TOKEN_NAME().Symbol.Text;
 
