@@ -7,6 +7,7 @@ public class SkipToken : IToken
         Value = value;
     }
 
+    public string Type => "@SKIP";
     public string Value { get; }
     public int Length => Value.Length;
 }

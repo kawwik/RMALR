@@ -7,6 +7,7 @@ public class ErrorToken : IToken
         Value = value;
     }
 
+    public string Type => "@ERROR";
     public string Value { get; }
     public int Length => Value.Length;
 }

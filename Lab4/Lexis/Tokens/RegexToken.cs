@@ -7,6 +7,7 @@ public class RegexToken : IToken
         Value = value;
     }
 
+    public string Type => "@REGEX";
     public string Value { get; }
     public int Length => Value.Length;
 }
