@@ -1,6 +1,5 @@
 ﻿using Lab4.Generated;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using static Lab4.SyntaxFactory;
@@ -19,10 +18,7 @@ public class LexisVisitor : RMALRBaseVisitor<SyntaxNode>
                 UsingDirective(ParseName("Lab4.Lexis.Matchers"))
             )
             .AddMembers(
-                FileScopedNamespaceDeclaration(ParseName("Lab4.Lexis.Examples")),
-                EnumDeclaration("TokenType")
-                    .AddMembers(tokenNames.Select(EnumMemberDeclaration).ToArray())
-                    .AddModifiers(PublicKeyword())
+                FileScopedNamespaceDeclaration(ParseName("Lab4.Lexis.Examples"))
             );
 
         var matcherDeclarations =
@@ -56,10 +52,7 @@ public class LexisVisitor : RMALRBaseVisitor<SyntaxNode>
 
         var arguments = new List<ArgumentSyntax>
         {
-            Argument(MemberAccessExpression(
-                SyntaxKind.SimpleMemberAccessExpression,
-                IdentifierName("TokenType"),
-                IdentifierName(tokenName)))
+            Argument(StringLiteralExpression(tokenName))
         };
 
         foreach (var pattern in context.patterns().pattern())
@@ -76,7 +69,7 @@ public class LexisVisitor : RMALRBaseVisitor<SyntaxNode>
             arguments.Add(argument);
         }
 
-        var matcherCreation = ObjectCreationExpression(ParseTypeName("TokenMatcher<TokenType>"))
+        var matcherCreation = ObjectCreationExpression(ParseTypeName("TokenMatcher"))
             .AddArgumentListArguments(arguments.ToArray());
 
         if (context.rule().Any())

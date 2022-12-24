@@ -2,17 +2,17 @@
 
 namespace Lab4.Lexis.Matchers;
 
-public class TokenMatcher<TTokenType> : IMatcher where TTokenType : Enum
+public class TokenMatcher: IMatcher
 {
     private readonly List<IMatcher> _matchers;
 
-    public TokenMatcher(TTokenType tokenType, params IMatcher[] matchers)
+    public TokenMatcher(string tokenType, params IMatcher[] matchers)
     {
         _matchers = matchers.ToList();
         TokenType = tokenType;
     }
     
-    public TTokenType TokenType { get; }
+    public string TokenType { get; }
 
     public IToken MatchToken(string str)
     {
@@ -27,6 +27,6 @@ public class TokenMatcher<TTokenType> : IMatcher where TTokenType : Enum
             currentIndex += token.Length;
         }
 
-        return new Token<TTokenType>(str[..currentIndex], TokenType);
+        return new Token(str[..currentIndex], TokenType);
     }
 }
