@@ -1,21 +1,28 @@
 grammar RMALR;
 
-start
-    : EOF 
-    | (token NEWLINE*)* EOF;
+start: ((token | rule) ';' NEWLINE*)* EOF;
 
-token: TOKEN_NAME ':' patterns ('->' rule+)? ';';
+// Grammar
+rule: RULE_NAME ':' rule_option; // Задел на несколько options
+rule_option: rule_part+;
+rule_part: RULE_NAME | TOKEN_NAME;
+
+// Lexis
+token: TOKEN_NAME ':' patterns ('->' lexer_rule)?;
 patterns: pattern+;
 pattern: TOKEN_NAME | REGEXP;
 
-rule: SKIP_RULE;
+lexer_rule: SKIP_RULE;
+
+// Tokens
+RULE_NAME: [a-z][A-Za-z_]*;
 
 TOKEN_NAME: [A-Z][A-Za-z_]*;
 REGEXP: QUOTE .+? QUOTE;
 
 QUOTE: '"';
 
-SKIP_RULE: 'skip';
+SKIP_RULE: '@skip';
 
 WHITESPACES: ' '+ -> skip;
 NEWLINE: '\r'? '\n';

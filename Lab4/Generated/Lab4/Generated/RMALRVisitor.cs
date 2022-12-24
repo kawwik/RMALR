@@ -39,6 +39,24 @@ public interface IRMALRVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitStart([NotNull] RMALRParser.StartContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="RMALRParser.rule"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitRule([NotNull] RMALRParser.RuleContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="RMALRParser.rule_option"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitRule_option([NotNull] RMALRParser.Rule_optionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="RMALRParser.rule_part"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitRule_part([NotNull] RMALRParser.Rule_partContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="RMALRParser.token"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -57,10 +75,10 @@ public interface IRMALRVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPattern([NotNull] RMALRParser.PatternContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="RMALRParser.rule"/>.
+	/// Visit a parse tree produced by <see cref="RMALRParser.lexer_rule"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitRule([NotNull] RMALRParser.RuleContext context);
+	Result VisitLexer_rule([NotNull] RMALRParser.Lexer_ruleContext context);
 }
 } // namespace Lab4.Generated

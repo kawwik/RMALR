@@ -72,7 +72,7 @@ public class LexisVisitor : RMALRBaseVisitor<SyntaxNode>
         var matcherCreation = ObjectCreationExpression(ParseTypeName("TokenMatcher"))
             .AddArgumentListArguments(arguments.ToArray());
 
-        if (context.rule().Any())
+        if (context.lexer_rule() is not null)
         {
             matcherCreation = ObjectCreationExpression(ParseTypeName("SkipMatcher"))
                 .AddArgumentListArguments(Argument(matcherCreation));
