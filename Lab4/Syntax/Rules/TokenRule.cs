@@ -8,4 +8,6 @@ public class TokenRule : RuleBase
     }
 
     public string TokenType { get; }
+
+    public override HashSet<string> First() => new(new[] {TokenType});
 }

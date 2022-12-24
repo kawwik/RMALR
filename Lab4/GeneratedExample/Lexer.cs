@@ -8,9 +8,11 @@ public class ExampleTokenizer : TokenizerBase
     {
         var DIGIT = new TokenMatcher("DIGIT", new RegexMatcher("\\d"));
         var PLUS = new TokenMatcher("PLUS", new RegexMatcher("\\+"));
+        var MULT = new TokenMatcher("MULT", new RegexMatcher("\\*"));
         var SPACES = new SkipMatcher(new TokenMatcher("SPACES", new RegexMatcher(" +")));
         Matchers.Add(DIGIT);
         Matchers.Add(PLUS);
+        Matchers.Add(MULT);
         Matchers.Add(SPACES);
     }
 }

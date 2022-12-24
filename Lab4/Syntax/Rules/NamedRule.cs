@@ -11,4 +11,12 @@ public class NamedRule : RuleBase
     public string Name { get; }
     
     public OptionsRule? Options { get; set; }
+
+    public override HashSet<string> First()
+    {
+        if (Options is null)
+            throw new InvalidOperationException("Не установлены возможные опции правила");
+
+        return Options.First();
+    }
 }

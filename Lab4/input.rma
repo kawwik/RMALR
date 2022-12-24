@@ -1,6 +1,8 @@
-﻿sum: DIGIT PLUS DIGIT;
+﻿sum: mult PLUS mult;
+mult: DIGIT MULT DIGIT;
 
 DIGIT: "\d";
 PLUS: "\+";
+MULT: "\*";
 
 SPACES: " +" -> @skip;

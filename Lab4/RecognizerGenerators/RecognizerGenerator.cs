@@ -36,5 +36,6 @@ public class RecognizerGenerator
     {
         var grammarVisitor = new GrammarVisitor();
         var rules = grammarVisitor.GetAllRules(tree);
+        var first = rules.First().First();
     }
 }

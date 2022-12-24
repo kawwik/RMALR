@@ -12,4 +12,6 @@ public class CompositeRule : RuleBase
     public IReadOnlyCollection<RuleBase> Rules => _rules;
 
     public void AddRule(RuleBase rule) => _rules.Add(rule);
+
+    public override HashSet<string> First() => _rules.First().First();
 }
