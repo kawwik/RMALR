@@ -2,10 +2,11 @@
 
 public class ErrorToken : IToken
 {
-    public ErrorToken(int length)
+    public ErrorToken(string value)
     {
-        Length = length;
+        Value = value;
     }
 
-    public int Length { get; }
+    public string Value { get; }
+    public int Length => Value.Length;
 }

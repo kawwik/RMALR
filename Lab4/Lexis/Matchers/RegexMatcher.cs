@@ -18,8 +18,8 @@ public class RegexMatcher : IMatcher
 
         return match.Index switch
         {
-            0 => new RegexToken(match.Length),
-            _ => new ErrorToken(match.Length)
+            0 => new RegexToken(match.Value),
+            _ => new ErrorToken(match.Value)
         };
     }
 }

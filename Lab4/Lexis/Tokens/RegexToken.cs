@@ -2,10 +2,11 @@
 
 public class RegexToken : IToken
 {
-    public RegexToken(int length)
+    public RegexToken(string value)
     {
-        Length = length;
+        Value = value;
     }
 
-    public int Length { get; }
+    public string Value { get; }
+    public int Length => Value.Length;
 }
