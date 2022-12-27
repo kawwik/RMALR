@@ -1,8 +1,8 @@
-﻿using Lab4.Syntax.Rules;
+﻿using Lab4.Generated;
 
-namespace Lab4.Syntax.Interfaces;
+namespace Lab4.Syntax.Parser.Interfaces;
 
 public interface IParserGenerator
 {
-    string Generate(IReadOnlyCollection<NamedRule> rules, string grammarName);
+    string Generate(RMALRParser.StartContext tree, string grammarName);
 }

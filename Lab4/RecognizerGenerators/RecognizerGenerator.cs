@@ -1,8 +1,7 @@
 ﻿using Antlr4.Runtime;
 using Lab4.Generated;
 using Lab4.Lexis;
-using Lab4.Syntax;
-using Lab4.Syntax.Interfaces;
+using Lab4.Syntax.Parser.Interfaces;
 
 namespace Lab4.RecognizerGenerators;
 
@@ -33,15 +32,13 @@ public class RecognizerGenerator
 
     private void GenerateLexer(RMALRParser.StartContext tree, string outputFile)
     {
-        var lexerCode = _lexerGenerator.CreateLexer(tree);
+        var lexerCode = _lexerGenerator.Generate(tree);
         File.WriteAllText(outputFile, lexerCode);
     }
 
     private void GenerateParser(RMALRParser.StartContext tree, string outputFile, string grammarName)
     {
-        var grammarVisitor = new GrammarVisitor();
-        var rules = grammarVisitor.GetAllRules(tree);
-        var parserCode = _parserGenerator.Generate(rules, grammarName);
+        var parserCode = _parserGenerator.Generate(tree, grammarName);
         File.WriteAllText(outputFile, parserCode);
     }
 }

@@ -1,5 +1,6 @@
-﻿using Lab4.Syntax.Interfaces;
+﻿using Lab4.Generated;
 using Lab4.Syntax.Parser.Builders;
+using Lab4.Syntax.Parser.Interfaces;
 using Lab4.Syntax.Rules;
 using Lab4.Utils;
 
@@ -7,8 +8,11 @@ namespace Lab4.Syntax.Parser;
 
 public class ParserGenerator : IParserGenerator
 {
-    public string Generate(IReadOnlyCollection<NamedRule> rules, string grammarName)
+    public string Generate(RMALRParser.StartContext tree, string grammarName)
     {
+        var grammarVisitor = new GrammarVisitor();
+        var rules = grammarVisitor.GetAllRules(tree);
+        
         var parserBuilder = new ParserBuilder(grammarName);
 
         foreach (var rule in rules)

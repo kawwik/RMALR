@@ -5,7 +5,7 @@ namespace Lab4.Lexis;
 
 public class LexerGenerator : ILexerGenerator
 {
-    public string CreateLexer(RMALRParser.StartContext tree)
+    public string Generate(RMALRParser.StartContext tree)
     {
         var lexisVisitor = new LexisVisitor();
         var result = lexisVisitor.Visit(tree);

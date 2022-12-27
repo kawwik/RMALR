@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace Lab4.Utils;
+﻿namespace Lab4.Utils;
 
 public static class StringExtensions
 {

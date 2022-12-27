@@ -4,5 +4,5 @@ namespace Lab4.Lexis;
 
 public interface ILexerGenerator
 {
-    string CreateLexer(RMALRParser.StartContext tree);
+    string Generate(RMALRParser.StartContext tree);
 }
