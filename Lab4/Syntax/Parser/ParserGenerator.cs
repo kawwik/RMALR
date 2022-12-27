@@ -1,14 +1,15 @@
 ﻿using Lab4.Syntax.Interfaces;
 using Lab4.Syntax.Parser.Builders;
 using Lab4.Syntax.Rules;
+using Lab4.Utils;
 
 namespace Lab4.Syntax.Parser;
 
 public class ParserGenerator : IParserGenerator
 {
-    public string Generate(IReadOnlyCollection<NamedRule> rules)
+    public string Generate(IReadOnlyCollection<NamedRule> rules, string grammarName)
     {
-        var parserBuilder = new ParserBuilder("Example");
+        var parserBuilder = new ParserBuilder(grammarName);
 
         foreach (var rule in rules)
         {
@@ -29,7 +30,7 @@ public class ParserGenerator : IParserGenerator
 
         switchBuilder.AddDefaultThrow();
         
-        var methodBuilder = MethodBuilder.BuildParserMethod(rule.Name, switchBuilder);
+        var methodBuilder = MethodBuilder.BuildParserMethod(rule.Name.Capitalize(), switchBuilder);
         return methodBuilder;
     }
 
@@ -45,7 +46,7 @@ public class ParserGenerator : IParserGenerator
             switch (rule)
             {
                 case NamedRule namedRule:
-                    caseBuilder.AddNonTerminalNodeReading(namedRule.Name);
+                    caseBuilder.AddNonTerminalNodeReading(namedRule.Name.Capitalize());
                     break;
                 case TokenRule tokenRule:
                     caseBuilder.AddTerminalNodeReading(tokenRule.TokenType);

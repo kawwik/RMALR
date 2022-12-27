@@ -19,7 +19,7 @@ public class RecognizerGenerator
         _parserGenerator = parserGenerator;
     }
 
-    public void Generate(string inputFile, string outputDirectory)
+    public void Generate(string inputFile, string outputDirectory, string grammarName)
     {
         var inputText = File.ReadAllText(inputFile);
         
@@ -27,8 +27,8 @@ public class RecognizerGenerator
         var parser = new RMALRParser(new CommonTokenStream(lexer));
 
         var tree = parser.start(); 
-        GenerateLexer(tree, outputDirectory + "/Lexer.cs");
-        GenerateParser(tree, outputDirectory + "/Parser.cs");
+        GenerateLexer(tree, outputDirectory + $"/{grammarName}Lexer.cs");
+        GenerateParser(tree, outputDirectory + $"/{grammarName}Parser.cs", grammarName);
     }
 
     private void GenerateLexer(RMALRParser.StartContext tree, string outputFile)
@@ -37,11 +37,11 @@ public class RecognizerGenerator
         File.WriteAllText(outputFile, lexerCode);
     }
 
-    private void GenerateParser(RMALRParser.StartContext tree, string outputFile)
+    private void GenerateParser(RMALRParser.StartContext tree, string outputFile, string grammarName)
     {
         var grammarVisitor = new GrammarVisitor();
         var rules = grammarVisitor.GetAllRules(tree);
-        var parserCode = _parserGenerator.Generate(rules);
+        var parserCode = _parserGenerator.Generate(rules, grammarName);
         File.WriteAllText(outputFile, parserCode);
     }
 }

@@ -8,13 +8,13 @@ public class ExampleParser : ParserBase
     {
     }
 
-    public NonTerminalNode ReadsumNode()
+    public NonTerminalNode ReadSumNode()
     {
-        var result = new NonTerminalNode("sum");
+        var result = new NonTerminalNode("Sum");
         switch (CurrentToken.Type)
         {
             case "DIGIT":
-                result.AddChildren(ReadmultNode(), ReadTerminal("PLUS"), ReadmultNode());
+                result.AddChildren(ReadMultNode(), ReadTerminal("PLUS"), ReadMultNode());
                 break;
             default:
                 throw new InvalidOperationException("Неожиданный токен");
@@ -24,9 +24,9 @@ public class ExampleParser : ParserBase
         return result;
     }
 
-    public NonTerminalNode ReadmultNode()
+    public NonTerminalNode ReadMultNode()
     {
-        var result = new NonTerminalNode("mult");
+        var result = new NonTerminalNode("Mult");
         switch (CurrentToken.Type)
         {
             case "DIGIT":

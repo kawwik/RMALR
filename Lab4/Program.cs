@@ -9,4 +9,5 @@ var recognizerGenerator = new RecognizerGenerator(lexerGenerator, parserGenerato
 
 recognizerGenerator.Generate(
     @"C:\Users\79148\RiderProjects\Lab4\Lab4\input.rma",
-    @"C:\Users\79148\RiderProjects\Lab4\Lab4\GeneratedExample");
+    @"C:\Users\79148\RiderProjects\Lab4\Lab4\GeneratedExample",
+    "Example");
