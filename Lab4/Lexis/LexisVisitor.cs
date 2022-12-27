@@ -29,7 +29,7 @@ public class LexisVisitor : RMALRBaseVisitor<SyntaxNode>
                 .ToArray();
 
         var addMatcherStatements = tokenNames
-            .Select(x => InvocationStatement("Matchers", "Add", Argument(IdentifierName(x))))
+            .Select(x => MemberInvocationStatement("Matchers", "Add", Argument(IdentifierName(x))))
             .Cast<StatementSyntax>()
             .ToArray();
 
