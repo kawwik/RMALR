@@ -2,16 +2,21 @@
 using Lab4.Generated;
 using Lab4.Lexis;
 using Lab4.Syntax;
+using Lab4.Syntax.Interfaces;
 
 namespace Lab4.RecognizerGenerators;
 
 public class RecognizerGenerator
 {
     private readonly ILexerGenerator _lexerGenerator;
+    private readonly IParserGenerator _parserGenerator;
 
-    public RecognizerGenerator(ILexerGenerator lexerGenerator)
+    public RecognizerGenerator(
+        ILexerGenerator lexerGenerator,
+        IParserGenerator parserGenerator)
     {
         _lexerGenerator = lexerGenerator;
+        _parserGenerator = parserGenerator;
     }
 
     public void Generate(string inputFile, string outputDirectory)
@@ -23,7 +28,7 @@ public class RecognizerGenerator
 
         var tree = parser.start(); 
         GenerateLexer(tree, outputDirectory + "/Lexer.cs");
-        GenerateParser(tree);
+        GenerateParser(tree, outputDirectory + "/Parser.cs");
     }
 
     private void GenerateLexer(RMALRParser.StartContext tree, string outputFile)
@@ -32,10 +37,11 @@ public class RecognizerGenerator
         File.WriteAllText(outputFile, lexerCode);
     }
 
-    private void GenerateParser(RMALRParser.StartContext tree)
+    private void GenerateParser(RMALRParser.StartContext tree, string outputFile)
     {
         var grammarVisitor = new GrammarVisitor();
         var rules = grammarVisitor.GetAllRules(tree);
-        var first = rules.First().First();
+        var parserCode = _parserGenerator.Generate(rules);
+        File.WriteAllText(outputFile, parserCode);
     }
 }

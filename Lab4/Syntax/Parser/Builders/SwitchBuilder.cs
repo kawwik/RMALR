@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using static Lab4.SyntaxFactory;
 
@@ -8,8 +9,13 @@ public class SwitchBuilder
 {
     private SwitchStatementSyntax _switchStatement;
 
-    public SwitchBuilder(ExpressionSyntax expression)
+    public SwitchBuilder()
     {
+        var expression = MemberAccessExpression(
+            SyntaxKind.SimpleMemberAccessExpression,
+            IdentifierName("CurrentToken"),
+            IdentifierName("Type"));
+        
         _switchStatement = SwitchStatement(expression);
     }
 

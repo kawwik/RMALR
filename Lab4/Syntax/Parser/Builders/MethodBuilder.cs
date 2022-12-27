@@ -18,7 +18,6 @@ public class MethodBuilder
 
     public static MethodBuilder BuildParserMethod(string nodeType, SwitchStatementSyntax switchStatement)
     {
-        var type = ParseTypeName(nodeType + "Node");
         const string resultVariableName = "result";
 
         var method = MethodDeclaration(ParseTypeName(nameof(NonTerminalNode)), $"Read{nodeType}Node")
