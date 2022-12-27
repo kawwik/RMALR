@@ -16,7 +16,7 @@ public class MethodBuilder
 
     private MethodBuilder(MethodDeclarationSyntax methodDeclaration) => _methodDeclaration = methodDeclaration;
 
-    public static MethodBuilder BuildParserMethod(string nodeType, SwitchStatementSyntax switchStatement)
+    public static MethodBuilder BuildParserMethod(string nodeType, SwitchBuilder switchBuilder)
     {
         const string resultVariableName = "result";
 
@@ -27,7 +27,7 @@ public class MethodBuilder
                         resultVariableName,
                         ParseTypeName(nameof(NonTerminalNode)),
                         Argument(StringLiteralExpression(nodeType)))),
-                switchStatement,
+                switchBuilder.GetSwitchStatement(),
                 ReturnStatement(ParseName(resultVariableName))
             )
             .AddModifiers(PublicKeyword());

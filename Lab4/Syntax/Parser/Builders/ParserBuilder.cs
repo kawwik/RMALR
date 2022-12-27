@@ -41,4 +41,6 @@ public class ParserBuilder
     {
         _parserClass = _parserClass.AddMembers(method.GetMethod());
     }
+
+    public override string ToString() => GetCompilationUnit().NormalizeWhitespace().ToString();
 }
