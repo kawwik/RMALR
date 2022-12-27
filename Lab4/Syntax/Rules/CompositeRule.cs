@@ -2,16 +2,16 @@
 
 public class CompositeRule : RuleBase
 {
-    private readonly List<RuleBase> _rules;
-
     public CompositeRule(IReadOnlyCollection<RuleBase> rules)
     {
-        _rules = rules.ToList();
+        Rules = rules;
     }
 
-    public IReadOnlyCollection<RuleBase> Rules => _rules;
+    public IReadOnlyCollection<RuleBase> Rules { get; }
 
-    public void AddRule(RuleBase rule) => _rules.Add(rule);
-
-    public override HashSet<string> First() => _rules.First().First();
+    public override HashSet<string> First()
+    {
+        // TODO: учесть пустые
+        return Rules.First().First();
+    }
 }

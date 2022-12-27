@@ -19,10 +19,10 @@ public class GrammarVisitor : RMALRBaseVisitor<RuleBase>
     {
         var options = context.rule_option()
             .Select(VisitRule_option)
-            .ToList();
-
+            .ToArray();
+        
         var namedRule = GetOrCreateRule(context.RULE_NAME().GetText());
-        namedRule.Options = new OptionsRule(options);
+        namedRule.Options = options;
 
         return namedRule;
     }
