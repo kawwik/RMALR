@@ -10,53 +10,56 @@ using static SyntaxFactory;
 public class SwitchCaseBuilder
 {
     private SwitchSectionSyntax _switchSection;
+    private InvocationExpressionSyntax? _childAddInvocation;
 
     public SwitchCaseBuilder()
     {
         _switchSection = SwitchSection();
+        _childAddInvocation = InvocationExpression(
+            MemberAccessExpression(
+                SyntaxKind.SimpleMemberAccessExpression,
+                IdentifierName("result"),
+                IdentifierName("AddChildren")));
     }
 
-    private SwitchCaseBuilder(SwitchSectionSyntax section)
+    private SwitchCaseBuilder(SwitchSectionSyntax section, InvocationExpressionSyntax? childAddInvocation)
     {
         _switchSection = section;
+        _childAddInvocation = childAddInvocation;
     }
 
     public static SwitchCaseBuilder BuildDefaultCase()
     {
-        return new SwitchCaseBuilder(SwitchSection().AddLabels(DefaultSwitchLabel()));
+        return new SwitchCaseBuilder(SwitchSection().AddLabels(DefaultSwitchLabel()), null);
     }
 
-    public SwitchSectionSyntax GetSection() => _switchSection.AddStatements(BreakStatement());
+    public SwitchSectionSyntax GetSection()
+    {
+        var section = _switchSection;
+        if (_childAddInvocation is not null)
+            section = section.AddStatements(ExpressionStatement(_childAddInvocation));
+
+        return section.AddStatements(BreakStatement());
+    }
 
     public void AddTerminalNodeReading(string terminalType)
     {
-        var nodeCreation = VariableDeclarationWithInvocation(
-            terminalType,
-            "ReadTerminal",
-            Argument(StringLiteralExpression(terminalType)));
+        var invocation = InvocationExpression(IdentifierName("ReadTerminal"))
+            .AddArgumentListArguments(Argument(StringLiteralExpression(terminalType)));
 
-        _switchSection = _switchSection.AddStatements(LocalDeclarationStatement(nodeCreation));
-        AddChildAddingStatement(terminalType);
+        AddChildAdding(invocation);
     }
 
     public void AddNonTerminalNodeReading(string nonTerminalType)
     {
-        var nodeCreation = VariableDeclarationWithInvocation(
-            nonTerminalType,
-            $"Read{nonTerminalType}Node");
+        var invocation = InvocationExpression(IdentifierName($"Read{nonTerminalType}Node"));
 
-        _switchSection = _switchSection.AddStatements(LocalDeclarationStatement(nodeCreation));
-        AddChildAddingStatement(nonTerminalType);
+        AddChildAdding(invocation);
     }
 
-    private void AddChildAddingStatement(string name)
+    private void AddChildAdding(ExpressionSyntax childExpression)
     {
-        var invocation = MemberInvocationStatement(
-            "result",
-            "AddChild",
-            Argument(IdentifierName(name)));
-
-        _switchSection = _switchSection.AddStatements(invocation);
+        _childAddInvocation = _childAddInvocation?.AddArgumentListArguments(Argument(childExpression));
     }
 
     public void AddThrowStatement(string exceptionName, string message)

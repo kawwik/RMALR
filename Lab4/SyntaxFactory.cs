@@ -10,7 +10,9 @@ public static class SyntaxFactory
     public static LiteralExpressionSyntax StringLiteralExpression(string text) =>
         LiteralExpression(SyntaxKind.StringLiteralExpression, Literal(text));
 
-    public static ExpressionStatementSyntax MemberInvocationStatement(string obj, string method,
+    public static ExpressionStatementSyntax MemberInvocationStatement(
+        string obj, 
+        string method,
         params ArgumentSyntax[] arguments)
     {
         return ExpressionStatement(

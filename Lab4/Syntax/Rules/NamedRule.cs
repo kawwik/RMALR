@@ -2,20 +2,23 @@
 
 public class NamedRule : RuleBase
 {
+    private CompositeRule[]? _options;
+
     public NamedRule(string name)
     {
         Name = name;
     }
 
     public string Name { get; }
-    
-    public CompositeRule[]? Options { get; set; }
+
+    public CompositeRule[] Options
+    {
+        get => _options ?? throw new InvalidOperationException("Опции не установлены");
+        set => _options = value;
+    }
 
     public override HashSet<string> First()
     {
-        if (Options is null)
-            throw new InvalidOperationException("Не установлены Option");
-
         // TODO: учесть пустые   
         return Options.First().First();
     }

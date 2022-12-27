@@ -22,19 +22,36 @@ public class ParserGenerator : IParserGenerator
     {
         var switchBuilder = new SwitchBuilder();
 
-        switchBuilder.AddCase(BuildCase());
+        foreach (var option in rule.Options)
+        {
+            switchBuilder.AddCase(BuildCase(option));
+        }
+
         switchBuilder.AddDefaultThrow();
         
         var methodBuilder = MethodBuilder.BuildParserMethod(rule.Name, switchBuilder);
         return methodBuilder;
     }
 
-    private SwitchCaseBuilder BuildCase()
+    private SwitchCaseBuilder BuildCase(CompositeRule option)
     {
         var caseBuilder = new SwitchCaseBuilder();
-        caseBuilder.AddLabels("Some1", "Some2", "Some3");
-        caseBuilder.AddTerminalNodeReading("XorNode");
-        caseBuilder.AddNonTerminalNodeReading("Zhopa");
+        
+        var first = option.First().ToArray();
+        caseBuilder.AddLabels(first);
+
+        foreach (var rule in option.Rules)
+        {
+            switch (rule)
+            {
+                case NamedRule namedRule:
+                    caseBuilder.AddNonTerminalNodeReading(namedRule.Name);
+                    break;
+                case TokenRule tokenRule:
+                    caseBuilder.AddTerminalNodeReading(tokenRule.TokenType);
+                    break;
+            }
+        }
 
         return caseBuilder;
     }

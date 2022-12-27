@@ -11,5 +11,5 @@ public class NonTerminalNode : Node
 
     public string Type { get; }
 
-    public void AddChild(Node node) => _children.Add(node);
+    public void AddChildren(params Node[] nodes) => _children.AddRange(nodes);
 }
