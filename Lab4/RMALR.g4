@@ -1,11 +1,15 @@
 grammar RMALR;
 
-start: ((token | rule) ';' NEWLINE*)* EOF;
+start: ((token | rule_definition) ';' NEWLINE*)* EOF;
 
 // Grammar
-rule: RULE_NAME ':' rule_option ('|' rule_option)*;
+rule_definition: RULE_NAME ':' rule;
+rule: rule_option ('|' rule_option)*;
 rule_option: rule_part+;
-rule_part: RULE_NAME | TOKEN_NAME;
+rule_part
+    : RULE_NAME | TOKEN_NAME 
+    | '(' rule ')'
+    | rule_part ('?' | '+' | '*');
 
 // Lexis
 token: TOKEN_NAME ':' patterns ('->' lexer_rule)?;
