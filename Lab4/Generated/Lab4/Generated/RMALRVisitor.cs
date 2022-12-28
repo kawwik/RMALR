@@ -39,11 +39,17 @@ public interface IRMALRVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitStart([NotNull] RMALRParser.StartContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="RMALRParser.rule"/>.
+	/// Visit a parse tree produced by <see cref="RMALRParser.rule_definition"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitRule([NotNull] RMALRParser.RuleContext context);
+	Result VisitRule_definition([NotNull] RMALRParser.Rule_definitionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="RMALRParser.rule_body"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitRule_body([NotNull] RMALRParser.Rule_bodyContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="RMALRParser.rule_option"/>.
 	/// </summary>

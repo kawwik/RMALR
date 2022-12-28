@@ -37,22 +37,26 @@ public partial class RMALRParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		T__0=1, T__1=2, T__2=3, T__3=4, RULE_NAME=5, TOKEN_NAME=6, REGEXP=7, QUOTE=8, 
-		SKIP_RULE=9, WHITESPACES=10, NEWLINE=11;
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, RULE_NAME=7, TOKEN_NAME=8, 
+		REGEXP=9, QUESTION_MARK=10, PLUS=11, MULTIPLY=12, QUOTE=13, SKIP_RULE=14, 
+		WHITESPACES=15, NEWLINE=16;
 	public const int
-		RULE_start = 0, RULE_rule = 1, RULE_rule_option = 2, RULE_rule_part = 3, 
-		RULE_token = 4, RULE_patterns = 5, RULE_pattern = 6, RULE_lexer_rule = 7;
+		RULE_start = 0, RULE_rule_definition = 1, RULE_rule_body = 2, RULE_rule_option = 3, 
+		RULE_rule_part = 4, RULE_token = 5, RULE_patterns = 6, RULE_pattern = 7, 
+		RULE_lexer_rule = 8;
 	public static readonly string[] ruleNames = {
-		"start", "rule", "rule_option", "rule_part", "token", "patterns", "pattern", 
-		"lexer_rule"
+		"start", "rule_definition", "rule_body", "rule_option", "rule_part", "token", 
+		"patterns", "pattern", "lexer_rule"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "';'", "':'", "'|'", "'->'", null, null, null, "'\"'", "'@skip'"
+		null, "';'", "':'", "'|'", "'('", "')'", "'->'", null, null, null, "'?'", 
+		"'+'", "'*'", "'\"'", "'@skip'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, null, null, null, null, "RULE_NAME", "TOKEN_NAME", "REGEXP", "QUOTE", 
-		"SKIP_RULE", "WHITESPACES", "NEWLINE"
+		null, null, null, null, null, null, null, "RULE_NAME", "TOKEN_NAME", "REGEXP", 
+		"QUESTION_MARK", "PLUS", "MULTIPLY", "QUOTE", "SKIP_RULE", "WHITESPACES", 
+		"NEWLINE"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -94,11 +98,11 @@ public partial class RMALRParser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public TokenContext token(int i) {
 			return GetRuleContext<TokenContext>(i);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public RuleContext[] rule() {
-			return GetRuleContexts<RuleContext>();
+		[System.Diagnostics.DebuggerNonUserCode] public Rule_definitionContext[] rule_definition() {
+			return GetRuleContexts<Rule_definitionContext>();
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public RuleContext rule(int i) {
-			return GetRuleContext<RuleContext>(i);
+		[System.Diagnostics.DebuggerNonUserCode] public Rule_definitionContext rule_definition(int i) {
+			return GetRuleContext<Rule_definitionContext>(i);
 		}
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] NEWLINE() { return GetTokens(RMALRParser.NEWLINE); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NEWLINE(int i) {
@@ -125,53 +129,53 @@ public partial class RMALRParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 29;
+			State = 31;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==RULE_NAME || _la==TOKEN_NAME) {
 				{
 				{
-				State = 18;
+				State = 20;
 				ErrorHandler.Sync(this);
 				switch (TokenStream.LA(1)) {
 				case TOKEN_NAME:
 					{
-					State = 16;
+					State = 18;
 					token();
 					}
 					break;
 				case RULE_NAME:
 					{
-					State = 17;
-					rule();
+					State = 19;
+					rule_definition();
 					}
 					break;
 				default:
 					throw new NoViableAltException(this);
 				}
-				State = 20;
+				State = 22;
 				Match(T__0);
-				State = 24;
+				State = 26;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				while (_la==NEWLINE) {
 					{
 					{
-					State = 21;
+					State = 23;
 					Match(NEWLINE);
 					}
 					}
-					State = 26;
+					State = 28;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
 				}
 				}
 				}
-				State = 31;
+				State = 33;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 32;
+			State = 34;
 			Match(Eof);
 			}
 		}
@@ -186,54 +190,93 @@ public partial class RMALRParser : Parser {
 		return _localctx;
 	}
 
-	public partial class RuleContext : ParserRuleContext {
+	public partial class Rule_definitionContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode RULE_NAME() { return GetToken(RMALRParser.RULE_NAME, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Rule_bodyContext rule_body() {
+			return GetRuleContext<Rule_bodyContext>(0);
+		}
+		public Rule_definitionContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_rule_definition; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IRMALRVisitor<TResult> typedVisitor = visitor as IRMALRVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitRule_definition(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Rule_definitionContext rule_definition() {
+		Rule_definitionContext _localctx = new Rule_definitionContext(Context, State);
+		EnterRule(_localctx, 2, RULE_rule_definition);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 36;
+			Match(RULE_NAME);
+			State = 37;
+			Match(T__1);
+			State = 38;
+			rule_body();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class Rule_bodyContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public Rule_optionContext[] rule_option() {
 			return GetRuleContexts<Rule_optionContext>();
 		}
 		[System.Diagnostics.DebuggerNonUserCode] public Rule_optionContext rule_option(int i) {
 			return GetRuleContext<Rule_optionContext>(i);
 		}
-		public RuleContext(ParserRuleContext parent, int invokingState)
+		public Rule_bodyContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_rule; } }
+		public override int RuleIndex { get { return RULE_rule_body; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IRMALRVisitor<TResult> typedVisitor = visitor as IRMALRVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitRule(this);
+			if (typedVisitor != null) return typedVisitor.VisitRule_body(this);
 			else return visitor.VisitChildren(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public RuleContext rule() {
-		RuleContext _localctx = new RuleContext(Context, State);
-		EnterRule(_localctx, 2, RULE_rule);
+	public Rule_bodyContext rule_body() {
+		Rule_bodyContext _localctx = new Rule_bodyContext(Context, State);
+		EnterRule(_localctx, 4, RULE_rule_body);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 34;
-			Match(RULE_NAME);
-			State = 35;
-			Match(T__1);
-			State = 36;
+			State = 40;
 			rule_option();
-			State = 41;
+			State = 45;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==T__2) {
 				{
 				{
-				State = 37;
+				State = 41;
 				Match(T__2);
-				State = 38;
+				State = 42;
 				rule_option();
 				}
 				}
-				State = 43;
+				State = 47;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -273,25 +316,25 @@ public partial class RMALRParser : Parser {
 	[RuleVersion(0)]
 	public Rule_optionContext rule_option() {
 		Rule_optionContext _localctx = new Rule_optionContext(Context, State);
-		EnterRule(_localctx, 4, RULE_rule_option);
+		EnterRule(_localctx, 6, RULE_rule_option);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 45;
+			State = 49;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 44;
-				rule_part();
+				State = 48;
+				rule_part(0);
 				}
 				}
-				State = 47;
+				State = 51;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
-			} while ( _la==RULE_NAME || _la==TOKEN_NAME );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__3) | (1L << RULE_NAME) | (1L << TOKEN_NAME))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -308,6 +351,15 @@ public partial class RMALRParser : Parser {
 	public partial class Rule_partContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode RULE_NAME() { return GetToken(RMALRParser.RULE_NAME, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOKEN_NAME() { return GetToken(RMALRParser.TOKEN_NAME, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Rule_bodyContext rule_body() {
+			return GetRuleContext<Rule_bodyContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public Rule_partContext rule_part() {
+			return GetRuleContext<Rule_partContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode QUESTION_MARK() { return GetToken(RMALRParser.QUESTION_MARK, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode PLUS() { return GetToken(RMALRParser.PLUS, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode MULTIPLY() { return GetToken(RMALRParser.MULTIPLY, 0); }
 		public Rule_partContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -323,20 +375,79 @@ public partial class RMALRParser : Parser {
 
 	[RuleVersion(0)]
 	public Rule_partContext rule_part() {
-		Rule_partContext _localctx = new Rule_partContext(Context, State);
-		EnterRule(_localctx, 6, RULE_rule_part);
+		return rule_part(0);
+	}
+
+	private Rule_partContext rule_part(int _p) {
+		ParserRuleContext _parentctx = Context;
+		int _parentState = State;
+		Rule_partContext _localctx = new Rule_partContext(Context, _parentState);
+		Rule_partContext _prevctx = _localctx;
+		int _startState = 8;
+		EnterRecursionRule(_localctx, 8, RULE_rule_part, _p);
 		int _la;
 		try {
+			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 49;
-			_la = TokenStream.LA(1);
-			if ( !(_la==RULE_NAME || _la==TOKEN_NAME) ) {
-			ErrorHandler.RecoverInline(this);
+			State = 60;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case RULE_NAME:
+				{
+				State = 54;
+				Match(RULE_NAME);
+				}
+				break;
+			case TOKEN_NAME:
+				{
+				State = 55;
+				Match(TOKEN_NAME);
+				}
+				break;
+			case T__3:
+				{
+				State = 56;
+				Match(T__3);
+				State = 57;
+				rule_body();
+				State = 58;
+				Match(T__4);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
 			}
-			else {
-				ErrorHandler.ReportMatch(this);
-			    Consume();
+			Context.Stop = TokenStream.LT(-1);
+			State = 66;
+			ErrorHandler.Sync(this);
+			_alt = Interpreter.AdaptivePredict(TokenStream,6,Context);
+			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					if ( ParseListeners!=null )
+						TriggerExitRuleEvent();
+					_prevctx = _localctx;
+					{
+					{
+					_localctx = new Rule_partContext(_parentctx, _parentState);
+					PushNewRecursionContext(_localctx, _startState, RULE_rule_part);
+					State = 62;
+					if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
+					State = 63;
+					_la = TokenStream.LA(1);
+					if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << QUESTION_MARK) | (1L << PLUS) | (1L << MULTIPLY))) != 0)) ) {
+					ErrorHandler.RecoverInline(this);
+					}
+					else {
+						ErrorHandler.ReportMatch(this);
+					    Consume();
+					}
+					}
+					} 
+				}
+				State = 68;
+				ErrorHandler.Sync(this);
+				_alt = Interpreter.AdaptivePredict(TokenStream,6,Context);
 			}
 			}
 		}
@@ -346,7 +457,7 @@ public partial class RMALRParser : Parser {
 			ErrorHandler.Recover(this, re);
 		}
 		finally {
-			ExitRule();
+			UnrollRecursionContexts(_parentctx);
 		}
 		return _localctx;
 	}
@@ -375,25 +486,25 @@ public partial class RMALRParser : Parser {
 	[RuleVersion(0)]
 	public TokenContext token() {
 		TokenContext _localctx = new TokenContext(Context, State);
-		EnterRule(_localctx, 8, RULE_token);
+		EnterRule(_localctx, 10, RULE_token);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 51;
+			State = 69;
 			Match(TOKEN_NAME);
-			State = 52;
+			State = 70;
 			Match(T__1);
-			State = 53;
+			State = 71;
 			patterns();
-			State = 56;
+			State = 74;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			if (_la==T__3) {
+			if (_la==T__5) {
 				{
-				State = 54;
-				Match(T__3);
-				State = 55;
+				State = 72;
+				Match(T__5);
+				State = 73;
 				lexer_rule();
 				}
 			}
@@ -434,22 +545,22 @@ public partial class RMALRParser : Parser {
 	[RuleVersion(0)]
 	public PatternsContext patterns() {
 		PatternsContext _localctx = new PatternsContext(Context, State);
-		EnterRule(_localctx, 10, RULE_patterns);
+		EnterRule(_localctx, 12, RULE_patterns);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 59;
+			State = 77;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 58;
+				State = 76;
 				pattern();
 				}
 				}
-				State = 61;
+				State = 79;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			} while ( _la==TOKEN_NAME || _la==REGEXP );
@@ -485,12 +596,12 @@ public partial class RMALRParser : Parser {
 	[RuleVersion(0)]
 	public PatternContext pattern() {
 		PatternContext _localctx = new PatternContext(Context, State);
-		EnterRule(_localctx, 12, RULE_pattern);
+		EnterRule(_localctx, 14, RULE_pattern);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 63;
+			State = 81;
 			_la = TokenStream.LA(1);
 			if ( !(_la==TOKEN_NAME || _la==REGEXP) ) {
 			ErrorHandler.RecoverInline(this);
@@ -530,11 +641,11 @@ public partial class RMALRParser : Parser {
 	[RuleVersion(0)]
 	public Lexer_ruleContext lexer_rule() {
 		Lexer_ruleContext _localctx = new Lexer_ruleContext(Context, State);
-		EnterRule(_localctx, 14, RULE_lexer_rule);
+		EnterRule(_localctx, 16, RULE_lexer_rule);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 65;
+			State = 83;
 			Match(SKIP_RULE);
 			}
 		}
@@ -549,26 +660,44 @@ public partial class RMALRParser : Parser {
 		return _localctx;
 	}
 
+	public override bool Sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
+		switch (ruleIndex) {
+		case 4: return rule_part_sempred((Rule_partContext)_localctx, predIndex);
+		}
+		return true;
+	}
+	private bool rule_part_sempred(Rule_partContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 0: return Precpred(Context, 1);
+		}
+		return true;
+	}
+
 	private static int[] _serializedATN = {
-		4,1,11,68,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
-		7,7,1,0,1,0,3,0,19,8,0,1,0,1,0,5,0,23,8,0,10,0,12,0,26,9,0,5,0,28,8,0,
-		10,0,12,0,31,9,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,5,1,40,8,1,10,1,12,1,43,9,
-		1,1,2,4,2,46,8,2,11,2,12,2,47,1,3,1,3,1,4,1,4,1,4,1,4,1,4,3,4,57,8,4,1,
-		5,4,5,60,8,5,11,5,12,5,61,1,6,1,6,1,7,1,7,1,7,0,0,8,0,2,4,6,8,10,12,14,
-		0,2,1,0,5,6,1,0,6,7,66,0,29,1,0,0,0,2,34,1,0,0,0,4,45,1,0,0,0,6,49,1,0,
-		0,0,8,51,1,0,0,0,10,59,1,0,0,0,12,63,1,0,0,0,14,65,1,0,0,0,16,19,3,8,4,
-		0,17,19,3,2,1,0,18,16,1,0,0,0,18,17,1,0,0,0,19,20,1,0,0,0,20,24,5,1,0,
-		0,21,23,5,11,0,0,22,21,1,0,0,0,23,26,1,0,0,0,24,22,1,0,0,0,24,25,1,0,0,
-		0,25,28,1,0,0,0,26,24,1,0,0,0,27,18,1,0,0,0,28,31,1,0,0,0,29,27,1,0,0,
-		0,29,30,1,0,0,0,30,32,1,0,0,0,31,29,1,0,0,0,32,33,5,0,0,1,33,1,1,0,0,0,
-		34,35,5,5,0,0,35,36,5,2,0,0,36,41,3,4,2,0,37,38,5,3,0,0,38,40,3,4,2,0,
-		39,37,1,0,0,0,40,43,1,0,0,0,41,39,1,0,0,0,41,42,1,0,0,0,42,3,1,0,0,0,43,
-		41,1,0,0,0,44,46,3,6,3,0,45,44,1,0,0,0,46,47,1,0,0,0,47,45,1,0,0,0,47,
-		48,1,0,0,0,48,5,1,0,0,0,49,50,7,0,0,0,50,7,1,0,0,0,51,52,5,6,0,0,52,53,
-		5,2,0,0,53,56,3,10,5,0,54,55,5,4,0,0,55,57,3,14,7,0,56,54,1,0,0,0,56,57,
-		1,0,0,0,57,9,1,0,0,0,58,60,3,12,6,0,59,58,1,0,0,0,60,61,1,0,0,0,61,59,
-		1,0,0,0,61,62,1,0,0,0,62,11,1,0,0,0,63,64,7,1,0,0,64,13,1,0,0,0,65,66,
-		5,9,0,0,66,15,1,0,0,0,7,18,24,29,41,47,56,61
+		4,1,16,86,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		7,7,2,8,7,8,1,0,1,0,3,0,21,8,0,1,0,1,0,5,0,25,8,0,10,0,12,0,28,9,0,5,0,
+		30,8,0,10,0,12,0,33,9,0,1,0,1,0,1,1,1,1,1,1,1,1,1,2,1,2,1,2,5,2,44,8,2,
+		10,2,12,2,47,9,2,1,3,4,3,50,8,3,11,3,12,3,51,1,4,1,4,1,4,1,4,1,4,1,4,1,
+		4,3,4,61,8,4,1,4,1,4,5,4,65,8,4,10,4,12,4,68,9,4,1,5,1,5,1,5,1,5,1,5,3,
+		5,75,8,5,1,6,4,6,78,8,6,11,6,12,6,79,1,7,1,7,1,8,1,8,1,8,0,1,8,9,0,2,4,
+		6,8,10,12,14,16,0,2,1,0,10,12,1,0,8,9,86,0,31,1,0,0,0,2,36,1,0,0,0,4,40,
+		1,0,0,0,6,49,1,0,0,0,8,60,1,0,0,0,10,69,1,0,0,0,12,77,1,0,0,0,14,81,1,
+		0,0,0,16,83,1,0,0,0,18,21,3,10,5,0,19,21,3,2,1,0,20,18,1,0,0,0,20,19,1,
+		0,0,0,21,22,1,0,0,0,22,26,5,1,0,0,23,25,5,16,0,0,24,23,1,0,0,0,25,28,1,
+		0,0,0,26,24,1,0,0,0,26,27,1,0,0,0,27,30,1,0,0,0,28,26,1,0,0,0,29,20,1,
+		0,0,0,30,33,1,0,0,0,31,29,1,0,0,0,31,32,1,0,0,0,32,34,1,0,0,0,33,31,1,
+		0,0,0,34,35,5,0,0,1,35,1,1,0,0,0,36,37,5,7,0,0,37,38,5,2,0,0,38,39,3,4,
+		2,0,39,3,1,0,0,0,40,45,3,6,3,0,41,42,5,3,0,0,42,44,3,6,3,0,43,41,1,0,0,
+		0,44,47,1,0,0,0,45,43,1,0,0,0,45,46,1,0,0,0,46,5,1,0,0,0,47,45,1,0,0,0,
+		48,50,3,8,4,0,49,48,1,0,0,0,50,51,1,0,0,0,51,49,1,0,0,0,51,52,1,0,0,0,
+		52,7,1,0,0,0,53,54,6,4,-1,0,54,61,5,7,0,0,55,61,5,8,0,0,56,57,5,4,0,0,
+		57,58,3,4,2,0,58,59,5,5,0,0,59,61,1,0,0,0,60,53,1,0,0,0,60,55,1,0,0,0,
+		60,56,1,0,0,0,61,66,1,0,0,0,62,63,10,1,0,0,63,65,7,0,0,0,64,62,1,0,0,0,
+		65,68,1,0,0,0,66,64,1,0,0,0,66,67,1,0,0,0,67,9,1,0,0,0,68,66,1,0,0,0,69,
+		70,5,8,0,0,70,71,5,2,0,0,71,74,3,12,6,0,72,73,5,6,0,0,73,75,3,16,8,0,74,
+		72,1,0,0,0,74,75,1,0,0,0,75,11,1,0,0,0,76,78,3,14,7,0,77,76,1,0,0,0,78,
+		79,1,0,0,0,79,77,1,0,0,0,79,80,1,0,0,0,80,13,1,0,0,0,81,82,7,1,0,0,82,
+		15,1,0,0,0,83,84,5,14,0,0,84,17,1,0,0,0,9,20,26,31,45,51,60,66,74,79
 	};
 
 	public static readonly ATN _ATN =
