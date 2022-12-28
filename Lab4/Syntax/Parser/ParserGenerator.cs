@@ -55,6 +55,8 @@ public class ParserGenerator : IParserGenerator
                 case TokenRule tokenRule:
                     caseBuilder.AddTerminalNodeReading(tokenRule.TokenType);
                     break;
+                default:
+                    throw new NotImplementedException($"Тип правила {rule.GetType().Name} не поддерживается");
             }
         }
 

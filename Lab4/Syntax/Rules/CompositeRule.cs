@@ -1,13 +1,13 @@
 ﻿namespace Lab4.Syntax.Rules;
 
-public class CompositeRule : RuleBase
+public class CompositeRule : UnnamedRule
 {
-    public CompositeRule(IReadOnlyCollection<RuleBase> rules)
+    public CompositeRule(IReadOnlyCollection<Rule> rules)
     {
         Rules = rules;
     }
 
-    public IReadOnlyCollection<RuleBase> Rules { get; }
+    public IReadOnlyCollection<Rule> Rules { get; }
 
     public override HashSet<string> First()
     {

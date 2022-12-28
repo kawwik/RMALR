@@ -1,6 +1,6 @@
 ﻿namespace Lab4.Syntax.Rules;
 
-public class NamedRule : RuleBase
+public class NamedRule : OptionsRule
 {
     private CompositeRule[]? _options;
 

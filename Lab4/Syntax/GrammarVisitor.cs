@@ -1,9 +1,10 @@
 ﻿using Lab4.Generated;
+using Lab4.Lexis.Tokens;
 using Lab4.Syntax.Rules;
 
 namespace Lab4.Syntax;
 
-public class GrammarVisitor : RMALRBaseVisitor<RuleBase>
+public class GrammarVisitor : RMALRBaseVisitor<Rule>
 {
     private readonly Dictionary<string, NamedRule?> _nameToRuleMapper = new();
 
@@ -32,7 +33,7 @@ public class GrammarVisitor : RMALRBaseVisitor<RuleBase>
         return new CompositeRule(parts);
     }
 
-    public override RuleBase VisitRule_part(RMALRParser.Rule_partContext context)
+    public override Rule VisitRule_part(RMALRParser.Rule_partContext context)
     {
         if (context.TOKEN_NAME() is not null)
             return new TokenRule(context.TOKEN_NAME().GetText());
@@ -43,6 +44,11 @@ public class GrammarVisitor : RMALRBaseVisitor<RuleBase>
         if (context.rule_body() is not null)
             return new CompositeRule(VisitRuleBody(context.rule_body()));
 
+        if (context.QUESTION_MARK() is not null)
+            return new OptionsRule(
+                VisitRule_part(context.rule_part()),
+                new TokenRule(EmptyToken.TokenType));
+        
         throw new NotImplementedException("Знаки ?, *, + не реализованы");
     }
 

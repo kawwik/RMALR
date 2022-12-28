@@ -1,6 +1,6 @@
 ﻿namespace Lab4.Syntax.Rules;
 
-public class TokenRule : RuleBase
+public class TokenRule : UnnamedRule
 {
     public TokenRule(string tokenType)
     {

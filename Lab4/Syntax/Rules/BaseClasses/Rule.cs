@@ -1,6 +1,6 @@
 ﻿namespace Lab4.Syntax.Rules;
 
-public abstract class RuleBase
+public abstract class Rule
 {
     /// <summary>
     /// Вычисляет множество FIRST для правила
