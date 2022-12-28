@@ -5,10 +5,10 @@ namespace Lab4.Lexis;
 
 public class LexerGenerator : ILexerGenerator
 {
-    public string Generate(RMALRParser.StartContext tree)
+    public string Generate(RMALRParser.StartContext tree, string grammarName)
     {
         var lexisVisitor = new LexisVisitor();
-        var result = lexisVisitor.Visit(tree);
+        var result = lexisVisitor.ParseLexer(tree, $"{grammarName}Parser");
 
         return result.NormalizeWhitespace().ToString();
     }

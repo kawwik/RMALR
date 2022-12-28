@@ -8,6 +8,6 @@ var parserGenerator = new ParserGenerator();
 var recognizerGenerator = new RecognizerGenerator(lexerGenerator, parserGenerator);
 
 recognizerGenerator.Generate(
-    @"C:\Users\79148\RiderProjects\Lab4\Lab4\input.rma",
+    @"C:\Users\79148\RiderProjects\Lab4\Lab4\lab2.rma",
     @"C:\Users\79148\RiderProjects\Lab4\Lab4\GeneratedExample",
-    "Example");
+    "Lab2");

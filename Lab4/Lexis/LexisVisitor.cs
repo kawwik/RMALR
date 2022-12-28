@@ -8,10 +8,8 @@ namespace Lab4.Lexis;
 
 public class LexisVisitor : RMALRBaseVisitor<SyntaxNode>
 {
-    public override SyntaxNode VisitStart(RMALRParser.StartContext context)
+    public SyntaxNode ParseLexer(RMALRParser.StartContext startContext, string parserName)
     {
-        var tokenNames = context.token().Select(x => x.TOKEN_NAME().Symbol.Text).ToArray();
-
         var compilationUnit = CompilationUnit()
             .AddUsings(
                 UsingDirective(ParseName("Lab4.Lexis.Lexers")),
@@ -20,6 +18,24 @@ public class LexisVisitor : RMALRBaseVisitor<SyntaxNode>
             .AddMembers(
                 FileScopedNamespaceDeclaration(ParseName("Lab4.Lexis.Examples"))
             );
+
+        var constructorBody = VisitStart(startContext);
+        var lexerConstructor = ConstructorDeclaration(parserName)
+            .WithBody(constructorBody)
+            .AddModifiers(PublicKeyword());
+
+        var lexerClass = ClassDeclaration(parserName)
+            .AddBaseListTypes(SimpleBaseType(ParseName("TokenizerBase")))
+            .AddMembers(lexerConstructor)
+            .AddModifiers(PublicKeyword());
+        
+        
+        return compilationUnit.AddMembers(lexerClass);
+    }
+    
+    public override BlockSyntax VisitStart(RMALRParser.StartContext context)
+    {
+        var tokenNames = context.token().Select(x => x.TOKEN_NAME().Symbol.Text).ToArray();
 
         var matcherDeclarations =
             context.token().Select(VisitToken)
@@ -33,17 +49,9 @@ public class LexisVisitor : RMALRBaseVisitor<SyntaxNode>
             .Cast<StatementSyntax>()
             .ToArray();
 
-        var lexerConstructor = ConstructorDeclaration("ExampleTokenizer")
-            .AddBodyStatements(matcherDeclarations)
-            .AddBodyStatements(addMatcherStatements)
-            .AddModifiers(PublicKeyword());
+        var constructorBody = Block(matcherDeclarations.Concat(addMatcherStatements));
 
-        var lexerClass = ClassDeclaration("ExampleTokenizer")
-            .AddBaseListTypes(SimpleBaseType(ParseName("TokenizerBase")))
-            .AddMembers(lexerConstructor)
-            .AddModifiers(PublicKeyword());
-
-        return compilationUnit.AddMembers(lexerClass);
+        return constructorBody;
     }
 
     public override SyntaxNode VisitToken(RMALRParser.TokenContext context)

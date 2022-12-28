@@ -26,13 +26,13 @@ public class RecognizerGenerator
         var parser = new RMALRParser(new CommonTokenStream(lexer));
 
         var tree = parser.start(); 
-        GenerateLexer(tree, outputDirectory + $"/{grammarName}Lexer.cs");
+        GenerateLexer(tree, outputDirectory + $"/{grammarName}Lexer.cs", grammarName);
         GenerateParser(tree, outputDirectory + $"/{grammarName}Parser.cs", grammarName);
     }
 
-    private void GenerateLexer(RMALRParser.StartContext tree, string outputFile)
+    private void GenerateLexer(RMALRParser.StartContext tree, string outputFile, string grammarName)
     {
-        var lexerCode = _lexerGenerator.Generate(tree);
+        var lexerCode = _lexerGenerator.Generate(tree, grammarName);
         File.WriteAllText(outputFile, lexerCode);
     }
 

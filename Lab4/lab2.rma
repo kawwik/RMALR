@@ -1,0 +1,10 @@
+AND: "and";
+OR: "or";
+XOR: "xor";
+NOT: "not";
+LEFT_PAR: "(";
+RIGHT_PAR: ")";
+VARIABLE: "[a-z]";
+
+SPACES: " +" -> @skip;
+
