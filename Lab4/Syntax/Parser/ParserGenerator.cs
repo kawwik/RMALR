@@ -12,7 +12,7 @@ public class ParserGenerator : IParserGenerator
     {
         var grammarVisitor = new GrammarVisitor();
         var rules = grammarVisitor.GetAllRules(tree);
-        
+
         var parserBuilder = new ParserBuilder(grammarName);
 
         foreach (var rule in rules)
@@ -25,6 +25,14 @@ public class ParserGenerator : IParserGenerator
 
     private MethodBuilder BuildRuleReadingMethod(NamedRule rule)
     {
+        var switchBuilder = BuildSwitch(rule);
+
+        var methodBuilder = MethodBuilder.BuildParserMethod(rule.Name.Capitalize(), switchBuilder);
+        return methodBuilder;
+    }
+
+    private SwitchBuilder BuildSwitch(NamedRule rule)
+    {
         var switchBuilder = new SwitchBuilder();
 
         foreach (var option in rule.Options)
@@ -33,15 +41,13 @@ public class ParserGenerator : IParserGenerator
         }
 
         switchBuilder.AddDefaultThrow();
-        
-        var methodBuilder = MethodBuilder.BuildParserMethod(rule.Name.Capitalize(), switchBuilder);
-        return methodBuilder;
+        return switchBuilder;
     }
 
     private SwitchCaseBuilder BuildCase(CompositeRule option)
     {
         var caseBuilder = new SwitchCaseBuilder();
-        
+
         var first = option.First().ToArray();
         caseBuilder.AddLabels(first);
 
@@ -55,11 +61,21 @@ public class ParserGenerator : IParserGenerator
                 case TokenRule tokenRule:
                     caseBuilder.AddTerminalNodeReading(tokenRule.TokenType);
                     break;
+                case CompositeRule compositeRule:
+                    var switchBuilder = new SwitchBuilder();
+                    switchBuilder.AddCase(BuildCase(compositeRule));
+                    switchBuilder.AddDefaultThrow();
+                    caseBuilder.AddStatement(switchBuilder.GetSwitchStatement());
+                    break;
+                case OptionsRule optionsRule:
+                    
+                    break;
                 default:
                     throw new NotImplementedException($"Тип правила {rule.GetType().Name} не поддерживается");
             }
         }
 
+        caseBuilder.PopChildAddingStatement();
         return caseBuilder;
     }
 }

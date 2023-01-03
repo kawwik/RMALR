@@ -42,7 +42,13 @@ public class GrammarVisitor : RMALRBaseVisitor<Rule>
             return GetOrCreateRule(context.RULE_NAME().GetText());
 
         if (context.rule_body() is not null)
-            return new CompositeRule(VisitRuleBody(context.rule_body()));
+        {
+            var bodyRules = VisitRuleBody(context.rule_body());
+            if (bodyRules.Length == 1)
+                return bodyRules.First();
+            
+            return new CompositeRule(bodyRules);
+        }
 
         if (context.QUESTION_MARK() is not null)
             return new OptionsRule(

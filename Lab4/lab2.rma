@@ -1,3 +1,5 @@
+kek: (OR (AND) ZHOPA);
+
 AND: "and";
 OR: "or";
 XOR: "xor";

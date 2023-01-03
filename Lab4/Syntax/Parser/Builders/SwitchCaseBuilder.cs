@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Lab4.Syntax.Parser.Builders;
@@ -14,11 +15,7 @@ public class SwitchCaseBuilder
     public SwitchCaseBuilder()
     {
         _switchSection = SwitchSection();
-        _childAddInvocation = InvocationExpression(
-            MemberAccessExpression(
-                SyntaxKind.SimpleMemberAccessExpression,
-                IdentifierName("result"),
-                IdentifierName("AddChildren")));
+        _childAddInvocation = BuildChildAddingInvocation();
     }
 
     private SwitchCaseBuilder(SwitchSectionSyntax section, InvocationExpressionSyntax? childAddInvocation)
@@ -32,33 +29,51 @@ public class SwitchCaseBuilder
         return new SwitchCaseBuilder(SwitchSection().AddLabels(DefaultSwitchLabel()), null);
     }
 
-    public SwitchSectionSyntax GetSection()
-    {
-        var section = _switchSection;
-        if (_childAddInvocation is not null)
-            section = section.AddStatements(ExpressionStatement(_childAddInvocation));
-
-        return section.AddStatements(BreakStatement());
-    }
+    public SwitchSectionSyntax GetSection() => _switchSection.AddStatements(BreakStatement());
 
     public void AddTerminalNodeReading(string terminalType)
     {
         var invocation = InvocationExpression(IdentifierName("ReadTerminal"))
             .AddArgumentListArguments(Argument(StringLiteralExpression(terminalType)));
 
-        AddChildAdding(invocation);
+        PushChildAdding(invocation);
     }
 
     public void AddNonTerminalNodeReading(string nonTerminalType)
     {
         var invocation = InvocationExpression(IdentifierName($"Read{nonTerminalType}Node"));
 
-        AddChildAdding(invocation);
+        PushChildAdding(invocation);
     }
 
-    private void AddChildAdding(ExpressionSyntax childExpression)
+    public void AddStatement(StatementSyntax statement)
     {
-        _childAddInvocation = _childAddInvocation?.AddArgumentListArguments(Argument(childExpression));
+        PopChildAddingStatement();
+        
+        _switchSection = _switchSection.AddStatements(statement);
+    }
+
+    private void PushChildAdding(ExpressionSyntax childExpression)
+    {
+        _childAddInvocation ??= BuildChildAddingInvocation();
+        _childAddInvocation = _childAddInvocation.AddArgumentListArguments(Argument(childExpression));
+    }
+
+    private static InvocationExpressionSyntax BuildChildAddingInvocation()
+    {
+        return InvocationExpression(
+            MemberAccessExpression(
+                SyntaxKind.SimpleMemberAccessExpression,
+                IdentifierName("result"),
+                IdentifierName("AddChildren")));
+    }
+
+    public void PopChildAddingStatement()
+    {
+        if (_childAddInvocation is not null && _childAddInvocation.ArgumentList.Arguments.Any())
+            _switchSection = _switchSection.AddStatements(ExpressionStatement(_childAddInvocation));
+
+        _childAddInvocation = null;
     }
 
     public void AddThrowStatement(string exceptionName, string message)
@@ -67,7 +82,7 @@ public class SwitchCaseBuilder
             ObjectCreationExpression(ParseTypeName(exceptionName))
                 .AddArgumentListArguments(Argument(StringLiteralExpression(message))));
 
-        _switchSection = _switchSection.AddStatements(throwStatement);
+        AddStatement(throwStatement);
     }
 
     public void AddLabels(params string[] labels)
