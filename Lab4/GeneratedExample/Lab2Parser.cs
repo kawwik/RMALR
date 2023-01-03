@@ -8,49 +8,30 @@ public class Lab2Parser : ParserBase
     {
     }
 
-    public NonTerminalNode ReadLolNode()
+    public NonTerminalNode ReadANode()
     {
-        var result = new NonTerminalNode("Lol");
+        var result = new NonTerminalNode("A");
         switch (CurrentToken.Type)
         {
-            case "OR":
-                result.AddChildren(ReadKekNode());
-                break;
-            default:
-                throw new InvalidOperationException("Неожиданный токен");
-                break;
-        }
-
-        return result;
-    }
-
-    public NonTerminalNode ReadKekNode()
-    {
-        var result = new NonTerminalNode("Kek");
-        switch (CurrentToken.Type)
-        {
-            case "OR":
+            case "VARIABLE":
+                result.AddChildren(ReadTerminal("VARIABLE"));
                 switch (CurrentToken.Type)
                 {
-                    case "OR":
-                        result.AddChildren(ReadTerminal("OR"));
+                    case "AND":
                         switch (CurrentToken.Type)
                         {
                             case "AND":
-                                result.AddChildren(ReadTerminal("AND"));
+                                result.AddChildren(ReadTerminal("AND"), ReadTerminal("NOT"));
                                 break;
                             default:
                                 throw new InvalidOperationException("Неожиданный токен");
                                 break;
                         }
 
-                        result.AddChildren(ReadTerminal("XOR"));
-                        break;
-                    default:
-                        throw new InvalidOperationException("Неожиданный токен");
                         break;
                 }
 
+                result.AddChildren(ReadTerminal("VARIABLE"));
                 break;
             default:
                 throw new InvalidOperationException("Неожиданный токен");

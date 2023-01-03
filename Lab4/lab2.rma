@@ -1,4 +1,4 @@
-lol: OR?;
+a: VARIABLE (AND NOT)? VARIABLE;
 
 AND: "and";
 OR: "or";

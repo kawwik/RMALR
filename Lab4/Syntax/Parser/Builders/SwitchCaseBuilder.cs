@@ -92,6 +92,9 @@ public class SwitchCaseBuilder
             .Select(ConstantPattern)
             .ToList();
 
+        if (constPatterns.Count == 0)
+            throw new ArgumentException("Пустая коллекция лейблов");
+
         if (constPatterns.Count == 1)
         {
             var label = CasePatternSwitchLabel(constPatterns.Single(), Token(SyntaxKind.ColonToken));
