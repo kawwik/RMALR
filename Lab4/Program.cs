@@ -1,4 +1,5 @@
 ﻿using Lab4.Lexis;
+using Lab4.Lexis.Examples;
 using Lab4.RecognizerGenerators;
 using Lab4.Syntax.Parser;
 
@@ -11,3 +12,10 @@ recognizerGenerator.Generate(
     @"C:\Users\79148\RiderProjects\Lab4\Lab4\lab2.rma",
     @"C:\Users\79148\RiderProjects\Lab4\Lab4\GeneratedExample",
     "Lab2");
+
+
+var tokenizer = new Lab2Lexer();
+var tokenStream = tokenizer.GetTokenStream("or and xor");
+var parser = new Lab2Parser(tokenStream);
+var a = parser.ReadLolNode();
+Console.WriteLine();

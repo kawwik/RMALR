@@ -8,7 +8,7 @@ public class LexerGenerator : ILexerGenerator
     public string Generate(RMALRParser.StartContext tree, string grammarName)
     {
         var lexisVisitor = new LexisVisitor();
-        var result = lexisVisitor.ParseLexer(tree, $"{grammarName}Parser");
+        var result = lexisVisitor.ParseLexer(tree, $"{grammarName}Lexer");
 
         return result.NormalizeWhitespace().ToString();
     }

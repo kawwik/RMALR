@@ -4,8 +4,24 @@ using Lab4.Syntax.Parser;
 
 public class Lab2Parser : ParserBase
 {
-    Lab2Parser(ITokenStream tokenStream) : base(tokenStream)
+    public Lab2Parser(ITokenStream tokenStream) : base(tokenStream)
     {
+    }
+
+    public NonTerminalNode ReadLolNode()
+    {
+        var result = new NonTerminalNode("Lol");
+        switch (CurrentToken.Type)
+        {
+            case "OR":
+                result.AddChildren(ReadKekNode());
+                break;
+            default:
+                throw new InvalidOperationException("Неожиданный токен");
+                break;
+        }
+
+        return result;
     }
 
     public NonTerminalNode ReadKekNode()
@@ -28,7 +44,7 @@ public class Lab2Parser : ParserBase
                                 break;
                         }
 
-                        result.AddChildren(ReadTerminal("ZHOPA"));
+                        result.AddChildren(ReadTerminal("XOR"));
                         break;
                     default:
                         throw new InvalidOperationException("Неожиданный токен");

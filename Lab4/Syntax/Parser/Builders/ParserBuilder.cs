@@ -27,7 +27,8 @@ public class ParserBuilder
                     .WithType(ParseTypeName(nameof(ITokenStream))))
             .WithInitializer(ConstructorInitializer(SyntaxKind.BaseConstructorInitializer)
                 .AddArgumentListArguments(Argument(IdentifierName("tokenStream"))))
-            .WithBody(Block());
+            .WithBody(Block())
+            .AddModifiers(PublicKeyword());
 
         _parserClass = ClassDeclaration(parserName)
             .AddMembers(constructor)

@@ -2,16 +2,16 @@ using Lab4.Lexis.Lexers;
 using Lab4.Lexis.Matchers;
 
 namespace Lab4.Lexis.Examples;
-public class Lab2Parser : TokenizerBase
+public class Lab2Lexer : TokenizerBase
 {
-    public Lab2Parser()
+    public Lab2Lexer()
     {
         var AND = new TokenMatcher("AND", new RegexMatcher("and"));
         var OR = new TokenMatcher("OR", new RegexMatcher("or"));
         var XOR = new TokenMatcher("XOR", new RegexMatcher("xor"));
         var NOT = new TokenMatcher("NOT", new RegexMatcher("not"));
-        var LEFT_PAR = new TokenMatcher("LEFT_PAR", new RegexMatcher("("));
-        var RIGHT_PAR = new TokenMatcher("RIGHT_PAR", new RegexMatcher(")"));
+        var LEFT_PAR = new TokenMatcher("LEFT_PAR", new RegexMatcher("\\("));
+        var RIGHT_PAR = new TokenMatcher("RIGHT_PAR", new RegexMatcher("\\)"));
         var VARIABLE = new TokenMatcher("VARIABLE", new RegexMatcher("[a-z]"));
         var SPACES = new SkipMatcher(new TokenMatcher("SPACES", new RegexMatcher(" +")));
         Matchers.Add(AND);
