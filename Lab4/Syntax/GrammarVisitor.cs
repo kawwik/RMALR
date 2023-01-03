@@ -53,9 +53,9 @@ public class GrammarVisitor : RMALRBaseVisitor<Rule>
         if (context.QUESTION_MARK() is not null)
             return new OptionsRule(
                 VisitRule_part(context.rule_part()),
-                new TokenRule(EmptyToken.TokenType));
+                new EmptyRule());
         
-        throw new NotImplementedException("Знаки ?, *, + не реализованы");
+        throw new NotImplementedException("Знаки *, + не реализованы");
     }
 
     private CompositeRule[] VisitRuleBody(RMALRParser.Rule_bodyContext context)

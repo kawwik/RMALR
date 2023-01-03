@@ -14,7 +14,7 @@ public class CompositeRule : UnnamedRule
 
     public IReadOnlyCollection<Rule> Rules { get; }
 
-    public override HashSet<string> First()
+    protected override HashSet<string> FirstInternal()
     {
         var rules = Rules.ToArray();
         var first = Rules.First().First();

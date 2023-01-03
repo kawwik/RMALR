@@ -9,5 +9,5 @@ public class TokenRule : UnnamedRule
 
     public string TokenType { get; }
 
-    public override HashSet<string> First() => new(new[] {TokenType});
+    protected override HashSet<string> FirstInternal() => new(new[] {TokenType});
 }

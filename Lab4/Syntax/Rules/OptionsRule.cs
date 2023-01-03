@@ -9,7 +9,7 @@ public class OptionsRule : UnnamedRule
     
     public Rule[] Options { get; }
 
-    public override HashSet<string> First()
+    protected override HashSet<string> FirstInternal()
     {
         return Options.Aggregate(new HashSet<string>(), (set, rule) =>
         {

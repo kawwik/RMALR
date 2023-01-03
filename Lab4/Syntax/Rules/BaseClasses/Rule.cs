@@ -2,9 +2,13 @@
 
 public abstract class Rule
 {
+    private HashSet<string>? _first;
+    
     /// <summary>
     /// Вычисляет множество FIRST для правила
     /// </summary>
     /// <returns>Множество типов токенов, содержащихся в FIRST</returns>
-    public abstract HashSet<string> First();
+    public HashSet<string> First() => _first ??= FirstInternal();
+
+    protected abstract HashSet<string> FirstInternal();
 }

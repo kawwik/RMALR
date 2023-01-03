@@ -17,7 +17,7 @@ public class NamedRule : Rule
         set => _options = value;
     }
 
-    public override HashSet<string> First()
+    protected override HashSet<string> FirstInternal()
     {
         return Options.Aggregate(new HashSet<string>(), (set, rule) =>
         {

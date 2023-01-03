@@ -1,5 +1,4 @@
-lol: kek;
-kek: (OR (AND) XOR);
+lol: OR?;
 
 AND: "and";
 OR: "or";
