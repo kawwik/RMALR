@@ -68,8 +68,6 @@ public class ParserGenerator : IParserGenerator
                     caseBuilder.AddStatement(switchBuilder.GetSwitchStatement());
                     break;
                 case OptionsRule optionsRule:
-                    
-                    break;
                 default:
                     throw new NotImplementedException($"Тип правила {rule.GetType().Name} не поддерживается");
             }

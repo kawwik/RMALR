@@ -19,7 +19,10 @@ public class NamedRule : Rule
 
     public override HashSet<string> First()
     {
-        // TODO: учесть пустые   
-        return Options.First().First();
+        return Options.Aggregate(new HashSet<string>(), (set, rule) =>
+        {
+            set.UnionWith(rule.First());
+            return set;
+        });
     }
 }
