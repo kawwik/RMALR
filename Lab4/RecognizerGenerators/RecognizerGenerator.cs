@@ -1,11 +1,12 @@
 ﻿using Antlr4.Runtime;
 using Lab4.Generated;
 using Lab4.Lexis;
+using Lab4.RecognizerGenerators.Interfaces;
 using Lab4.Syntax.Parser.Interfaces;
 
 namespace Lab4.RecognizerGenerators;
 
-public class RecognizerGenerator
+public class RecognizerGenerator : IRecognizerGenerator
 {
     private readonly ILexerGenerator _lexerGenerator;
     private readonly IParserGenerator _parserGenerator;
