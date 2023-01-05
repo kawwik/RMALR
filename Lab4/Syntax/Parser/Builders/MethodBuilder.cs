@@ -7,6 +7,7 @@ namespace Lab4.Syntax.Parser.Builders;
 
 public class MethodBuilder
 {
+    private const string _resultVariableName = "result";
     private MethodDeclarationSyntax _methodDeclaration;
 
     public MethodBuilder(string returnType, string methodName)
@@ -16,24 +17,26 @@ public class MethodBuilder
 
     private MethodBuilder(MethodDeclarationSyntax methodDeclaration) => _methodDeclaration = methodDeclaration;
 
-    public static MethodBuilder BuildParserMethod(string nodeType, SwitchBuilder switchBuilder)
+    public static MethodBuilder BuildParserMethod(string nodeType)
     {
-        const string resultVariableName = "result";
-
         var method = MethodDeclaration(ParseTypeName(nameof(NonTerminalNode)), $"Read{nodeType}Node")
             .AddBodyStatements(
                 LocalDeclarationStatement(
                     VariableDeclarationWithCreation(
-                        resultVariableName,
+                        _resultVariableName,
                         ParseTypeName(nameof(NonTerminalNode)),
-                        Argument(StringLiteralExpression(nodeType)))),
-                switchBuilder.GetSwitchStatement(),
-                ReturnStatement(ParseName(resultVariableName))
+                        Argument(StringLiteralExpression(nodeType))))
             )
             .AddModifiers(PublicKeyword());
 
         return new MethodBuilder(method);
     }
 
-    public MethodDeclarationSyntax GetMethod() => _methodDeclaration;
+    public void AddBodyStatements(BodyBuilder bodyBuilder)
+    {
+        _methodDeclaration = _methodDeclaration.AddBodyStatements(bodyBuilder.GetStatements());
+    }
+
+    public MethodDeclarationSyntax GetMethod() => _methodDeclaration.AddBodyStatements(
+        ReturnStatement(ParseName(_resultVariableName)));
 }

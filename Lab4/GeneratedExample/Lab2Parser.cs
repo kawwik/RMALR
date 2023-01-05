@@ -11,52 +11,19 @@ public class Lab2Parser : ParserBase
     public NonTerminalNode ReadANode()
     {
         var result = new NonTerminalNode("A");
+        result.AddChildren(ReadTerminal("VARIABLE"));
         switch (CurrentToken.Type)
         {
-            case "VARIABLE":
-                result.AddChildren(ReadTerminal("VARIABLE"));
-                switch (CurrentToken.Type)
-                {
-                    case "AND":
-                        switch (CurrentToken.Type)
-                        {
-                            case "AND":
-                                switch (CurrentToken.Type)
-                                {
-                                    case "AND":
-                                        result.AddChildren(ReadTerminal("AND"), ReadTerminal("NOT"));
-                                        break;
-                                    default:
-                                        throw new InvalidOperationException("Неожиданный токен");
-                                        break;
-                                }
-
-                                break;
-                            default:
-                                throw new InvalidOperationException("Неожиданный токен");
-                                break;
-                        }
-
-                        switch (CurrentToken.Type)
-                        {
-                            case "NOT":
-                                result.AddChildren(ReadTerminal("NOT"));
-                                break;
-                            default:
-                                throw new InvalidOperationException("Неожиданный токен");
-                                break;
-                        }
-
-                        break;
-                }
-
-                result.AddChildren(ReadTerminal("VARIABLE"));
+            case "AND":
+                result.AddChildren(ReadTerminal("AND"));
+                result.AddChildren(ReadTerminal("NOT"));
                 break;
-            default:
-                throw new InvalidOperationException("Неожиданный токен");
+            case "NOT":
+                result.AddChildren(ReadTerminal("NOT"));
                 break;
         }
 
+        result.AddChildren(ReadTerminal("VARIABLE"));
         return result;
     }
 }

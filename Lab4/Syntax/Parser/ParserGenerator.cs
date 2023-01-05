@@ -106,10 +106,10 @@
 //                 caseBuilder.AddTerminalNodeReading(tokenRule.TokenType);
 //                 break;
 //             case CompositeRule compositeRule:
-//                 caseBuilder.AddStatement(BuildSwitch(compositeRule).GetSwitchStatement());
+//                 caseBuilder.AddStatements(BuildSwitch(compositeRule).GetSwitchStatement());
 //                 break;
 //             case OptionsRule optionsRule:
-//                 caseBuilder.AddStatement(BuildSwitch(optionsRule).GetSwitchStatement());
+//                 caseBuilder.AddStatements(BuildSwitch(optionsRule).GetSwitchStatement());
 //                 break;
 //             default:
 //                 throw new NotImplementedException($"Тип правила {rule.GetType().Name} не поддерживается");

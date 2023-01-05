@@ -10,70 +10,27 @@ using static SyntaxFactory;
 public class SwitchCaseBuilder
 {
     private SwitchSectionSyntax _switchSection;
-    private InvocationExpressionSyntax? _childAddInvocation;
 
     public SwitchCaseBuilder()
     {
         _switchSection = SwitchSection();
-        _childAddInvocation = BuildChildAddingInvocation();
     }
 
-    private SwitchCaseBuilder(SwitchSectionSyntax section, InvocationExpressionSyntax? childAddInvocation)
+    private SwitchCaseBuilder(SwitchSectionSyntax section)
     {
         _switchSection = section;
-        _childAddInvocation = childAddInvocation;
     }
 
     public static SwitchCaseBuilder BuildDefaultCase()
     {
-        return new SwitchCaseBuilder(SwitchSection().AddLabels(DefaultSwitchLabel()), null);
+        return new SwitchCaseBuilder(SwitchSection().AddLabels(DefaultSwitchLabel()));
     }
 
     public SwitchSectionSyntax GetSection() => _switchSection.AddStatements(BreakStatement());
-
-    public void AddTerminalNodeReading(string terminalType)
+    
+    public void AddStatements(params StatementSyntax[] statements)
     {
-        var invocation = InvocationExpression(IdentifierName("ReadTerminal"))
-            .AddArgumentListArguments(Argument(StringLiteralExpression(terminalType)));
-
-        PushChildAdding(invocation);
-    }
-
-    public void AddNonTerminalNodeReading(string nonTerminalType)
-    {
-        var invocation = InvocationExpression(IdentifierName($"Read{nonTerminalType}Node"));
-
-        PushChildAdding(invocation);
-    }
-
-    public void AddStatement(StatementSyntax statement)
-    {
-        PopChildAddingStatement();
-        
-        _switchSection = _switchSection.AddStatements(statement);
-    }
-
-    private void PushChildAdding(ExpressionSyntax childExpression)
-    {
-        _childAddInvocation ??= BuildChildAddingInvocation();
-        _childAddInvocation = _childAddInvocation.AddArgumentListArguments(Argument(childExpression));
-    }
-
-    private static InvocationExpressionSyntax BuildChildAddingInvocation()
-    {
-        return InvocationExpression(
-            MemberAccessExpression(
-                SyntaxKind.SimpleMemberAccessExpression,
-                IdentifierName("result"),
-                IdentifierName("AddChildren")));
-    }
-
-    public void PopChildAddingStatement()
-    {
-        if (_childAddInvocation is not null && _childAddInvocation.ArgumentList.Arguments.Any())
-            _switchSection = _switchSection.AddStatements(ExpressionStatement(_childAddInvocation));
-
-        _childAddInvocation = null;
+        _switchSection = _switchSection.AddStatements(statements);
     }
 
     public void AddThrowStatement(string exceptionName, string message)
@@ -82,7 +39,7 @@ public class SwitchCaseBuilder
             ObjectCreationExpression(ParseTypeName(exceptionName))
                 .AddArgumentListArguments(Argument(StringLiteralExpression(message))));
 
-        AddStatement(throwStatement);
+        AddStatements(throwStatement);
     }
 
     public void AddLabels(params string[] labels)
