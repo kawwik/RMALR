@@ -4,7 +4,7 @@ using Lab4.RecognizerGenerators;
 using Lab4.Syntax.Parser;
 
 var lexerGenerator = new LexerGenerator();
-var parserGenerator = new ParserGenerator();
+var parserGenerator = new ParserGenerator2();
 
 var recognizerGenerator = new RecognizerGenerator(lexerGenerator, parserGenerator);
 

@@ -2,7 +2,7 @@
 
 public class NamedRule : Rule
 {
-    private CompositeRule[]? _options;
+    private Rule? _optionsRule;
 
     public NamedRule(string name)
     {
@@ -11,18 +11,11 @@ public class NamedRule : Rule
 
     public string Name { get; }
 
-    public CompositeRule[] Options
+    public Rule Rule
     {
-        get => _options ?? throw new InvalidOperationException("Опции не установлены");
-        set => _options = value;
+        get => _optionsRule ?? throw new InvalidOperationException("Правило не установлено");
+        set => _optionsRule = value;
     }
 
-    protected override HashSet<string> FirstInternal()
-    {
-        return Options.Aggregate(new HashSet<string>(), (set, rule) =>
-        {
-            set.UnionWith(rule.First());
-            return set;
-        });
-    }
+    protected override HashSet<string> FirstInternal() => Rule.First();
 }
