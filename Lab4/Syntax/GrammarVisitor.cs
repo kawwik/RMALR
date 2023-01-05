@@ -5,23 +5,47 @@ namespace Lab4.Syntax;
 
 public class GrammarVisitor : RMALRBaseVisitor<Rule>
 {
-    private readonly Dictionary<string, NamedRule?> _nameToRuleMapper = new();
+    private readonly Dictionary<string, NamedRule> _ruleNameToRule = new();
 
     public List<NamedRule> GetAllRules(RMALRParser.StartContext context)
     {
-        _nameToRuleMapper.Clear();
+        _ruleNameToRule.Clear();
+
+        DefineRules(context);
+
         return context.rule_definition()
             .Select(VisitRule_definition)
             .ToList();
     }
 
+    private void DefineRules(RMALRParser.StartContext context)
+    {
+        foreach (var ruleDefinition in context.rule_definition())
+        {
+            var inheritedAttributes = ruleDefinition.attribute_list() is null
+                ? new List<string>()
+                : VisitAttributeList(ruleDefinition.attribute_list());
+
+            var namedRule = new NamedRule(ruleDefinition.IDENTIFIER().GetText(), inheritedAttributes);
+            _ruleNameToRule.Add(namedRule.Name, namedRule);
+        }
+    }
+
     public override NamedRule VisitRule_definition(RMALRParser.Rule_definitionContext context)
     {
-        var namedRule = GetOrCreateRule(context.RULE_NAME().GetText());
-
-        namedRule.Rule = VisitRule_body(context.rule_body());
+        var namedRule = _ruleNameToRule[context.IDENTIFIER().GetText()];
+        var ruleBody = VisitRule_body(context.rule_body());
+        namedRule.Payload = ruleBody;
 
         return namedRule;
+    }
+
+
+    private List<string> VisitAttributeList(RMALRParser.Attribute_listContext context)
+    {
+        return context.attribute()
+            .Select(x => x.IDENTIFIER().Symbol.Text)
+            .ToList();
     }
 
     public override Rule VisitRule_body(RMALRParser.Rule_bodyContext context)
@@ -41,7 +65,7 @@ public class GrammarVisitor : RMALRBaseVisitor<Rule>
             .Select(VisitRule_part)
             .ToArray();
 
-        return ruleParts.Length == 1 
+        return ruleParts.Length == 1
             ? ruleParts.First()
             : new CompositeRule(ruleParts);
     }
@@ -51,37 +75,43 @@ public class GrammarVisitor : RMALRBaseVisitor<Rule>
         if (context.TOKEN_NAME() is { } tokenName)
             return new TokenRule(tokenName.GetText());
 
-        if (context.RULE_NAME() is { } ruleName)
-            return GetOrCreateRule(ruleName.GetText());
+        if (context.rule_invocation() is { } ruleInvocation)
+            return VisitRule_invocation(ruleInvocation);
 
         if (context.rule_body() is { } ruleBody)
-            return VisitRule_body(ruleBody); 
+            return VisitRule_body(ruleBody);
 
         var rulePart = VisitRule_part(context.rule_part());
         if (context.QUESTION_MARK() is not null)
         {
-            if (rulePart is not OptionsRule optionsRule) 
+            if (rulePart is not OptionsRule optionsRule)
                 return new OptionsRule(rulePart, new EmptyRule());
-            
+
             var options = optionsRule.Options
                 .UnionBy(new[] { new EmptyRule() }, rule => rule.GetType())
                 .ToArray();
 
             return new OptionsRule(options);
-
         }
-        
+
         throw new NotImplementedException("Знаки *, + не реализованы");
     }
 
-    private NamedRule GetOrCreateRule(string ruleName)
+    public override Rule VisitRule_invocation(RMALRParser.Rule_invocationContext context)
     {
-        if (!_nameToRuleMapper.TryGetValue(ruleName, out var rule))
-        {
-            rule = new NamedRule(ruleName);
-            _nameToRuleMapper.Add(ruleName, rule);
-        }
+        var namedRule = _ruleNameToRule[context.IDENTIFIER().GetText()];
+        
+        var argumentList = context.argument_list() is { } argumentListContext
+            ? VisitArgumentList(argumentListContext)
+            : Array.Empty<string>();
 
-        return rule!;
+        return new InvocationRule(namedRule, argumentList);
+    }
+
+    public IReadOnlyCollection<string> VisitArgumentList(RMALRParser.Argument_listContext context)
+    {
+        return context.argument()
+            .Select(x => x.IDENTIFIER().GetText())
+            .ToList();
     }
 }

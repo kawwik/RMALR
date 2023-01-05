@@ -3,13 +3,21 @@ grammar RMALR;
 start: ((token | rule_definition) ';' NEWLINE*)* EOF;
 
 // Grammar
-rule_definition: RULE_NAME ':' rule_body;
+rule_definition: IDENTIFIER attribute_list? ':' rule_body;
 rule_body: rule_option ('|' rule_option)*;
 rule_option: rule_part+;
 rule_part
-    : RULE_NAME | TOKEN_NAME 
+    : rule_invocation
+    | TOKEN_NAME 
     | '(' rule_body ')'
     | rule_part (QUESTION_MARK | PLUS | MULTIPLY);
+
+attribute_list: '[' attribute (',' attribute)* ']';
+attribute: IDENTIFIER;
+
+rule_invocation: IDENTIFIER argument_list?;
+argument_list: '[' argument (',' argument)* ']';
+argument: IDENTIFIER;
 
 // Lexis
 token: TOKEN_NAME ':' patterns ('->' lexer_rule)?;
@@ -19,7 +27,7 @@ pattern: TOKEN_NAME | REGEXP;
 lexer_rule: SKIP_RULE;
 
 // Tokens
-RULE_NAME: [a-z][A-Za-z_]*;
+IDENTIFIER: [a-z][A-Za-z_]*;
 
 TOKEN_NAME: [A-Z][A-Za-z_]*;
 REGEXP: QUOTE .+? QUOTE;

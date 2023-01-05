@@ -63,6 +63,36 @@ public interface IRMALRVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitRule_part([NotNull] RMALRParser.Rule_partContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="RMALRParser.attribute_list"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitAttribute_list([NotNull] RMALRParser.Attribute_listContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="RMALRParser.attribute"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitAttribute([NotNull] RMALRParser.AttributeContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="RMALRParser.rule_invocation"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitRule_invocation([NotNull] RMALRParser.Rule_invocationContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="RMALRParser.argument_list"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitArgument_list([NotNull] RMALRParser.Argument_listContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="RMALRParser.argument"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitArgument([NotNull] RMALRParser.ArgumentContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="RMALRParser.token"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

@@ -29,9 +29,10 @@ public class ParserGenerator : IParserGenerator
     {
         var methodBuilder = MethodBuilder.BuildParserMethod(rule.Name.Capitalize());
         var bodyBuilder = new BodyBuilder();
-        bodyBuilder.AddStatements(ReadRule(rule.Rule));
+        bodyBuilder.AddStatements(ReadRule(rule.Payload));
         
         methodBuilder.AddBodyStatements(bodyBuilder);
+        methodBuilder.AddParameters(rule.InheritedAttributes.ToArray());
         
         return methodBuilder;
     }
@@ -45,10 +46,15 @@ public class ParserGenerator : IParserGenerator
         return bodyBuilder.GetStatements();
     }
 
-    private StatementSyntax[] ReadNamedRule(NamedRule namedRule)
+    private StatementSyntax[] ReadInvocationRule(InvocationRule invocationRule)
     {
         var bodyBuilder = new BodyBuilder();
-        bodyBuilder.AddNonTerminalNodeReading(namedRule.Name.Capitalize());
+
+        var arguments = invocationRule.Arguments
+            .Select(Microsoft.CodeAnalysis.CSharp.SyntaxFactory.IdentifierName)
+            .ToList();
+        
+        bodyBuilder.AddNonTerminalNodeReading(invocationRule.NamedRule.Name.Capitalize(), arguments);
         bodyBuilder.PopChildAddingStatement();
         
         return bodyBuilder.GetStatements();
@@ -92,7 +98,7 @@ public class ParserGenerator : IParserGenerator
         {
             EmptyRule => Array.Empty<StatementSyntax>(),
             TokenRule tokenRule => ReadTokenRule(tokenRule),
-            NamedRule namedRule => ReadNamedRule(namedRule),
+            InvocationRule invocationRule => ReadInvocationRule(invocationRule),
             OptionsRule optionsRule => new[] { ReadOptionsRule(optionsRule) },
             CompositeRule compositeRule => ReadCompositeRule(compositeRule)
         };

@@ -23,10 +23,12 @@ public class BodyBuilder
         PushChildAdding(invocation);
     }
     
-    public void AddNonTerminalNodeReading(string nonTerminalType)
+    public void AddNonTerminalNodeReading(string nonTerminalType, IReadOnlyCollection<ExpressionSyntax> argumentExpressions)
     {
-        var invocation = InvocationExpression(IdentifierName($"Read{nonTerminalType}Node"));
-
+        var arguments = argumentExpressions.Select(Argument).ToArray();
+        var invocation = InvocationExpression(IdentifierName($"Read{nonTerminalType}Node"))
+            .AddArgumentListArguments(arguments);
+        
         PushChildAdding(invocation);
     }
 

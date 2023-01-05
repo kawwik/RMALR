@@ -1,4 +1,5 @@
 ﻿using Lab4.Syntax.Nodes;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using static Lab4.SyntaxFactory;
@@ -30,6 +31,16 @@ public class MethodBuilder
             .AddModifiers(PublicKeyword());
 
         return new MethodBuilder(method);
+    }
+
+    public void AddParameters(params string[] parameterNames)
+    {
+        var parameters = parameterNames
+            .Select(Identifier)
+            .Select(x => Parameter(x).WithType(ParseTypeName("dynamic")))
+            .ToArray();
+
+        _methodDeclaration = _methodDeclaration.AddParameterListParameters(parameters);
     }
 
     public void AddBodyStatements(BodyBuilder bodyBuilder)

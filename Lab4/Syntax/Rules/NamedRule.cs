@@ -2,20 +2,23 @@
 
 public class NamedRule : Rule
 {
-    private Rule? _optionsRule;
+    private Rule? _payload;
 
-    public NamedRule(string name)
+    public NamedRule(string name, IReadOnlyCollection<string> inheritedAttributes)
     {
         Name = name;
+        InheritedAttributes = inheritedAttributes;
     }
 
     public string Name { get; }
 
-    public Rule Rule
+    public Rule Payload
     {
-        get => _optionsRule ?? throw new InvalidOperationException("Правило не установлено");
-        set => _optionsRule = value;
+        get => _payload ?? throw new InvalidOperationException("Не установлено правило");
+        set => _payload = value;
     }
 
-    protected override HashSet<string> FirstInternal() => Rule.First();
+    public IReadOnlyCollection<string> InheritedAttributes { get; }
+
+    protected override HashSet<string> FirstInternal() => Payload.First();
 }
