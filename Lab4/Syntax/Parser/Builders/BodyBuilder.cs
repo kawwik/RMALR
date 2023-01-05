@@ -43,9 +43,29 @@ public class BodyBuilder
         _block = _block.AddStatements(statements);
     }
     
+    public void Append(BodyBuilder bodyBuilder)
+    {
+        _block = _block.AddStatements(bodyBuilder.GetStatements());
+
+        if (bodyBuilder._childAddInvocation is null)
+            return;
+        
+        var additionalArguments = bodyBuilder._childAddInvocation.ArgumentList.Arguments.ToArray();
+        _childAddInvocation = _childAddInvocation?.AddArgumentListArguments(additionalArguments);
+    }
+    
     private void PushChildAdding(ExpressionSyntax childExpression)
     {
-        _childAddInvocation ??= BuildChildAddingInvocation().AddArgumentListArguments(Argument(childExpression));
+        _childAddInvocation ??= BuildChildAddingInvocation();
+        _childAddInvocation = _childAddInvocation.AddArgumentListArguments(Argument(childExpression));
+    }
+    
+    private void PushChildrenAdding(ExpressionSyntax[] childExpression)
+    {
+        _childAddInvocation ??= BuildChildAddingInvocation();
+
+        var expressions = childExpression.Select(Argument).ToArray();
+        _childAddInvocation = _childAddInvocation.AddArgumentListArguments(expressions);
     }
     
     private static InvocationExpressionSyntax BuildChildAddingInvocation()
