@@ -56,6 +56,7 @@ public class ParserGenerator : IParserGenerator
         return switchBuilder;
     }
 
+    // TODO: косячно работает. Возможно начиная с парсинга
     private SwitchBuilder BuildSwitch(OptionsRule optionsRule)
     {
         var switchBuilder = new SwitchBuilder();
@@ -68,7 +69,10 @@ public class ParserGenerator : IParserGenerator
             var first = option.First();
             first.Remove(EmptyToken.TokenType);
 
-            switchBuilder.AddCase(BuildCase(new []{option}, first));
+            if (option is CompositeRule compositeOption) 
+                switchBuilder.AddCase(BuildCase(compositeOption.Rules, first));
+            else
+                switchBuilder.AddCase(BuildCase(new []{option}, first));
         }
     
         return switchBuilder;

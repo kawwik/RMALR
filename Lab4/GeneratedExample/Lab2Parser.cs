@@ -21,7 +21,26 @@ public class Lab2Parser : ParserBase
                         switch (CurrentToken.Type)
                         {
                             case "AND":
-                                result.AddChildren(ReadTerminal("AND"), ReadTerminal("NOT"));
+                                switch (CurrentToken.Type)
+                                {
+                                    case "AND":
+                                        result.AddChildren(ReadTerminal("AND"), ReadTerminal("NOT"));
+                                        break;
+                                    default:
+                                        throw new InvalidOperationException("Неожиданный токен");
+                                        break;
+                                }
+
+                                break;
+                            default:
+                                throw new InvalidOperationException("Неожиданный токен");
+                                break;
+                        }
+
+                        switch (CurrentToken.Type)
+                        {
+                            case "NOT":
+                                result.AddChildren(ReadTerminal("NOT"));
                                 break;
                             default:
                                 throw new InvalidOperationException("Неожиданный токен");
