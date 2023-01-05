@@ -4,10 +4,14 @@ public class NamedRule : Rule
 {
     private Rule? _payload;
 
-    public NamedRule(string name, IReadOnlyCollection<string> inheritedAttributes)
+    public NamedRule(
+        IReadOnlyCollection<string> inheritedAttributes,
+        IReadOnlyCollection<string> synthesizedAttribute, 
+        string name)
     {
         Name = name;
         InheritedAttributes = inheritedAttributes;
+        SynthesizedAttribute = synthesizedAttribute;
     }
 
     public string Name { get; }
@@ -19,6 +23,8 @@ public class NamedRule : Rule
     }
 
     public IReadOnlyCollection<string> InheritedAttributes { get; }
+    
+    public IReadOnlyCollection<string> SynthesizedAttribute { get; }
 
     protected override HashSet<string> FirstInternal() => Payload.First();
 }

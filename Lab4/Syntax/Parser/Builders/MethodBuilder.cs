@@ -43,6 +43,14 @@ public class MethodBuilder
         _methodDeclaration = _methodDeclaration.AddParameterListParameters(parameters);
     }
 
+    public void AddVariableDefinition(string type, string name)
+    {
+        var variableDefinition = VariableDeclaration(ParseTypeName(type))
+            .AddVariables(VariableDeclarator(name));
+
+        _methodDeclaration = _methodDeclaration.AddBodyStatements(LocalDeclarationStatement(variableDefinition));
+    }
+
     public void AddBodyStatements(BodyBuilder bodyBuilder)
     {
         _methodDeclaration = _methodDeclaration.AddBodyStatements(bodyBuilder.GetStatements());

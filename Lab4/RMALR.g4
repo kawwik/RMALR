@@ -3,7 +3,7 @@ grammar RMALR;
 start: ((token | rule_definition) ';' NEWLINE*)* EOF;
 
 // Grammar
-rule_definition: IDENTIFIER attribute_list? ':' rule_body;
+rule_definition: IDENTIFIER attribute_list? returned_attributes? ':' rule_body;
 rule_body: rule_option ('|' rule_option)*;
 rule_option: rule_part+;
 rule_part
@@ -14,6 +14,8 @@ rule_part
 
 attribute_list: '[' attribute (',' attribute)* ']';
 attribute: IDENTIFIER;
+
+returned_attributes: 'returns' attribute_list;
 
 rule_invocation: IDENTIFIER argument_list?;
 argument_list: '[' argument (',' argument)* ']';

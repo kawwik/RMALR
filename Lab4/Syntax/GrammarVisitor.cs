@@ -22,11 +22,19 @@ public class GrammarVisitor : RMALRBaseVisitor<Rule>
     {
         foreach (var ruleDefinition in context.rule_definition())
         {
-            var inheritedAttributes = ruleDefinition.attribute_list() is null
-                ? new List<string>()
+            IReadOnlyCollection<string> inheritedAttributes = ruleDefinition.attribute_list() is null
+                ? Array.Empty<string>()
                 : VisitAttributeList(ruleDefinition.attribute_list());
 
-            var namedRule = new NamedRule(ruleDefinition.IDENTIFIER().GetText(), inheritedAttributes);
+            IReadOnlyCollection<string> synthesizedAttributes = ruleDefinition.returned_attributes() is null
+                ? Array.Empty<string>()
+                : VisitAttributeList(ruleDefinition.returned_attributes().attribute_list());
+
+            var namedRule = new NamedRule(
+                inheritedAttributes,
+                synthesizedAttributes,
+                ruleDefinition.IDENTIFIER().GetText());
+
             _ruleNameToRule.Add(namedRule.Name, namedRule);
         }
     }

@@ -30,7 +30,12 @@ public class ParserGenerator : IParserGenerator
         var methodBuilder = MethodBuilder.BuildParserMethod(rule.Name.Capitalize());
         var bodyBuilder = new BodyBuilder();
         bodyBuilder.AddStatements(ReadRule(rule.Payload));
-        
+
+        foreach (var attribute in rule.SynthesizedAttribute)
+        {
+            methodBuilder.AddVariableDefinition("dynamic", attribute);
+        }
+
         methodBuilder.AddBodyStatements(bodyBuilder);
         methodBuilder.AddParameters(rule.InheritedAttributes.ToArray());
         

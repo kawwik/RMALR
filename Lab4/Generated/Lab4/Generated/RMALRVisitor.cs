@@ -75,6 +75,12 @@ public interface IRMALRVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitAttribute([NotNull] RMALRParser.AttributeContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="RMALRParser.returned_attributes"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitReturned_attributes([NotNull] RMALRParser.Returned_attributesContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="RMALRParser.rule_invocation"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

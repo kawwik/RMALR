@@ -38,25 +38,25 @@ public partial class RMALRParser : Parser {
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		IDENTIFIER=10, TOKEN_NAME=11, REGEXP=12, QUESTION_MARK=13, PLUS=14, MULTIPLY=15, 
-		QUOTE=16, SKIP_RULE=17, WHITESPACES=18, NEWLINE=19;
+		T__9=10, IDENTIFIER=11, TOKEN_NAME=12, REGEXP=13, QUESTION_MARK=14, PLUS=15, 
+		MULTIPLY=16, QUOTE=17, SKIP_RULE=18, WHITESPACES=19, NEWLINE=20;
 	public const int
 		RULE_start = 0, RULE_rule_definition = 1, RULE_rule_body = 2, RULE_rule_option = 3, 
-		RULE_rule_part = 4, RULE_attribute_list = 5, RULE_attribute = 6, RULE_rule_invocation = 7, 
-		RULE_argument_list = 8, RULE_argument = 9, RULE_token = 10, RULE_patterns = 11, 
-		RULE_pattern = 12, RULE_lexer_rule = 13;
+		RULE_rule_part = 4, RULE_attribute_list = 5, RULE_attribute = 6, RULE_returned_attributes = 7, 
+		RULE_rule_invocation = 8, RULE_argument_list = 9, RULE_argument = 10, 
+		RULE_token = 11, RULE_patterns = 12, RULE_pattern = 13, RULE_lexer_rule = 14;
 	public static readonly string[] ruleNames = {
 		"start", "rule_definition", "rule_body", "rule_option", "rule_part", "attribute_list", 
-		"attribute", "rule_invocation", "argument_list", "argument", "token", 
-		"patterns", "pattern", "lexer_rule"
+		"attribute", "returned_attributes", "rule_invocation", "argument_list", 
+		"argument", "token", "patterns", "pattern", "lexer_rule"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "';'", "':'", "'|'", "'('", "')'", "'['", "','", "']'", "'->'", 
-		null, null, null, "'?'", "'+'", "'*'", "'\"'", "'@skip'"
+		null, "';'", "':'", "'|'", "'('", "')'", "'['", "','", "']'", "'returns'", 
+		"'->'", null, null, null, "'?'", "'+'", "'*'", "'\"'", "'@skip'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, null, null, null, null, null, null, null, null, null, "IDENTIFIER", 
+		null, null, null, null, null, null, null, null, null, null, null, "IDENTIFIER", 
 		"TOKEN_NAME", "REGEXP", "QUESTION_MARK", "PLUS", "MULTIPLY", "QUOTE", 
 		"SKIP_RULE", "WHITESPACES", "NEWLINE"
 	};
@@ -131,53 +131,53 @@ public partial class RMALRParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 41;
+			State = 43;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==IDENTIFIER || _la==TOKEN_NAME) {
 				{
 				{
-				State = 30;
+				State = 32;
 				ErrorHandler.Sync(this);
 				switch (TokenStream.LA(1)) {
 				case TOKEN_NAME:
 					{
-					State = 28;
+					State = 30;
 					token();
 					}
 					break;
 				case IDENTIFIER:
 					{
-					State = 29;
+					State = 31;
 					rule_definition();
 					}
 					break;
 				default:
 					throw new NoViableAltException(this);
 				}
-				State = 32;
+				State = 34;
 				Match(T__0);
-				State = 36;
+				State = 38;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				while (_la==NEWLINE) {
 					{
 					{
-					State = 33;
+					State = 35;
 					Match(NEWLINE);
 					}
 					}
-					State = 38;
+					State = 40;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
 				}
 				}
 				}
-				State = 43;
+				State = 45;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 44;
+			State = 46;
 			Match(Eof);
 			}
 		}
@@ -200,6 +200,9 @@ public partial class RMALRParser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public Attribute_listContext attribute_list() {
 			return GetRuleContext<Attribute_listContext>(0);
 		}
+		[System.Diagnostics.DebuggerNonUserCode] public Returned_attributesContext returned_attributes() {
+			return GetRuleContext<Returned_attributesContext>(0);
+		}
 		public Rule_definitionContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -221,21 +224,31 @@ public partial class RMALRParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 46;
-			Match(IDENTIFIER);
 			State = 48;
+			Match(IDENTIFIER);
+			State = 50;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==T__5) {
 				{
-				State = 47;
+				State = 49;
 				attribute_list();
 				}
 			}
 
-			State = 50;
+			State = 53;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			if (_la==T__8) {
+				{
+				State = 52;
+				returned_attributes();
+				}
+			}
+
+			State = 55;
 			Match(T__1);
-			State = 51;
+			State = 56;
 			rule_body();
 			}
 		}
@@ -278,21 +291,21 @@ public partial class RMALRParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 53;
-			rule_option();
 			State = 58;
+			rule_option();
+			State = 63;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==T__2) {
 				{
 				{
-				State = 54;
+				State = 59;
 				Match(T__2);
-				State = 55;
+				State = 60;
 				rule_option();
 				}
 				}
-				State = 60;
+				State = 65;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -337,17 +350,17 @@ public partial class RMALRParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 62;
+			State = 67;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 61;
+				State = 66;
 				rule_part(0);
 				}
 				}
-				State = 64;
+				State = 69;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__3) | (1L << IDENTIFIER) | (1L << TOKEN_NAME))) != 0) );
@@ -408,28 +421,28 @@ public partial class RMALRParser : Parser {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 73;
+			State = 78;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case IDENTIFIER:
 				{
-				State = 67;
+				State = 72;
 				rule_invocation();
 				}
 				break;
 			case TOKEN_NAME:
 				{
-				State = 68;
+				State = 73;
 				Match(TOKEN_NAME);
 				}
 				break;
 			case T__3:
 				{
-				State = 69;
+				State = 74;
 				Match(T__3);
-				State = 70;
+				State = 75;
 				rule_body();
-				State = 71;
+				State = 76;
 				Match(T__4);
 				}
 				break;
@@ -437,9 +450,9 @@ public partial class RMALRParser : Parser {
 				throw new NoViableAltException(this);
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 79;
+			State = 84;
 			ErrorHandler.Sync(this);
-			_alt = Interpreter.AdaptivePredict(TokenStream,7,Context);
+			_alt = Interpreter.AdaptivePredict(TokenStream,8,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( ParseListeners!=null )
@@ -449,9 +462,9 @@ public partial class RMALRParser : Parser {
 					{
 					_localctx = new Rule_partContext(_parentctx, _parentState);
 					PushNewRecursionContext(_localctx, _startState, RULE_rule_part);
-					State = 75;
+					State = 80;
 					if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
-					State = 76;
+					State = 81;
 					_la = TokenStream.LA(1);
 					if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << QUESTION_MARK) | (1L << PLUS) | (1L << MULTIPLY))) != 0)) ) {
 					ErrorHandler.RecoverInline(this);
@@ -463,9 +476,9 @@ public partial class RMALRParser : Parser {
 					}
 					} 
 				}
-				State = 81;
+				State = 86;
 				ErrorHandler.Sync(this);
-				_alt = Interpreter.AdaptivePredict(TokenStream,7,Context);
+				_alt = Interpreter.AdaptivePredict(TokenStream,8,Context);
 			}
 			}
 		}
@@ -508,27 +521,27 @@ public partial class RMALRParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 82;
+			State = 87;
 			Match(T__5);
-			State = 83;
-			attribute();
 			State = 88;
+			attribute();
+			State = 93;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==T__6) {
 				{
 				{
-				State = 84;
+				State = 89;
 				Match(T__6);
-				State = 85;
+				State = 90;
 				attribute();
 				}
 				}
-				State = 90;
+				State = 95;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 91;
+			State = 96;
 			Match(T__7);
 			}
 		}
@@ -565,8 +578,49 @@ public partial class RMALRParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 93;
+			State = 98;
 			Match(IDENTIFIER);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class Returned_attributesContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public Attribute_listContext attribute_list() {
+			return GetRuleContext<Attribute_listContext>(0);
+		}
+		public Returned_attributesContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_returned_attributes; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IRMALRVisitor<TResult> typedVisitor = visitor as IRMALRVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitReturned_attributes(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Returned_attributesContext returned_attributes() {
+		Returned_attributesContext _localctx = new Returned_attributesContext(Context, State);
+		EnterRule(_localctx, 14, RULE_returned_attributes);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 100;
+			Match(T__8);
+			State = 101;
+			attribute_list();
 			}
 		}
 		catch (RecognitionException re) {
@@ -601,18 +655,18 @@ public partial class RMALRParser : Parser {
 	[RuleVersion(0)]
 	public Rule_invocationContext rule_invocation() {
 		Rule_invocationContext _localctx = new Rule_invocationContext(Context, State);
-		EnterRule(_localctx, 14, RULE_rule_invocation);
+		EnterRule(_localctx, 16, RULE_rule_invocation);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 95;
+			State = 103;
 			Match(IDENTIFIER);
-			State = 97;
+			State = 105;
 			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,9,Context) ) {
+			switch ( Interpreter.AdaptivePredict(TokenStream,10,Context) ) {
 			case 1:
 				{
-				State = 96;
+				State = 104;
 				argument_list();
 				}
 				break;
@@ -653,32 +707,32 @@ public partial class RMALRParser : Parser {
 	[RuleVersion(0)]
 	public Argument_listContext argument_list() {
 		Argument_listContext _localctx = new Argument_listContext(Context, State);
-		EnterRule(_localctx, 16, RULE_argument_list);
+		EnterRule(_localctx, 18, RULE_argument_list);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 99;
+			State = 107;
 			Match(T__5);
-			State = 100;
+			State = 108;
 			argument();
-			State = 105;
+			State = 113;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==T__6) {
 				{
 				{
-				State = 101;
+				State = 109;
 				Match(T__6);
-				State = 102;
+				State = 110;
 				argument();
 				}
 				}
-				State = 107;
+				State = 115;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 108;
+			State = 116;
 			Match(T__7);
 			}
 		}
@@ -711,11 +765,11 @@ public partial class RMALRParser : Parser {
 	[RuleVersion(0)]
 	public ArgumentContext argument() {
 		ArgumentContext _localctx = new ArgumentContext(Context, State);
-		EnterRule(_localctx, 18, RULE_argument);
+		EnterRule(_localctx, 20, RULE_argument);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 110;
+			State = 118;
 			Match(IDENTIFIER);
 			}
 		}
@@ -754,25 +808,25 @@ public partial class RMALRParser : Parser {
 	[RuleVersion(0)]
 	public TokenContext token() {
 		TokenContext _localctx = new TokenContext(Context, State);
-		EnterRule(_localctx, 20, RULE_token);
+		EnterRule(_localctx, 22, RULE_token);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 112;
+			State = 120;
 			Match(TOKEN_NAME);
-			State = 113;
+			State = 121;
 			Match(T__1);
-			State = 114;
+			State = 122;
 			patterns();
-			State = 117;
+			State = 125;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			if (_la==T__8) {
+			if (_la==T__9) {
 				{
-				State = 115;
-				Match(T__8);
-				State = 116;
+				State = 123;
+				Match(T__9);
+				State = 124;
 				lexer_rule();
 				}
 			}
@@ -813,22 +867,22 @@ public partial class RMALRParser : Parser {
 	[RuleVersion(0)]
 	public PatternsContext patterns() {
 		PatternsContext _localctx = new PatternsContext(Context, State);
-		EnterRule(_localctx, 22, RULE_patterns);
+		EnterRule(_localctx, 24, RULE_patterns);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 120;
+			State = 128;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 119;
+				State = 127;
 				pattern();
 				}
 				}
-				State = 122;
+				State = 130;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			} while ( _la==TOKEN_NAME || _la==REGEXP );
@@ -864,12 +918,12 @@ public partial class RMALRParser : Parser {
 	[RuleVersion(0)]
 	public PatternContext pattern() {
 		PatternContext _localctx = new PatternContext(Context, State);
-		EnterRule(_localctx, 24, RULE_pattern);
+		EnterRule(_localctx, 26, RULE_pattern);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 124;
+			State = 132;
 			_la = TokenStream.LA(1);
 			if ( !(_la==TOKEN_NAME || _la==REGEXP) ) {
 			ErrorHandler.RecoverInline(this);
@@ -909,11 +963,11 @@ public partial class RMALRParser : Parser {
 	[RuleVersion(0)]
 	public Lexer_ruleContext lexer_rule() {
 		Lexer_ruleContext _localctx = new Lexer_ruleContext(Context, State);
-		EnterRule(_localctx, 26, RULE_lexer_rule);
+		EnterRule(_localctx, 28, RULE_lexer_rule);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 126;
+			State = 134;
 			Match(SKIP_RULE);
 			}
 		}
@@ -942,43 +996,46 @@ public partial class RMALRParser : Parser {
 	}
 
 	private static int[] _serializedATN = {
-		4,1,19,129,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
-		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,1,0,1,0,3,
-		0,31,8,0,1,0,1,0,5,0,35,8,0,10,0,12,0,38,9,0,5,0,40,8,0,10,0,12,0,43,9,
-		0,1,0,1,0,1,1,1,1,3,1,49,8,1,1,1,1,1,1,1,1,2,1,2,1,2,5,2,57,8,2,10,2,12,
-		2,60,9,2,1,3,4,3,63,8,3,11,3,12,3,64,1,4,1,4,1,4,1,4,1,4,1,4,1,4,3,4,74,
-		8,4,1,4,1,4,5,4,78,8,4,10,4,12,4,81,9,4,1,5,1,5,1,5,1,5,5,5,87,8,5,10,
-		5,12,5,90,9,5,1,5,1,5,1,6,1,6,1,7,1,7,3,7,98,8,7,1,8,1,8,1,8,1,8,5,8,104,
-		8,8,10,8,12,8,107,9,8,1,8,1,8,1,9,1,9,1,10,1,10,1,10,1,10,1,10,3,10,118,
-		8,10,1,11,4,11,121,8,11,11,11,12,11,122,1,12,1,12,1,13,1,13,1,13,0,1,8,
-		14,0,2,4,6,8,10,12,14,16,18,20,22,24,26,0,2,1,0,13,15,1,0,11,12,128,0,
-		41,1,0,0,0,2,46,1,0,0,0,4,53,1,0,0,0,6,62,1,0,0,0,8,73,1,0,0,0,10,82,1,
-		0,0,0,12,93,1,0,0,0,14,95,1,0,0,0,16,99,1,0,0,0,18,110,1,0,0,0,20,112,
-		1,0,0,0,22,120,1,0,0,0,24,124,1,0,0,0,26,126,1,0,0,0,28,31,3,20,10,0,29,
-		31,3,2,1,0,30,28,1,0,0,0,30,29,1,0,0,0,31,32,1,0,0,0,32,36,5,1,0,0,33,
-		35,5,19,0,0,34,33,1,0,0,0,35,38,1,0,0,0,36,34,1,0,0,0,36,37,1,0,0,0,37,
-		40,1,0,0,0,38,36,1,0,0,0,39,30,1,0,0,0,40,43,1,0,0,0,41,39,1,0,0,0,41,
-		42,1,0,0,0,42,44,1,0,0,0,43,41,1,0,0,0,44,45,5,0,0,1,45,1,1,0,0,0,46,48,
-		5,10,0,0,47,49,3,10,5,0,48,47,1,0,0,0,48,49,1,0,0,0,49,50,1,0,0,0,50,51,
-		5,2,0,0,51,52,3,4,2,0,52,3,1,0,0,0,53,58,3,6,3,0,54,55,5,3,0,0,55,57,3,
-		6,3,0,56,54,1,0,0,0,57,60,1,0,0,0,58,56,1,0,0,0,58,59,1,0,0,0,59,5,1,0,
-		0,0,60,58,1,0,0,0,61,63,3,8,4,0,62,61,1,0,0,0,63,64,1,0,0,0,64,62,1,0,
-		0,0,64,65,1,0,0,0,65,7,1,0,0,0,66,67,6,4,-1,0,67,74,3,14,7,0,68,74,5,11,
-		0,0,69,70,5,4,0,0,70,71,3,4,2,0,71,72,5,5,0,0,72,74,1,0,0,0,73,66,1,0,
-		0,0,73,68,1,0,0,0,73,69,1,0,0,0,74,79,1,0,0,0,75,76,10,1,0,0,76,78,7,0,
-		0,0,77,75,1,0,0,0,78,81,1,0,0,0,79,77,1,0,0,0,79,80,1,0,0,0,80,9,1,0,0,
-		0,81,79,1,0,0,0,82,83,5,6,0,0,83,88,3,12,6,0,84,85,5,7,0,0,85,87,3,12,
-		6,0,86,84,1,0,0,0,87,90,1,0,0,0,88,86,1,0,0,0,88,89,1,0,0,0,89,91,1,0,
-		0,0,90,88,1,0,0,0,91,92,5,8,0,0,92,11,1,0,0,0,93,94,5,10,0,0,94,13,1,0,
-		0,0,95,97,5,10,0,0,96,98,3,16,8,0,97,96,1,0,0,0,97,98,1,0,0,0,98,15,1,
-		0,0,0,99,100,5,6,0,0,100,105,3,18,9,0,101,102,5,7,0,0,102,104,3,18,9,0,
-		103,101,1,0,0,0,104,107,1,0,0,0,105,103,1,0,0,0,105,106,1,0,0,0,106,108,
-		1,0,0,0,107,105,1,0,0,0,108,109,5,8,0,0,109,17,1,0,0,0,110,111,5,10,0,
-		0,111,19,1,0,0,0,112,113,5,11,0,0,113,114,5,2,0,0,114,117,3,22,11,0,115,
-		116,5,9,0,0,116,118,3,26,13,0,117,115,1,0,0,0,117,118,1,0,0,0,118,21,1,
-		0,0,0,119,121,3,24,12,0,120,119,1,0,0,0,121,122,1,0,0,0,122,120,1,0,0,
-		0,122,123,1,0,0,0,123,23,1,0,0,0,124,125,7,1,0,0,125,25,1,0,0,0,126,127,
-		5,17,0,0,127,27,1,0,0,0,13,30,36,41,48,58,64,73,79,88,97,105,117,122
+		4,1,20,137,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,
+		1,0,1,0,3,0,33,8,0,1,0,1,0,5,0,37,8,0,10,0,12,0,40,9,0,5,0,42,8,0,10,0,
+		12,0,45,9,0,1,0,1,0,1,1,1,1,3,1,51,8,1,1,1,3,1,54,8,1,1,1,1,1,1,1,1,2,
+		1,2,1,2,5,2,62,8,2,10,2,12,2,65,9,2,1,3,4,3,68,8,3,11,3,12,3,69,1,4,1,
+		4,1,4,1,4,1,4,1,4,1,4,3,4,79,8,4,1,4,1,4,5,4,83,8,4,10,4,12,4,86,9,4,1,
+		5,1,5,1,5,1,5,5,5,92,8,5,10,5,12,5,95,9,5,1,5,1,5,1,6,1,6,1,7,1,7,1,7,
+		1,8,1,8,3,8,106,8,8,1,9,1,9,1,9,1,9,5,9,112,8,9,10,9,12,9,115,9,9,1,9,
+		1,9,1,10,1,10,1,11,1,11,1,11,1,11,1,11,3,11,126,8,11,1,12,4,12,129,8,12,
+		11,12,12,12,130,1,13,1,13,1,14,1,14,1,14,0,1,8,15,0,2,4,6,8,10,12,14,16,
+		18,20,22,24,26,28,0,2,1,0,14,16,1,0,12,13,136,0,43,1,0,0,0,2,48,1,0,0,
+		0,4,58,1,0,0,0,6,67,1,0,0,0,8,78,1,0,0,0,10,87,1,0,0,0,12,98,1,0,0,0,14,
+		100,1,0,0,0,16,103,1,0,0,0,18,107,1,0,0,0,20,118,1,0,0,0,22,120,1,0,0,
+		0,24,128,1,0,0,0,26,132,1,0,0,0,28,134,1,0,0,0,30,33,3,22,11,0,31,33,3,
+		2,1,0,32,30,1,0,0,0,32,31,1,0,0,0,33,34,1,0,0,0,34,38,5,1,0,0,35,37,5,
+		20,0,0,36,35,1,0,0,0,37,40,1,0,0,0,38,36,1,0,0,0,38,39,1,0,0,0,39,42,1,
+		0,0,0,40,38,1,0,0,0,41,32,1,0,0,0,42,45,1,0,0,0,43,41,1,0,0,0,43,44,1,
+		0,0,0,44,46,1,0,0,0,45,43,1,0,0,0,46,47,5,0,0,1,47,1,1,0,0,0,48,50,5,11,
+		0,0,49,51,3,10,5,0,50,49,1,0,0,0,50,51,1,0,0,0,51,53,1,0,0,0,52,54,3,14,
+		7,0,53,52,1,0,0,0,53,54,1,0,0,0,54,55,1,0,0,0,55,56,5,2,0,0,56,57,3,4,
+		2,0,57,3,1,0,0,0,58,63,3,6,3,0,59,60,5,3,0,0,60,62,3,6,3,0,61,59,1,0,0,
+		0,62,65,1,0,0,0,63,61,1,0,0,0,63,64,1,0,0,0,64,5,1,0,0,0,65,63,1,0,0,0,
+		66,68,3,8,4,0,67,66,1,0,0,0,68,69,1,0,0,0,69,67,1,0,0,0,69,70,1,0,0,0,
+		70,7,1,0,0,0,71,72,6,4,-1,0,72,79,3,16,8,0,73,79,5,12,0,0,74,75,5,4,0,
+		0,75,76,3,4,2,0,76,77,5,5,0,0,77,79,1,0,0,0,78,71,1,0,0,0,78,73,1,0,0,
+		0,78,74,1,0,0,0,79,84,1,0,0,0,80,81,10,1,0,0,81,83,7,0,0,0,82,80,1,0,0,
+		0,83,86,1,0,0,0,84,82,1,0,0,0,84,85,1,0,0,0,85,9,1,0,0,0,86,84,1,0,0,0,
+		87,88,5,6,0,0,88,93,3,12,6,0,89,90,5,7,0,0,90,92,3,12,6,0,91,89,1,0,0,
+		0,92,95,1,0,0,0,93,91,1,0,0,0,93,94,1,0,0,0,94,96,1,0,0,0,95,93,1,0,0,
+		0,96,97,5,8,0,0,97,11,1,0,0,0,98,99,5,11,0,0,99,13,1,0,0,0,100,101,5,9,
+		0,0,101,102,3,10,5,0,102,15,1,0,0,0,103,105,5,11,0,0,104,106,3,18,9,0,
+		105,104,1,0,0,0,105,106,1,0,0,0,106,17,1,0,0,0,107,108,5,6,0,0,108,113,
+		3,20,10,0,109,110,5,7,0,0,110,112,3,20,10,0,111,109,1,0,0,0,112,115,1,
+		0,0,0,113,111,1,0,0,0,113,114,1,0,0,0,114,116,1,0,0,0,115,113,1,0,0,0,
+		116,117,5,8,0,0,117,19,1,0,0,0,118,119,5,11,0,0,119,21,1,0,0,0,120,121,
+		5,12,0,0,121,122,5,2,0,0,122,125,3,24,12,0,123,124,5,10,0,0,124,126,3,
+		28,14,0,125,123,1,0,0,0,125,126,1,0,0,0,126,23,1,0,0,0,127,129,3,26,13,
+		0,128,127,1,0,0,0,129,130,1,0,0,0,130,128,1,0,0,0,130,131,1,0,0,0,131,
+		25,1,0,0,0,132,133,7,1,0,0,133,27,1,0,0,0,134,135,5,18,0,0,135,29,1,0,
+		0,0,14,32,38,43,50,53,63,69,78,84,93,105,113,125,130
 	};
 
 	public static readonly ATN _ATN =
