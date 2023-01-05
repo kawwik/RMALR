@@ -28,28 +28,33 @@ public class ParserGenerator2 : IParserGenerator
     private MethodBuilder BuildRuleReadingMethod(NamedRule rule)
     {
         var methodBuilder = MethodBuilder.BuildParserMethod(rule.Name.Capitalize());
-        methodBuilder.AddBodyStatements(ReadRule(rule.Rule));
-
+        var bodyBuilder = new BodyBuilder();
+        bodyBuilder.AddStatements(ReadRule(rule.Rule));
+        
+        methodBuilder.AddBodyStatements(bodyBuilder);
+        
         return methodBuilder;
     }
 
-    private BodyBuilder ReadTokenRule(TokenRule tokenRule)
+    private StatementSyntax[] ReadTokenRule(TokenRule tokenRule)
     {
         var bodyBuilder = new BodyBuilder();
         bodyBuilder.AddTerminalNodeReading(tokenRule.TokenType);
+        bodyBuilder.PopChildAddingStatement();
         
-        return bodyBuilder;
+        return bodyBuilder.GetStatements();
     }
 
-    private BodyBuilder ReadNamedRule(NamedRule namedRule)
+    private StatementSyntax[] ReadNamedRule(NamedRule namedRule)
     {
         var bodyBuilder = new BodyBuilder();
         bodyBuilder.AddNonTerminalNodeReading(namedRule.Name);
+        bodyBuilder.PopChildAddingStatement();
         
-        return bodyBuilder;
+        return bodyBuilder.GetStatements();
     }
 
-    private BodyBuilder ReadOptionsRule(OptionsRule optionsRule)
+    private StatementSyntax ReadOptionsRule(OptionsRule optionsRule)
     {
         var switchBuilder = new SwitchBuilder();
 
@@ -58,7 +63,7 @@ public class ParserGenerator2 : IParserGenerator
             var first = option.First();
             var caseBuilder = new SwitchCaseBuilder();
             caseBuilder.AddLabels(first.ToArray());
-            caseBuilder.AddStatements();
+            caseBuilder.AddStatements(ReadRule(option));
 
             switchBuilder.AddCase(caseBuilder);
         }
@@ -66,32 +71,29 @@ public class ParserGenerator2 : IParserGenerator
         if (!optionsRule.First().Contains(EmptyToken.TokenType))
             switchBuilder.AddDefaultThrow();
 
-        var bodyBuilder = new BodyBuilder();
-        bodyBuilder.AddStatements(switchBuilder.GetSwitchStatement());
-        return bodyBuilder;
+        return switchBuilder.GetSwitchStatement();
     }
 
-    private BodyBuilder ReadCompositeRule(CompositeRule compositeRule)
+    private StatementSyntax[] ReadCompositeRule(CompositeRule compositeRule)
     {
         var bodyBuilder = new BodyBuilder();
 
         foreach (var rule in compositeRule.Rules)
         {
-            bodyBuilder.Append(ReadRule(rule));
+            bodyBuilder.AddStatements(ReadRule(rule));
         }
 
-        bodyBuilder.PopChildAddingStatement();
-        return bodyBuilder;
+        return bodyBuilder.GetStatements();
     }
 
-    private BodyBuilder ReadRule(Rule rule)
+    private StatementSyntax[] ReadRule(Rule rule)
     {
         return rule switch
         {
-            EmptyRule => new BodyBuilder(),
+            EmptyRule => Array.Empty<StatementSyntax>(),
             TokenRule tokenRule => ReadTokenRule(tokenRule),
             NamedRule namedRule => ReadNamedRule(namedRule),
-            OptionsRule optionsRule => ReadOptionsRule(optionsRule),
+            OptionsRule optionsRule => new[] { ReadOptionsRule(optionsRule) },
             CompositeRule compositeRule => ReadCompositeRule(compositeRule)
         };
     }

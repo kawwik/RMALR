@@ -32,11 +32,6 @@ public class SwitchCaseBuilder
     {
         _switchSection = _switchSection.AddStatements(statements);
     }
-    
-    public void AddStatements(BodyBuilder bodyBuilder)
-    {
-        _switchSection = _switchSection.AddStatements(bodyBuilder.GetStatements());
-    }
 
     public void AddThrowStatement(string exceptionName, string message)
     {

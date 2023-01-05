@@ -11,14 +11,19 @@ public class Lab2Parser : ParserBase
     public NonTerminalNode ReadANode()
     {
         var result = new NonTerminalNode("A");
+        result.AddChildren(ReadTerminal("VARIABLE"));
         switch (CurrentToken.Type)
         {
             case "AND":
+                result.AddChildren(ReadTerminal("AND"));
+                result.AddChildren(ReadTerminal("NOT"));
                 break;
             case "NOT":
+                result.AddChildren(ReadTerminal("NOT"));
                 break;
         }
 
+        result.AddChildren(ReadTerminal("VARIABLE"));
         return result;
     }
 }
