@@ -1,4 +1,11 @@
-a: VARIABLE ((AND NOT) | NOT)? VARIABLE;
+start: xor?;
+xor: or xorAddition;
+xorAddition: (XOR or xorAddition)?;
+or: and orAddition;
+orAddition: (OR and orAddition)?;
+and: term andAddition;
+andAddition: (AND term andAddition)?;
+term: NOT term | VARIABLE | LEFT_PAR xor RIGHT_PAR;
 
 AND: "and";
 OR: "or";

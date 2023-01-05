@@ -17,5 +17,5 @@ recognizerGenerator.Generate(
 var tokenizer = new Lab2Lexer();
 var tokenStream = tokenizer.GetTokenStream("a and not b");
 var parser = new Lab2Parser(tokenStream);
-var a = parser.ReadANode();
+var a = parser.ReadStartNode();
 Console.WriteLine();

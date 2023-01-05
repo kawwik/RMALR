@@ -48,7 +48,7 @@ public class ParserGenerator : IParserGenerator
     private StatementSyntax[] ReadNamedRule(NamedRule namedRule)
     {
         var bodyBuilder = new BodyBuilder();
-        bodyBuilder.AddNonTerminalNodeReading(namedRule.Name);
+        bodyBuilder.AddNonTerminalNodeReading(namedRule.Name.Capitalize());
         bodyBuilder.PopChildAddingStatement();
         
         return bodyBuilder.GetStatements();
