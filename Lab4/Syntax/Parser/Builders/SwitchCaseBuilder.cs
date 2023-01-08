@@ -33,11 +33,11 @@ public class SwitchCaseBuilder
         _switchSection = _switchSection.AddStatements(statements);
     }
 
-    public void AddThrowStatement(string exceptionName, string message)
+    public void AddThrowStatement(string exceptionName, params ArgumentSyntax[] arguments)
     {
         var throwStatement = ThrowStatement(
             ObjectCreationExpression(ParseTypeName(exceptionName))
-                .AddArgumentListArguments(Argument(StringLiteralExpression(message))));
+                .AddArgumentListArguments(arguments));
 
         AddStatements(throwStatement);
     }

@@ -17,7 +17,8 @@ public class ParserBuilder
         _compilationUnit = CompilationUnit().AddUsings(
             UsingDirective(ParseName("Lab4.Lexis.Lexers")),
             UsingDirective(ParseName("Lab4.Syntax.Nodes")),
-            UsingDirective(ParseName("Lab4.Syntax.Parser")));
+            UsingDirective(ParseName("Lab4.Syntax.Parser")),
+            UsingDirective(ParseName("Lab4.Exceptions")));
         
         var parserName = $"{grammarName}Parser";
 

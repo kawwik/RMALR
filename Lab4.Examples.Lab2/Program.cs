@@ -1,5 +1,5 @@
-﻿using Lab4.Examples.Lab2.Generated;
-using Lab4.Lexis;
+﻿using Lab4.Lexis;
+using Lab4.Lexis.Examples;
 using Lab4.RecognizerGenerators;
 using Lab4.Syntax.Parser;
 using Lab4.Visualization;

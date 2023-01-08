@@ -1,5 +1,6 @@
 ﻿using Lab4.Exceptions;
 using Lab4.Lexis.Lexers;
+using Lab4.Lexis.Tokens;
 using Lab4.Syntax.Nodes;
 using IToken = Lab4.Lexis.Tokens.IToken;
 
@@ -20,8 +21,11 @@ public abstract class ParserBase
 
     protected TerminalNode ReadTerminal(string type)
     {
+        if (CurrentToken.Type == FinishToken.TokenType)
+            throw new UnexpectedTokenException("Неожиданный конец файла");
+        
         if (CurrentToken.Type != type)
-            throw new UnexpectedTokenException("Неожиданный токен");
+            throw new UnexpectedTokenException(CurrentToken);
 
         var terminalNode = new TerminalNode(CurrentToken);
         NextToken();

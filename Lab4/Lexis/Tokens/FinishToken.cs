@@ -2,7 +2,8 @@
 
 public class FinishToken : IToken
 {
-    public string Type => "@FINISH";
+    public const string TokenType = "@FINISH";
+    public string Type => TokenType;
     public string Value => string.Empty;
     public int Length => 0;
 }

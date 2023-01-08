@@ -1,8 +1,7 @@
 using Lab4.Lexis.Lexers;
 using Lab4.Syntax.Nodes;
 using Lab4.Syntax.Parser;
-
-namespace Lab4.Examples.Lab2.Generated;
+using Lab4.Exceptions;
 
 public class Lab2Parser : ParserBase
 {
@@ -110,7 +109,7 @@ public class Lab2Parser : ParserBase
                 result.AddChildren(ReadTerminal("RIGHT_PAR"));
                 break;
             default:
-                throw new InvalidOperationException("Неожиданный токен");
+                throw new UnexpectedTokenException(CurrentToken);
                 break;
         }
 

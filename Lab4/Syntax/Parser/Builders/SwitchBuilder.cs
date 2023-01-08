@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
+﻿using Lab4.Exceptions;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
@@ -28,7 +29,9 @@ public class SwitchBuilder
     public void AddDefaultThrow()
     {
         var section = SwitchCaseBuilder.BuildDefaultCase();
-        section.AddThrowStatement(nameof(InvalidOperationException), "Неожиданный токен");
+        section.AddThrowStatement(
+            nameof(UnexpectedTokenException), 
+            Argument(IdentifierName("CurrentToken")));
 
         _switchStatement = _switchStatement.AddSections(section.GetSection());
     }
