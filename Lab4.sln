@@ -4,7 +4,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab4", "Lab4\Lab4.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab4.Tests", "Lab4.Tests\Lab4.Tests.csproj", "{A703AFAF-6177-4092-83B5-D7E86F2E6B53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab4.Examples", "Lab4.Examples\Lab4.Examples.csproj", "{1CB7BA57-9AB4-4732-A550-99AAFF124445}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab4.Examples.Lab2", "Lab4.Examples.Lab2\Lab4.Examples.Lab2.csproj", "{1CB7BA57-9AB4-4732-A550-99AAFF124445}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{C5976E84-CD06-48D9-978E-9998819C4AEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab4.Examples.Calculator", "Lab4.Examples.Calculator\Lab4.Examples.Calculator.csproj", "{664B913B-5414-4D06-A1B6-4146026C91F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +28,13 @@ Global
 		{1CB7BA57-9AB4-4732-A550-99AAFF124445}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CB7BA57-9AB4-4732-A550-99AAFF124445}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CB7BA57-9AB4-4732-A550-99AAFF124445}.Release|Any CPU.Build.0 = Release|Any CPU
+		{664B913B-5414-4D06-A1B6-4146026C91F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{664B913B-5414-4D06-A1B6-4146026C91F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{664B913B-5414-4D06-A1B6-4146026C91F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{664B913B-5414-4D06-A1B6-4146026C91F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1CB7BA57-9AB4-4732-A550-99AAFF124445} = {C5976E84-CD06-48D9-978E-9998819C4AEE}
+		{664B913B-5414-4D06-A1B6-4146026C91F0} = {C5976E84-CD06-48D9-978E-9998819C4AEE}
 	EndGlobalSection
 EndGlobal
