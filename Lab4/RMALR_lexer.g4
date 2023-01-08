@@ -27,3 +27,9 @@ SKIP_RULE: '@skip';
 
 WHITESPACES: ' '+ -> skip;
 NEWLINE: '\r'? '\n';
+
+OPEN_BRACE: '{' -> pushMode(ACTION);
+
+mode ACTION;
+CLOSE_BRACE: '}' -> popMode;
+CODE: [ a-zA-Z0-9.=]+;

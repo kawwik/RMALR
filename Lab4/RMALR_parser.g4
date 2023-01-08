@@ -2,29 +2,31 @@ parser grammar RMALR_parser;
 
 options { tokenVocab=RMALR_lexer; }
 
-start: ((token | rule_definition) SEMICOLON NEWLINE*)* EOF;
+start: ((token | rule_definition) ';' NEWLINE*)* EOF;
 
 // Grammar
-rule_definition: IDENTIFIER attribute_list? returned_attributes? COLON rule_body;
-rule_body: rule_option (OPTION_MARK rule_option)*;
+rule_definition: IDENTIFIER attribute_list? returned_attributes? ':' rule_body;
+rule_body: rule_option ('|' rule_option)*;
 rule_option: rule_part+;
 rule_part
     : rule_invocation
     | TOKEN_NAME 
-    | LEFT_PAR rule_body RIGHT_PAR
-    | rule_part (QUESTION_MARK | PLUS | MULTIPLY);
+    | '(' rule_body ')'
+    | rule_part ('?' | '+' | '*');
 
-attribute_list: LEFT_SQUARE attribute (COMMA attribute)* RIGHT_SQUARE;
+attribute_list: '[' attribute (',' attribute)* ']';
 attribute: IDENTIFIER;
 
 returned_attributes: RETURNS attribute_list;
 
 rule_invocation: IDENTIFIER argument_list?;
-argument_list: LEFT_SQUARE argument (COMMA argument)* RIGHT_SQUARE;
+argument_list: '[' argument (',' argument)* ']';
 argument: IDENTIFIER;
 
+action: '{' CODE '}';
+
 // Lexis
-token: TOKEN_NAME COLON patterns (ARROW lexer_rule)?;
+token: TOKEN_NAME ':' patterns ('->' lexer_rule)?;
 patterns: pattern+;
 pattern: TOKEN_NAME | REGEXP;
 
