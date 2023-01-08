@@ -12,5 +12,9 @@
         <PackageReference Include="Antlr4.Runtime.Standard" Version="4.10.1" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Generated\Lab4" />
+    </ItemGroup>
 
 </Project>

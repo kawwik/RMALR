@@ -23,21 +23,21 @@ public class RecognizerGenerator : IRecognizerGenerator
     {
         var inputText = File.ReadAllText(inputFile);
         
-        var lexer = new RMALRLexer(CharStreams.fromString(inputText));
-        var parser = new RMALRParser(new CommonTokenStream(lexer));
+        var lexer = new RMALR_lexer(CharStreams.fromString(inputText));
+        var parser = new RMALR_parser(new CommonTokenStream(lexer));
 
         var tree = parser.start(); 
         GenerateLexer(tree, outputDirectory + $"/{grammarName}Lexer.cs", grammarName);
         GenerateParser(tree, outputDirectory + $"/{grammarName}Parser.cs", grammarName);
     }
 
-    private void GenerateLexer(RMALRParser.StartContext tree, string outputFile, string grammarName)
+    private void GenerateLexer(RMALR_parser.StartContext tree, string outputFile, string grammarName)
     {
         var lexerCode = _lexerGenerator.Generate(tree, grammarName);
         File.WriteAllText(outputFile, lexerCode);
     }
 
-    private void GenerateParser(RMALRParser.StartContext tree, string outputFile, string grammarName)
+    private void GenerateParser(RMALR_parser.StartContext tree, string outputFile, string grammarName)
     {
         var parserCode = _parserGenerator.Generate(tree, grammarName);
         File.WriteAllText(outputFile, parserCode);

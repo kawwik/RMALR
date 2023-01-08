@@ -3,11 +3,11 @@ using Lab4.Syntax.Rules;
 
 namespace Lab4.Syntax;
 
-public class GrammarVisitor : RMALRBaseVisitor<Rule>
+public class GrammarVisitor : RMALR_parserBaseVisitor<Rule>
 {
     private readonly Dictionary<string, NamedRule> _ruleNameToRule = new();
 
-    public List<NamedRule> GetAllRules(RMALRParser.StartContext context)
+    public List<NamedRule> GetAllRules(RMALR_parser.StartContext context)
     {
         _ruleNameToRule.Clear();
 
@@ -18,7 +18,7 @@ public class GrammarVisitor : RMALRBaseVisitor<Rule>
             .ToList();
     }
 
-    private void DefineRules(RMALRParser.StartContext context)
+    private void DefineRules(RMALR_parser.StartContext context)
     {
         foreach (var ruleDefinition in context.rule_definition())
         {
@@ -39,7 +39,7 @@ public class GrammarVisitor : RMALRBaseVisitor<Rule>
         }
     }
 
-    public override NamedRule VisitRule_definition(RMALRParser.Rule_definitionContext context)
+    public override NamedRule VisitRule_definition(RMALR_parser.Rule_definitionContext context)
     {
         var namedRule = _ruleNameToRule[context.IDENTIFIER().GetText()];
         var ruleBody = VisitRule_body(context.rule_body());
@@ -49,14 +49,14 @@ public class GrammarVisitor : RMALRBaseVisitor<Rule>
     }
 
 
-    private List<string> VisitAttributeList(RMALRParser.Attribute_listContext context)
+    private List<string> VisitAttributeList(RMALR_parser.Attribute_listContext context)
     {
         return context.attribute()
             .Select(x => x.IDENTIFIER().Symbol.Text)
             .ToList();
     }
 
-    public override Rule VisitRule_body(RMALRParser.Rule_bodyContext context)
+    public override Rule VisitRule_body(RMALR_parser.Rule_bodyContext context)
     {
         var options = context.rule_option()
             .Select(VisitRule_option)
@@ -67,7 +67,7 @@ public class GrammarVisitor : RMALRBaseVisitor<Rule>
             : new OptionsRule(options);
     }
 
-    public override Rule VisitRule_option(RMALRParser.Rule_optionContext context)
+    public override Rule VisitRule_option(RMALR_parser.Rule_optionContext context)
     {
         var ruleParts = context.rule_part()
             .Select(VisitRule_part)
@@ -78,7 +78,7 @@ public class GrammarVisitor : RMALRBaseVisitor<Rule>
             : new CompositeRule(ruleParts);
     }
 
-    public override Rule VisitRule_part(RMALRParser.Rule_partContext context)
+    public override Rule VisitRule_part(RMALR_parser.Rule_partContext context)
     {
         if (context.TOKEN_NAME() is { } tokenName)
             return new TokenRule(tokenName.GetText());
@@ -105,7 +105,7 @@ public class GrammarVisitor : RMALRBaseVisitor<Rule>
         throw new NotImplementedException("Знаки *, + не реализованы");
     }
 
-    public override Rule VisitRule_invocation(RMALRParser.Rule_invocationContext context)
+    public override Rule VisitRule_invocation(RMALR_parser.Rule_invocationContext context)
     {
         var namedRule = _ruleNameToRule[context.IDENTIFIER().GetText()];
         
@@ -116,7 +116,7 @@ public class GrammarVisitor : RMALRBaseVisitor<Rule>
         return new InvocationRule(namedRule, argumentList);
     }
 
-    public IReadOnlyCollection<string> VisitArgumentList(RMALRParser.Argument_listContext context)
+    public IReadOnlyCollection<string> VisitArgumentList(RMALR_parser.Argument_listContext context)
     {
         return context.argument()
             .Select(x => x.IDENTIFIER().GetText())

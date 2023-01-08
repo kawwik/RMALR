@@ -10,7 +10,7 @@ namespace Lab4.Syntax.Parser;
 
 public class ParserGenerator : IParserGenerator
 {
-    public string Generate(RMALRParser.StartContext tree, string grammarName)
+    public string Generate(RMALR_parser.StartContext tree, string grammarName)
     {
         var grammarVisitor = new GrammarVisitor();
         var rules = grammarVisitor.GetAllRules(tree);

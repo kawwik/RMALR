@@ -6,9 +6,9 @@ using static Lab4.SyntaxFactory;
 
 namespace Lab4.Lexis;
 
-public class LexisVisitor : RMALRBaseVisitor<SyntaxNode>
+public class LexisVisitor : RMALR_parserBaseVisitor<SyntaxNode>
 {
-    public SyntaxNode ParseLexer(RMALRParser.StartContext startContext, string parserName)
+    public SyntaxNode ParseLexer(RMALR_parser.StartContext startContext, string parserName)
     {
         var compilationUnit = CompilationUnit()
             .AddUsings(
@@ -33,7 +33,7 @@ public class LexisVisitor : RMALRBaseVisitor<SyntaxNode>
         return compilationUnit.AddMembers(lexerClass);
     }
     
-    public override BlockSyntax VisitStart(RMALRParser.StartContext context)
+    public override BlockSyntax VisitStart(RMALR_parser.StartContext context)
     {
         var tokenNames = context.token().Select(x => x.TOKEN_NAME().Symbol.Text).ToArray();
 
@@ -54,7 +54,7 @@ public class LexisVisitor : RMALRBaseVisitor<SyntaxNode>
         return constructorBody;
     }
 
-    public override SyntaxNode VisitToken(RMALRParser.TokenContext context)
+    public override SyntaxNode VisitToken(RMALR_parser.TokenContext context)
     {
         var tokenName = context.TOKEN_NAME().Symbol.Text;
 
