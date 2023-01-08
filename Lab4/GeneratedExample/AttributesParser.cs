@@ -12,7 +12,7 @@ public class AttributesParser : ParserBase
     {
         var result = new NonTerminalNode("Start");
         result.AddChildren(ReadTerminal("NOT"));
-        result.AddChildren(ReadKekNode(lol));
+        result.AddChildren(ReadKekNode(result["lol"]));
         return result;
     }
 

@@ -54,7 +54,7 @@ public class ParserGenerator : IParserGenerator
         var bodyBuilder = new BodyBuilder();
 
         var arguments = invocationRule.Arguments
-            .Select(IdentifierName)
+            .Select(new AttributesService().ParseAttributeCall)
             .ToList();
         
         bodyBuilder.AddNonTerminalNodeReading(invocationRule.NamedRule.Name.Capitalize(), arguments);

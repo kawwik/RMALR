@@ -119,7 +119,7 @@ public class GrammarVisitor : RMALR_parserBaseVisitor<Rule>
     public IReadOnlyCollection<string> VisitArgumentList(RMALR_parser.Argument_listContext context)
     {
         return context.argument()
-            .Select(x => x.IDENTIFIER().GetText())
+            .Select(x => x.GetText())
             .ToList();
     }
 }
