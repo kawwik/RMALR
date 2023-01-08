@@ -1,4 +1,5 @@
 ﻿using Lab4.Syntax.Nodes;
+using Lab4.Utils;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
@@ -20,7 +21,7 @@ public class MethodBuilder
 
     public static MethodBuilder BuildParserMethod(string nodeType)
     {
-        var method = MethodDeclaration(ParseTypeName(nameof(NonTerminalNode)), $"Read{nodeType}Node")
+        var method = MethodDeclaration(ParseTypeName(nameof(NonTerminalNode)), $"Read{nodeType.Capitalize()}Node")
             .AddBodyStatements(
                 LocalDeclarationStatement(
                     VariableDeclarationWithCreation(

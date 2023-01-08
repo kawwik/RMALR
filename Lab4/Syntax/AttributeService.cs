@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Lab4.Syntax.Nodes;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
@@ -7,9 +8,17 @@ using static Lab4.SyntaxFactory;
 
 namespace Lab4.Syntax;
 
-public class AttributesService
+public static class AttributeService
 {
-    public ExpressionSyntax ParseAttributeCall(string attributeCall)
+    public static string ReplaceAttributeCalls(string code)
+    {
+        return Regex.Replace(
+            code,
+            @"\$[a-z][A-Za-z_]*[0-9]*(.[a-z][A-Za-z_]*)?",
+            match => ParseAttributeCall(match.Value).ToString());
+    }
+    
+    public static ExpressionSyntax ParseAttributeCall(string attributeCall)
     {
         if (!attributeCall.StartsWith("$"))
             return IdentifierName(attributeCall);

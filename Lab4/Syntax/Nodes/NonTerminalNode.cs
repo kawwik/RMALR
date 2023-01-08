@@ -1,6 +1,4 @@
-﻿using System.Collections.Immutable;
-
-namespace Lab4.Syntax.Nodes;
+﻿namespace Lab4.Syntax.Nodes;
 
 public class NonTerminalNode : Node
 {
@@ -15,7 +13,7 @@ public class NonTerminalNode : Node
 
     private Dictionary<string, dynamic> Attributes { get; } = new();
 
-    public dynamic this[string attribute]
+    public override dynamic this[string attribute]
     {
         get => Attributes[attribute];
         set => Attributes[attribute] = value;

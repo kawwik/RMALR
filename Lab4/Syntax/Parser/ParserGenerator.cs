@@ -1,9 +1,11 @@
-﻿using Lab4.Generated;
+﻿using System.Text.RegularExpressions;
+using Lab4.Generated;
 using Lab4.Lexis.Tokens;
 using Lab4.Syntax.Parser.Builders;
 using Lab4.Syntax.Parser.Interfaces;
 using Lab4.Syntax.Rules;
 using Lab4.Utils;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
@@ -30,7 +32,7 @@ public class ParserGenerator : IParserGenerator
 
     private MethodBuilder BuildRuleReadingMethod(NamedRule rule)
     {
-        var methodBuilder = MethodBuilder.BuildParserMethod(rule.Name.Capitalize());
+        var methodBuilder = MethodBuilder.BuildParserMethod(rule.Name);
         var bodyBuilder = new BodyBuilder();
         bodyBuilder.AddStatements(ReadRule(rule.Payload));
 
@@ -54,7 +56,7 @@ public class ParserGenerator : IParserGenerator
         var bodyBuilder = new BodyBuilder();
 
         var arguments = invocationRule.Arguments
-            .Select(new AttributesService().ParseAttributeCall)
+            .Select(AttributeService.ParseAttributeCall)
             .ToList();
         
         bodyBuilder.AddNonTerminalNodeReading(invocationRule.NamedRule.Name.Capitalize(), arguments);
@@ -95,6 +97,18 @@ public class ParserGenerator : IParserGenerator
         return bodyBuilder.GetStatements();
     }
 
+    private StatementSyntax[] ReadActionRule(ActionRule actionRule)
+    {
+        var statements = new List<StatementSyntax>(ReadRule(actionRule.Payload));
+        var actionCode = AttributeService.ReplaceAttributeCalls(actionRule.ActionCode);
+        var actionStatements = Regex.Split(actionCode,@"(?<=;)")
+            .Select(x => ParseStatement(x));
+        
+        statements.AddRange(actionStatements);
+
+        return statements.ToArray();
+    }
+
     private StatementSyntax[] ReadRule(Rule rule)
     {
         return rule switch
@@ -103,6 +117,7 @@ public class ParserGenerator : IParserGenerator
             TokenRule tokenRule => ReadTokenRule(tokenRule),
             InvocationRule invocationRule => ReadInvocationRule(invocationRule),
             OptionsRule optionsRule => new[] { ReadOptionsRule(optionsRule) },
+            ActionRule actionRule => ReadActionRule(actionRule),
             CompositeRule compositeRule => ReadCompositeRule(compositeRule)
         };
     }

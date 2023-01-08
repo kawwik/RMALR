@@ -10,16 +10,17 @@ public class AttributesParser : ParserBase
 
     public NonTerminalNode ReadStartNode()
     {
-        var result = new NonTerminalNode("Start");
-        result.AddChildren(ReadTerminal("NOT"));
-        result.AddChildren(ReadKekNode(result["lol"]));
+        var result = new NonTerminalNode("start");
+        result.AddChildren(ReadKekNode());
+        Console.WriteLine(result.GetChild("kek", 1)["value"] + 1);
         return result;
     }
 
-    public NonTerminalNode ReadKekNode(dynamic val)
+    public NonTerminalNode ReadKekNode()
     {
-        var result = new NonTerminalNode("Kek");
-        result.AddChildren(ReadTerminal("VARIABLE"));
+        var result = new NonTerminalNode("kek");
+        result.AddChildren(ReadTerminal("XOR"));
+        result["value"] = 5;
         return result;
     }
 }

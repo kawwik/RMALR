@@ -14,8 +14,14 @@ recognizerGenerator.Generate(
     "Attributes");
 
 
-var tokenizer = new Lab2Lexer();
-var tokenStream = tokenizer.GetTokenStream("a and not b");
-var parser = new Lab2Parser(tokenStream);
-var a = parser.ReadStartNode();
+// var tokenizer = new Lab2Lexer();
+// var tokenStream = tokenizer.GetTokenStream("a and not b");
+// var parser = new Lab2Parser(tokenStream);
+// var a = parser.ReadStartNode();
+
+var tokenizer = new AttributesLexer();
+var tokenStream = tokenizer.GetTokenStream("xor");
+var parser = new AttributesParser(tokenStream);
+parser.ReadStartNode();
+
 Console.WriteLine();

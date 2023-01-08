@@ -1,5 +1,5 @@
-﻿start @returns [lol]: NOT kek [$lol];
-kek [val] : VARIABLE; 
+﻿start: kek { Console.WriteLine($kek.value); };
+kek @returns [value]: XOR {$value=5;}; 
 
 AND: "and";
 OR: "or";
