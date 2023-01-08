@@ -1,7 +1,7 @@
 using Lab4.Lexis.Lexers;
 using Lab4.Lexis.Matchers;
 
-namespace Lab4.Lexis.Examples;
+namespace Lab4.Examples.Calculator.Generated;
 public class AttributesLexer : TokenizerBase
 {
     public AttributesLexer()

@@ -2,7 +2,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
-using static Lab4.SyntaxFactory;
+using static Lab4.Syntax.SyntaxFactory;
 
 namespace Lab4.Lexis;
 

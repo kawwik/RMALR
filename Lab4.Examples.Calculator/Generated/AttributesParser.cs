@@ -2,6 +2,8 @@ using Lab4.Lexis.Lexers;
 using Lab4.Syntax.Nodes;
 using Lab4.Syntax.Parser;
 
+namespace Lab4.Examples.Calculator.Generated;
+
 public class AttributesParser : ParserBase
 {
     public AttributesParser(ITokenStream tokenStream) : base(tokenStream)

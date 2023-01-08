@@ -4,12 +4,13 @@ using Lab4.Lexis.Tokens;
 using Lab4.Syntax.Parser.Builders;
 using Lab4.Syntax.Parser.Interfaces;
 using Lab4.Syntax.Rules;
+using Lab4.Syntax.Rules.BaseClasses;
 using Lab4.Utils;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
-using static Lab4.SyntaxFactory;
+using static Lab4.Syntax.SyntaxFactory;
 
 namespace Lab4.Syntax.Parser;
 

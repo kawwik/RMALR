@@ -19,6 +19,8 @@ public class NonTerminalNode : Node
         set => Attributes[attribute] = value;
     }
 
+    public override IReadOnlyCollection<ITreeNode> Children => _children;
+
     public void AddChildren(params Node[] nodes) => _children.AddRange(nodes);
 
     public Node GetChild(string type, int number)

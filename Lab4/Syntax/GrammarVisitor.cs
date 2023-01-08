@@ -1,5 +1,6 @@
 ﻿using Lab4.Generated;
 using Lab4.Syntax.Rules;
+using Lab4.Syntax.Rules.BaseClasses;
 
 namespace Lab4.Syntax;
 

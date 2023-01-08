@@ -24,4 +24,10 @@ public class TerminalNode : Node
         }
         set => throw new NotSupportedException("Нельзя изменить атрибуты терминального узла");
     }
+
+    public override IReadOnlyCollection<ITreeNode> Children { get; } = Array.Empty<ITreeNode>();
+
+    public override bool Empty => false;
+
+    public override string Name => $"Token: {Token.Value}";
 }

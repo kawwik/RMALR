@@ -1,4 +1,6 @@
-﻿namespace Lab4.Syntax.Rules;
+﻿using Lab4.Syntax.Rules.BaseClasses;
+
+namespace Lab4.Syntax.Rules;
 
 public class NamedRule : Rule
 {

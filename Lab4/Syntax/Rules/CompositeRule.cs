@@ -1,4 +1,5 @@
 ﻿using Lab4.Lexis.Tokens;
+using Lab4.Syntax.Rules.BaseClasses;
 
 namespace Lab4.Syntax.Rules;
 
