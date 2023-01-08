@@ -12,7 +12,8 @@ public class AttributesParser : ParserBase
     {
         var result = new NonTerminalNode("start");
         result.AddChildren(ReadKekNode());
-        Console.WriteLine(result.GetChild("kek", 1)["value"] + 1);
+        result.AddChildren(ReadZhopaNode(result.GetChild("kek", 1)["value"]));
+        Console.WriteLine(result.GetChild("zhopa", 1)["res"]);
         return result;
     }
 
@@ -21,6 +22,14 @@ public class AttributesParser : ParserBase
         var result = new NonTerminalNode("kek");
         result.AddChildren(ReadTerminal("XOR"));
         result["value"] = 5;
+        return result;
+    }
+
+    public NonTerminalNode ReadZhopaNode(dynamic i)
+    {
+        var result = new NonTerminalNode("zhopa");
+        result.AddChildren(ReadTerminal("OR"));
+        result["res"] = i * 2;
         return result;
     }
 }

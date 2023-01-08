@@ -1,5 +1,6 @@
-﻿start: kek { Console.WriteLine($kek.value); };
+﻿start: kek zhopa[$kek.value] { Console.WriteLine($zhopa.res); };
 kek @returns [value]: XOR {$value=5;}; 
+zhopa[i] @returns [res]: OR {$res = i * 2;};
 
 AND: "and";
 OR: "or";

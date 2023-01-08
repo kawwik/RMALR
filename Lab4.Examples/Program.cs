@@ -9,8 +9,8 @@ var parserGenerator = new ParserGenerator();
 var recognizerGenerator = new RecognizerGenerator(lexerGenerator, parserGenerator);
 
 recognizerGenerator.Generate(
-    @"C:\Users\79148\RiderProjects\Lab4\Lab4\attributes.rma",
-    @"C:\Users\79148\RiderProjects\Lab4\Lab4\GeneratedExample",
+    @"C:\Users\79148\RiderProjects\Lab4\Lab4.Examples\attributes.rma",
+    @"C:\Users\79148\RiderProjects\Lab4\Lab4.Examples\Generated",
     "Attributes");
 
 
@@ -20,7 +20,7 @@ recognizerGenerator.Generate(
 // var a = parser.ReadStartNode();
 
 var tokenizer = new AttributesLexer();
-var tokenStream = tokenizer.GetTokenStream("xor");
+var tokenStream = tokenizer.GetTokenStream("xor or");
 var parser = new AttributesParser(tokenStream);
 parser.ReadStartNode();
 

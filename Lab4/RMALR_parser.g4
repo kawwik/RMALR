@@ -21,7 +21,7 @@ returned_attributes: RETURNS attribute_list;
 
 rule_invocation: IDENTIFIER argument_list?;
 argument_list: '[' argument (',' argument)* ']';
-argument: '$'? IDENTIFIER;
+argument: '$'? IDENTIFIER ('.' IDENTIFIER);
 
 action: '{' CODE '}';
 

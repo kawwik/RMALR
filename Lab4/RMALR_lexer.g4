@@ -15,6 +15,7 @@ LEFT_SQUARE: '[';
 RIGHT_SQUARE: ']';
 ARROW: '->';
 DOLLAR: '$';
+DOT: '.';
 
 RETURNS: '@returns';
 
