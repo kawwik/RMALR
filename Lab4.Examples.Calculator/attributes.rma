@@ -1,13 +1,13 @@
-﻿start: kek zhopa[$kek.value] { Console.WriteLine($zhopa.res); };
-kek @returns [value]: XOR {$value=5;}; 
-zhopa[i] @returns [res]: OR {$res = i * 2;};
+﻿start: NUMBER { Console.WriteLine(int.Parse($NUMBER.text) * 2);};
 
-AND: "and";
-OR: "or";
-XOR: "xor";
-NOT: "not";
+PLUS: "\+";
+MINUS: "-";
+DIVIDE: "/";
+MULTIPLY: "\*";
+
 LEFT_PAR: "\(";
 RIGHT_PAR: "\)";
-VARIABLE: "[a-z]";
+
+NUMBER: "[0-9]+";
 
 SPACES: " +" -> @skip;

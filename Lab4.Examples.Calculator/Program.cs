@@ -1,5 +1,5 @@
-﻿using Lab4.Examples.Calculator.Generated;
-using Lab4.Lexis;
+﻿using Lab4.Lexis;
+using Lab4.Lexis.Examples;
 using Lab4.RecognizerGenerators;
 using Lab4.Syntax.Parser;
 
@@ -15,6 +15,6 @@ recognizerGenerator.Generate(
 
 
 var tokenizer = new AttributesLexer();
-var tokenStream = tokenizer.GetTokenStream("xor or");
+var tokenStream = tokenizer.GetTokenStream("5");
 var parser = new AttributesParser(tokenStream);
 parser.ReadStartNode();

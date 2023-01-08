@@ -28,6 +28,7 @@ public class AttributeServiceTests
     [InlineData(@"val = $exprP.val;", @"val = result.GetChild(""exprP"",1)[""val""];")]
     [InlineData(@"val = $exprP1.val;", @"val = result.GetChild(""exprP"",1)[""val""];")]
     [InlineData(@"val = $exprP2.val;", @"val = result.GetChild(""exprP"",2)[""val""];")]
+    [InlineData("Console.WriteLine($NUMBER.text);", @"Console.WriteLine(result.GetChild(""NUMBER"",1)[""text""]);")]
     public void ReplaceAttributeCalls_CorrectlyReplaced(string code, string expected)
     {
         // Arrange.

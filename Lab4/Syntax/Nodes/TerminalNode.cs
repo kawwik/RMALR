@@ -17,7 +17,7 @@ public class TerminalNode : Node
     {
         get
         {
-            if (attribute == "TEXT")
+            if (attribute == "text")
                 return Token.Value;
 
             throw new InvalidOperationException("Терминальный узел не содержит таких атрибутов");

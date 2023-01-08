@@ -14,7 +14,7 @@ public static class AttributeService
     {
         return Regex.Replace(
             code,
-            @"\$[a-z][A-Za-z_]*[0-9]*(.[a-z][A-Za-z_]*)?",
+            @"\$[A-Za-z_]+[0-9]*(.[a-z][A-Za-z_]*)?",
             match => ParseAttributeCall(match.Value).ToString());
     }
     
