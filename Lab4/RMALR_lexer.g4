@@ -15,7 +15,7 @@ LEFT_SQUARE: '[';
 RIGHT_SQUARE: ']';
 ARROW: '->';
 
-RETURNS: 'returns';
+RETURNS: '@returns';
 
 QUESTION_MARK: '?';
 PLUS: '+';

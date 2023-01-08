@@ -8,9 +8,10 @@ public class AttributesParser : ParserBase
     {
     }
 
-    public NonTerminalNode ReadStartNode(dynamic lol)
+    public NonTerminalNode ReadStartNode()
     {
         var result = new NonTerminalNode("Start");
+        dynamic lol;
         result.AddChildren(ReadTerminal("NOT"));
         result.AddChildren(ReadKekNode(lol));
         return result;
