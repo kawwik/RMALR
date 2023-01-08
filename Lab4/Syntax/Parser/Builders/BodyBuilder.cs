@@ -44,7 +44,7 @@ public class BodyBuilder
     {
         _block = _block.AddStatements(statements);
     }
-    
+
     private void PushChildAdding(ExpressionSyntax childExpression)
     {
         _childAddInvocation ??= BuildChildAddingInvocation().AddArgumentListArguments(Argument(childExpression));

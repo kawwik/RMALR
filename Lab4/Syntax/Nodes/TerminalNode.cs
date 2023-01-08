@@ -10,4 +10,6 @@ public class TerminalNode : Node
     }
 
     public IToken Token { get; }
+
+    public override string Type => Token.Type;
 }

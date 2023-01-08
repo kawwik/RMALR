@@ -6,6 +6,9 @@ using Lab4.Syntax.Rules;
 using Lab4.Utils;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
+using static Lab4.SyntaxFactory;
+
 namespace Lab4.Syntax.Parser;
 
 public class ParserGenerator : IParserGenerator
@@ -31,11 +34,6 @@ public class ParserGenerator : IParserGenerator
         var bodyBuilder = new BodyBuilder();
         bodyBuilder.AddStatements(ReadRule(rule.Payload));
 
-        foreach (var attribute in rule.SynthesizedAttribute)
-        {
-            methodBuilder.AddVariableDefinition("dynamic", attribute);
-        }
-
         methodBuilder.AddBodyStatements(bodyBuilder);
         methodBuilder.AddParameters(rule.InheritedAttributes.ToArray());
         
@@ -56,7 +54,7 @@ public class ParserGenerator : IParserGenerator
         var bodyBuilder = new BodyBuilder();
 
         var arguments = invocationRule.Arguments
-            .Select(Microsoft.CodeAnalysis.CSharp.SyntaxFactory.IdentifierName)
+            .Select(IdentifierName)
             .ToList();
         
         bodyBuilder.AddNonTerminalNodeReading(invocationRule.NamedRule.Name.Capitalize(), arguments);

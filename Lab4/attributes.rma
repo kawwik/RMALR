@@ -1,4 +1,4 @@
-﻿start @returns [lol]: NOT kek [lol];
+﻿start @returns [lol]: NOT kek [$lol];
 kek [val] : VARIABLE; 
 
 AND: "and";

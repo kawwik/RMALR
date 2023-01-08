@@ -6,18 +6,25 @@ public class NonTerminalNode : Node
 {
     private readonly List<Node> _children = new();
 
-    private readonly Dictionary<string, dynamic> _attributes = new();
-
     public NonTerminalNode(string type)
     {
         Type = type;
     }
 
-    public string Type { get; }
+    public override string Type { get; }
 
-    public ImmutableDictionary<string, dynamic> Attributes => _attributes.ToImmutableDictionary();
+    private Dictionary<string, dynamic> Attributes { get; } = new();
+
+    public dynamic this[string attribute]
+    {
+        get => Attributes[attribute];
+        set => Attributes[attribute] = value;
+    }
 
     public void AddChildren(params Node[] nodes) => _children.AddRange(nodes);
 
-    public void AddAttribute(string name, dynamic value) => _attributes.Add(name, value);
+    public Node GetChild(string type, int number)
+    {
+        return _children.Where(x => x.Type == type).ToArray()[number - 1];
+    } 
 }

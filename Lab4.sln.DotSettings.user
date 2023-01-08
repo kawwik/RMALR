@@ -3,5 +3,6 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::A703AFAF-6177-4092-83B5-D7E86F2E6B53::net6.0::Lab4.Tests.RegexMatcherTests.GetMatchingOffset_StringStartsWithRegex_ReturnCorrectNumber&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::A703AFAF-6177-4092-83B5-D7E86F2E6B53::net6.0::Lab4.Tests.RegexMatcherTests.GetMatchingOffset_StringDoesntStartWithRegex_ReturnZero&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A703AFAF-6177-4092-83B5-D7E86F2E6B53::net6.0::Lab4.Tests.AttributeServiceTests.ParseAttributeCall_CorrectlyParsed&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
