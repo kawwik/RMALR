@@ -17,6 +17,8 @@ namespace Lab4.Syntax.Parser;
 
 public class ParserGenerator : IParserGenerator
 {
+    private Dictionary<Rule, HashSet<string>> _follows = new();
+
     public string Generate(RMALR_parser.StartContext tree, string grammarName)
     {
         var grammarVisitor = new GrammarVisitor();
@@ -24,7 +26,7 @@ public class ParserGenerator : IParserGenerator
 
         var parserBuilder = new ParserBuilder(grammarName);
 
-        var follows = new FollowCalculator().Calculate(rules.ToArray());
+        _follows = new FollowCalculator().Calculate(rules.ToArray());
 
         foreach (var rule in rules)
         {
@@ -83,8 +85,15 @@ public class ParserGenerator : IParserGenerator
             switchBuilder.AddCase(caseBuilder);
         }
 
-        if (!optionsRule.First().Contains(EmptyToken.TokenType))
-            switchBuilder.AddDefaultThrow();
+        if (optionsRule.First().Contains(EmptyToken.TokenType))
+        {
+            var emptyCaseBuilder = new SwitchCaseBuilder();
+            emptyCaseBuilder.AddLabels(_follows[optionsRule].ToArray());
+            
+            switchBuilder.AddCase(emptyCaseBuilder);
+        }
+
+        switchBuilder.AddDefaultThrow();
 
         return switchBuilder.GetSwitchStatement();
     }

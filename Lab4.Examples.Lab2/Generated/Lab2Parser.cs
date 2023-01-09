@@ -17,6 +17,11 @@ public class Lab2Parser : ParserBase
             case "NOT" or "VARIABLE" or "LEFT_PAR":
                 result.AddChildren(ReadXorNode());
                 break;
+            case "@FINISH":
+                break;
+            default:
+                throw new UnexpectedTokenException(CurrentToken);
+                break;
         }
 
         return result;
@@ -39,6 +44,11 @@ public class Lab2Parser : ParserBase
                 result.AddChildren(ReadTerminal("XOR"));
                 result.AddChildren(ReadOrNode());
                 result.AddChildren(ReadXorAdditionNode());
+                break;
+            case "RIGHT_PAR" or "@FINISH":
+                break;
+            default:
+                throw new UnexpectedTokenException(CurrentToken);
                 break;
         }
 
@@ -63,6 +73,11 @@ public class Lab2Parser : ParserBase
                 result.AddChildren(ReadAndNode());
                 result.AddChildren(ReadOrAdditionNode());
                 break;
+            case "XOR" or "RIGHT_PAR" or "@FINISH":
+                break;
+            default:
+                throw new UnexpectedTokenException(CurrentToken);
+                break;
         }
 
         return result;
@@ -85,6 +100,11 @@ public class Lab2Parser : ParserBase
                 result.AddChildren(ReadTerminal("AND"));
                 result.AddChildren(ReadTermNode());
                 result.AddChildren(ReadAndAdditionNode());
+                break;
+            case "OR" or "XOR" or "RIGHT_PAR" or "@FINISH":
+                break;
+            default:
+                throw new UnexpectedTokenException(CurrentToken);
                 break;
         }
 
