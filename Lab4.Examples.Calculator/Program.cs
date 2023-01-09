@@ -8,13 +8,13 @@ var parserGenerator = new ParserGenerator();
 
 var recognizerGenerator = new RecognizerGenerator(lexerGenerator, parserGenerator);
 
-recognizerGenerator.Generate(
-    @"C:\Users\79148\RiderProjects\Lab4\Lab4.Examples.Calculator\attributes.rma",
-    @"C:\Users\79148\RiderProjects\Lab4\Lab4.Examples.Calculator\Generated",
-    "Attributes");
+// recognizerGenerator.Generate(
+//     @"C:\Users\79148\RiderProjects\Lab4\Lab4.Examples.Calculator\calculator.rma",
+//     @"C:\Users\79148\RiderProjects\Lab4\Lab4.Examples.Calculator\Generated",
+//     "Calculator");
 
 
-var tokenizer = new AttributesLexer();
-var tokenStream = tokenizer.GetTokenStream("5");
-var parser = new AttributesParser(tokenStream);
+var tokenizer = new CalculatorLexer();
+var tokenStream = tokenizer.GetTokenStream("(5 + 2 * 8 * (3 + 1)) / 23");
+var parser = new CalculatorParser(tokenStream);
 parser.ReadStartNode();

@@ -2,9 +2,9 @@ using Lab4.Lexis.Lexers;
 using Lab4.Lexis.Matchers;
 
 namespace Lab4.Lexis.Examples;
-public class AttributesLexer : TokenizerBase
+public class CalculatorLexer : TokenizerBase
 {
-    public AttributesLexer()
+    public CalculatorLexer()
     {
         var PLUS = new TokenMatcher("PLUS", new RegexMatcher("\\+"));
         var MINUS = new TokenMatcher("MINUS", new RegexMatcher("-"));

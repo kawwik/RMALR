@@ -1,0 +1,37 @@
+﻿start: sum { Console.WriteLine($sum.val); };
+
+sum @returns [val] : term sum_addition [$term.val] { $val = $sum_addition.val; };
+
+sum_addition [i] @returns [val]
+    : PLUS term add[i, $term.val] sum_addition[$add.res] { $val = $sum_addition.val; }
+    | MINUS term sub[i, $term.val] sum_addition[$sub.res] { $val = $sum_addition.val; }
+    | { $val = i; };
+
+add [x, y] @returns [res]: { $res = x + y; };
+sub [x, y] @returns [res]: { $res = x - y; };
+
+term: fact mult_addition [$fact.val] { $val = $mult_addition.val; };
+
+mult_addition [i] @returns [val]
+    : MULTIPLY fact mul[i, $fact.val] mult_addition [$mul.res] { $val = $mult_addition.val; }
+    | DIVIDE fact div[i, $fact.val] mult_addition [$div.res] { $val = $mult_addition.val; }
+    | { $val = i; };
+
+mul [x, y] @returns [res]: { $res = x * y; };    
+div [x, y] @returns [res]: { $res = x / y; };    
+    
+fact @returns [val]
+    : NUMBER { $val = int.Parse($NUMBER.text); }
+    | LEFT_PAR sum RIGHT_PAR { $val = $sum.val; };    
+
+PLUS: "\+";
+MINUS: "-";
+DIVIDE: "/";
+MULTIPLY: "\*";
+
+LEFT_PAR: "\(";
+RIGHT_PAR: "\)";
+
+NUMBER: "[0-9]+";
+
+SPACES: " +" -> @skip;
