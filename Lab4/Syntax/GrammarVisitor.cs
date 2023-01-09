@@ -74,10 +74,13 @@ public class GrammarVisitor : RMALR_parserBaseVisitor<Rule>
             .Select(VisitRule_part)
             .ToArray();
 
-        var rule = ruleParts.Length == 1
-            ? ruleParts.First()
-            : new CompositeRule(ruleParts);
-
+        var rule = ruleParts.Length switch
+        {
+            0 => new EmptyRule(),
+            1 => ruleParts.Single(),
+            _ => new CompositeRule(ruleParts)
+        };
+        
         return context.action() is { } action 
             ? new ActionRule(rule, action.CODE().GetText())
             : rule;

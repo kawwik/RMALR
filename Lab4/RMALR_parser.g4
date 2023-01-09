@@ -7,7 +7,7 @@ start: ((token | rule_definition) ';' NEWLINE*)* EOF;
 // Grammar
 rule_definition: IDENTIFIER attribute_list? returned_attributes? ':' rule_body;
 rule_body: rule_option ('|' rule_option)*;
-rule_option: rule_part+ action?;
+rule_option: rule_part* action?;
 rule_part
     : rule_invocation
     | TOKEN_NAME 

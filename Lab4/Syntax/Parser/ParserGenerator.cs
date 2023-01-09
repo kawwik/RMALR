@@ -9,7 +9,6 @@ using Lab4.Syntax.Rules.Services;
 using Lab4.Utils;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using static Lab4.Syntax.SyntaxFactory;
 
@@ -44,7 +43,7 @@ public class ParserGenerator : IParserGenerator
 
         methodBuilder.AddBodyStatements(bodyBuilder);
         methodBuilder.AddParameters(rule.InheritedAttributes.ToArray());
-        
+
         return methodBuilder;
     }
 
@@ -53,7 +52,7 @@ public class ParserGenerator : IParserGenerator
         var bodyBuilder = new BodyBuilder();
         bodyBuilder.AddTerminalNodeReading(tokenRule.TokenType);
         bodyBuilder.PopChildAddingStatement();
-        
+
         return bodyBuilder.GetStatements();
     }
 
@@ -64,10 +63,10 @@ public class ParserGenerator : IParserGenerator
         var arguments = invocationRule.Arguments
             .Select(AttributeService.ParseAttributeCall)
             .ToList();
-        
+
         bodyBuilder.AddNonTerminalNodeReading(invocationRule.NamedRule.Name.Capitalize(), arguments);
         bodyBuilder.PopChildAddingStatement();
-        
+
         return bodyBuilder.GetStatements();
     }
 
@@ -75,7 +74,8 @@ public class ParserGenerator : IParserGenerator
     {
         var switchBuilder = new SwitchBuilder();
 
-        foreach (var option in optionsRule.Options.Where(x => x is not EmptyRule))
+        foreach (var option in optionsRule.Options
+                     .Where(x => x is not EmptyRule and not ActionRule { Payload: EmptyRule }))
         {
             var first = option.First();
             var caseBuilder = new SwitchCaseBuilder();
@@ -89,7 +89,13 @@ public class ParserGenerator : IParserGenerator
         {
             var emptyCaseBuilder = new SwitchCaseBuilder();
             emptyCaseBuilder.AddLabels(_follows[optionsRule].ToArray());
-            
+
+            var emptyAction = optionsRule.Options
+                .SingleOrDefault(x => x is ActionRule { Payload: EmptyRule });
+
+            if (emptyAction is not null) 
+                emptyCaseBuilder.AddStatements(ReadRule(emptyAction));
+
             switchBuilder.AddCase(emptyCaseBuilder);
         }
 
@@ -114,9 +120,9 @@ public class ParserGenerator : IParserGenerator
     {
         var statements = new List<StatementSyntax>(ReadRule(actionRule.Payload));
         var actionCode = AttributeService.ReplaceAttributeCalls(actionRule.ActionCode);
-        var actionStatements = Regex.Split(actionCode,@"(?<=;)")
+        var actionStatements = Regex.Split(actionCode, @"(?<=;)")
             .Select(x => ParseStatement(x));
-        
+
         statements.AddRange(actionStatements);
 
         return statements.ToArray();

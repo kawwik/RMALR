@@ -1,4 +1,4 @@
-﻿start: NUMBER { Console.WriteLine(int.Parse($NUMBER.text) * 2);};
+﻿start: NUMBER { Console.WriteLine(int.Parse($NUMBER.text) * 2);} | {Console.WriteLine("Here is nothing");};
 
 PLUS: "\+";
 MINUS: "-";
