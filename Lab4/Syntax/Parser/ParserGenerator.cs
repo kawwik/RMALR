@@ -24,8 +24,7 @@ public class ParserGenerator : IParserGenerator
 
         var parserBuilder = new ParserBuilder(grammarName);
 
-        var follows = new FollowCalculator2().Calculate(rules.ToArray());
-        var named = follows.Where(x => x.Key is NamedRule).ToList();
+        var follows = new FollowCalculator().Calculate(rules.ToArray());
 
         foreach (var rule in rules)
         {
