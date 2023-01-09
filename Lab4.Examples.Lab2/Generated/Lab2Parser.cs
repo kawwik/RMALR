@@ -40,6 +40,9 @@ public class Lab2Parser : ParserBase
                 result.AddChildren(ReadOrNode());
                 result.AddChildren(ReadXorAdditionNode());
                 break;
+            default:
+                throw new UnexpectedTokenException(CurrentToken);
+                break;
         }
 
         return result;
@@ -63,6 +66,9 @@ public class Lab2Parser : ParserBase
                 result.AddChildren(ReadAndNode());
                 result.AddChildren(ReadOrAdditionNode());
                 break;
+            default:
+                throw new UnexpectedTokenException(CurrentToken);
+                break;
         }
 
         return result;
@@ -85,6 +91,9 @@ public class Lab2Parser : ParserBase
                 result.AddChildren(ReadTerminal("AND"));
                 result.AddChildren(ReadTermNode());
                 result.AddChildren(ReadAndAdditionNode());
+                break;
+            default:
+                throw new UnexpectedTokenException(CurrentToken);
                 break;
         }
 

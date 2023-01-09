@@ -5,6 +5,7 @@ using Lab4.Syntax.Parser.Builders;
 using Lab4.Syntax.Parser.Interfaces;
 using Lab4.Syntax.Rules;
 using Lab4.Syntax.Rules.BaseClasses;
+using Lab4.Syntax.Rules.Services;
 using Lab4.Utils;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -22,6 +23,9 @@ public class ParserGenerator : IParserGenerator
         var rules = grammarVisitor.GetAllRules(tree);
 
         var parserBuilder = new ParserBuilder(grammarName);
+
+        var follows = new FollowCalculator2().Calculate(rules.ToArray());
+        var named = follows.Where(x => x.Key is NamedRule).ToList();
 
         foreach (var rule in rules)
         {
