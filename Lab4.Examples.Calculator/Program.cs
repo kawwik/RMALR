@@ -8,10 +8,10 @@ var parserGenerator = new ParserGenerator();
 
 var recognizerGenerator = new RecognizerGenerator(lexerGenerator, parserGenerator);
 
-// recognizerGenerator.Generate(
-//     @"C:\Users\79148\RiderProjects\Lab4\Lab4.Examples.Calculator\calculator.rma",
-//     @"C:\Users\79148\RiderProjects\Lab4\Lab4.Examples.Calculator\Generated",
-//     "Calculator");
+recognizerGenerator.Generate(
+    @"C:\Users\79148\RiderProjects\Lab4\Lab4.Examples.Calculator\calculator.rma",
+    @"C:\Users\79148\RiderProjects\Lab4\Lab4.Examples.Calculator\Generated",
+    "Calculator");
 
 
 var tokenizer = new CalculatorLexer();
