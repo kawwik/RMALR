@@ -1,17 +1,12 @@
-﻿using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Runtime.Intrinsics.Arm;
-using System.Security.Cryptography;
-using System.Text;
-using Lab4.Lexis.Tokens;
+﻿using Lab4.Lexis.Tokens;
 using Lab4.Syntax.Rules.BaseClasses;
 
 namespace Lab4.Syntax.Rules.Services;
 
 public class FollowCalculator
 {
-    private Dictionary<Rule, HashSet<string>> _result = new();
-    private Dictionary<Rule, bool> _visited = new();
+    private readonly Dictionary<Rule, HashSet<string>> _result = new();
+    private readonly Dictionary<Rule, bool> _visited = new();
 
     public Dictionary<Rule, HashSet<string>> Calculate(NamedRule[] rules)
     {
@@ -27,7 +22,7 @@ public class FollowCalculator
 
             _visited.Clear();
         } while (changed);
-        
+
         return _result;
     }
 
@@ -54,33 +49,33 @@ public class FollowCalculator
 
     private bool AppendActionRule(ActionRule actionRule)
     {
-        var result = _result.TryAdd(actionRule, new HashSet<string>());
-        result |= AppendRule(actionRule.Payload);
-        return result | _result[actionRule.Payload].UnionWith<string>(_result[actionRule]);
+        return _result.TryAdd(actionRule, new HashSet<string>())
+               | AppendRule(actionRule.Payload)
+               | _result[actionRule.Payload].UnionWith<string>(_result[actionRule]);
     }
 
     private bool AppendCompositeRule(CompositeRule compositeRule)
     {
-        var result = _result.TryAdd(compositeRule, new HashSet<string>());
+        var changed = _result.TryAdd(compositeRule, new HashSet<string>());
 
         var rules = compositeRule.Rules.ToArray();
         for (int i = 0; i < rules.Length - 1; i++)
         {
             var following = new CompositeRule(rules[(i + 1)..]);
-            result |= AppendRule(rules[i]);
+            changed |= AppendRule(rules[i]);
 
             var followingFirst = following.First();
 
             if (followingFirst.Remove(EmptyToken.TokenType))
             {
-                _result[rules[i]].UnionWith(_result[compositeRule]);
+                changed |= _result[rules[i]].UnionWith<string>(_result[compositeRule]);
             }
 
-            result |= _result[rules[i]].UnionWith<string>(followingFirst);
+            changed |= _result[rules[i]].UnionWith<string>(followingFirst);
         }
 
-        result |= AppendRule(rules.Last());
-        return result | _result[rules.Last()].UnionWith<string>(_result[compositeRule]);
+        changed |= AppendRule(rules.Last());
+        return changed | _result[rules.Last()].UnionWith<string>(_result[compositeRule]);
     }
 
     private bool AppendEmptyRule(EmptyRule emptyRule)
@@ -90,31 +85,29 @@ public class FollowCalculator
 
     private bool AppendInvocationRule(InvocationRule invocationRule)
     {
-        var result = _result.TryAdd(invocationRule, new HashSet<string>());
-        result |= AppendRule(invocationRule.NamedRule);
-
-        return result | _result[invocationRule.NamedRule].UnionWith<string>(_result[invocationRule]);
+        return _result.TryAdd(invocationRule, new HashSet<string>())
+               | AppendRule(invocationRule.NamedRule)
+               | _result[invocationRule.NamedRule].UnionWith<string>(_result[invocationRule]);
     }
 
     private bool AppendNamedRule(NamedRule namedRule)
     {
-        var result =_result.TryAdd(namedRule, new HashSet<string>());
-        result |= AppendRule(namedRule.Payload);
-
-        return result | _result[namedRule.Payload].UnionWith<string>(_result[namedRule]);
+        return _result.TryAdd(namedRule, new HashSet<string>())
+               | AppendRule(namedRule.Payload)
+               | _result[namedRule.Payload].UnionWith<string>(_result[namedRule]);
     }
 
     private bool AppendOptionRule(OptionsRule optionsRule)
     {
-        var result = _result.TryAdd(optionsRule, new HashSet<string>());
+        var changed = _result.TryAdd(optionsRule, new HashSet<string>());
 
         foreach (var rule in optionsRule.Options)
         {
-            result |= AppendRule(rule);
-            result |= _result[rule].UnionWith<string>(_result[optionsRule]);
+            changed |= AppendRule(rule);
+            changed |= _result[rule].UnionWith<string>(_result[optionsRule]);
         }
 
-        return result;
+        return changed;
     }
 
     private bool AppendTokenRule(TokenRule tokenRule)

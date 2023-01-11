@@ -1,8 +1,9 @@
 ﻿using Lab4.Generated;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Lab4.Syntax.Parser.Interfaces;
 
 public interface IParserGenerator
 {
-    string Generate(RMALR_parser.StartContext tree, string grammarName);
+    SourceText Generate(RMALR_parser.StartContext tree, string grammarName);
 }

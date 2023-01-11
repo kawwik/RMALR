@@ -9,6 +9,7 @@ using Lab4.Syntax.Rules.Services;
 using Lab4.Utils;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Text;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using static Lab4.Syntax.SyntaxFactory;
 
@@ -18,7 +19,7 @@ public class ParserGenerator : IParserGenerator
 {
     private Dictionary<Rule, HashSet<string>> _follows = new();
 
-    public string Generate(RMALR_parser.StartContext tree, string grammarName)
+    public SourceText Generate(RMALR_parser.StartContext tree, string grammarName)
     {
         var grammarVisitor = new GrammarVisitor();
         var rules = grammarVisitor.GetAllRules(tree);
@@ -31,8 +32,8 @@ public class ParserGenerator : IParserGenerator
         {
             parserBuilder.AddMethod(BuildRuleReadingMethod(rule));
         }
-
-        return parserBuilder.ToString();
+        
+        return parserBuilder.GetCompilationUnit().NormalizeWhitespace().GetText();
     }
 
     private MethodBuilder BuildRuleReadingMethod(NamedRule rule)

@@ -34,12 +34,18 @@ public class RecognizerGenerator : IRecognizerGenerator
     private void GenerateLexer(RMALR_parser.StartContext tree, string outputFile, string grammarName)
     {
         var lexerCode = _lexerGenerator.Generate(tree, grammarName);
-        File.WriteAllText(outputFile, lexerCode);
+        
+        using var writer = File.CreateText(outputFile);
+        
+        lexerCode.Write(writer);
     }
 
     private void GenerateParser(RMALR_parser.StartContext tree, string outputFile, string grammarName)
     {
         var parserCode = _parserGenerator.Generate(tree, grammarName);
-        File.WriteAllText(outputFile, parserCode);
+
+        using var writer = File.CreateText(outputFile);
+     
+        parserCode.Write(writer);
     }
 }
