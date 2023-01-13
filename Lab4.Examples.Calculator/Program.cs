@@ -13,8 +13,9 @@ var recognizerGenerator = new RecognizerGenerator(lexerGenerator, parserGenerato
 //     @"C:\Users\79148\RiderProjects\Lab4\Lab4.Examples.Calculator\Generated",
 //     "Calculator");
 
+Math.
 
 var tokenizer = new CalculatorLexer();
-var tokenStream = tokenizer.GetTokenStream("(5 + 2 * 8 * (3 + 1)) / 23");
+var tokenStream = tokenizer.GetTokenStream("1 - 2 - 3");
 var parser = new CalculatorParser(tokenStream);
 parser.ReadStartNode();

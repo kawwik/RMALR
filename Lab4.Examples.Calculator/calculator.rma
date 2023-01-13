@@ -22,7 +22,18 @@ div [x, y] @returns [res]: { $res = x / y; };
     
 fact @returns [val]
     : NUMBER { $val = int.Parse($NUMBER.text); }
+    | choose { $val = $choose.res }
     | LEFT_PAR sum RIGHT_PAR { $val = $sum.val; };    
+    
+choose @returns [res]: CHOOSE_FUNC_NAME LEFT_PAR NUMBER COMMA NUMBER RIGHT_PAR 
+{ 
+    n = int.Parse($NUMBER1.text); 
+    k = int.Parse($NUMBER1.text);
+     
+};
+
+CHOOSE_FUNC_NAME: "choose";
+COMMA: ",";
 
 PLUS: "\+";
 MINUS: "-";
