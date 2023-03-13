@@ -8,14 +8,12 @@ var parserGenerator = new ParserGenerator();
 
 var recognizerGenerator = new RecognizerGenerator(lexerGenerator, parserGenerator);
 
-// recognizerGenerator.Generate(
-//     @"C:\Users\79148\RiderProjects\Lab4\Lab4.Examples.Calculator\calculator.rma",
-//     @"C:\Users\79148\RiderProjects\Lab4\Lab4.Examples.Calculator\Generated",
-//     "Calculator");
-
-Math.
+recognizerGenerator.Generate(
+    @"C:\Users\79148\RiderProjects\Lab4\Lab4.Examples.Calculator\calculator.rma",
+    @"C:\Users\79148\RiderProjects\Lab4\Lab4.Examples.Calculator\Generated",
+    "Calculator");
 
 var tokenizer = new CalculatorLexer();
-var tokenStream = tokenizer.GetTokenStream("1 - 2 - 3");
+var tokenStream = tokenizer.GetTokenStream("5 choose 3 choose 3");
 var parser = new CalculatorParser(tokenStream);
 parser.ReadStartNode();

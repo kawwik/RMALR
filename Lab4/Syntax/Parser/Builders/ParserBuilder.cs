@@ -15,6 +15,7 @@ public class ParserBuilder
     public ParserBuilder(string grammarName)
     {
         _compilationUnit = CompilationUnit().AddUsings(
+            UsingDirective(ParseName("System.Numerics")),
             UsingDirective(ParseName("Lab4.Lexis.Lexers")),
             UsingDirective(ParseName("Lab4.Syntax.Nodes")),
             UsingDirective(ParseName("Lab4.Syntax.Parser")),

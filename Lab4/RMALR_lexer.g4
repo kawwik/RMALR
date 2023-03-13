@@ -34,4 +34,4 @@ OPEN_BRACE: '{' -> pushMode(ACTION);
 
 mode ACTION;
 CLOSE_BRACE: '}' -> popMode;
-CODE: ([ a-zA-Z0-9.=-] | '+' | '*' | '/' | ';' | '$' | '(' | ')' | '"' | '_')+;
+CODE: ([ a-zA-Z0-9.=-] | '+' | '*' | '/' | ';' | '$' | '(' | ')' | '"' | '_' | '\r' | '\n' | '<')+;

@@ -20,25 +20,35 @@ mult_addition [i] @returns [val]
 mul [x, y] @returns [res]: { $res = x * y; };    
 div [x, y] @returns [res]: { $res = x / y; };    
     
-fact @returns [val]
-    : NUMBER { $val = int.Parse($NUMBER.text); }
-    | choose { $val = $choose.res }
-    | LEFT_PAR sum RIGHT_PAR { $val = $sum.val; };    
-    
-choose @returns [res]: CHOOSE_FUNC_NAME LEFT_PAR NUMBER COMMA NUMBER RIGHT_PAR 
-{ 
-    n = int.Parse($NUMBER1.text); 
-    k = int.Parse($NUMBER1.text);
-     
-};
+fact: choose_op choose_addition [$choose_op.val] { $val = $choose_addition.val; };
 
-CHOOSE_FUNC_NAME: "choose";
-COMMA: ",";
+choose_addition [i] @returns [val]
+    : CHOOSE choose_op choose[i, $choose_op.val] choose_addition[$choose.res] { $val = $choose_addition.val; }
+    | { $val = i; }; 
+    
+choose [n, k] @returns [res]: 
+{
+    long nFact = 1;
+    for (int i = 2; i <= n; i++) nFact = checked(nFact * i);
+    
+    long kFact = 1;
+    for (int i = 2; i <= k; i++) kFact = checked(kFact * i); ;
+    
+    long dFact = 1;
+    for (int i = 2; i <= n - k; i++) dFact = checked(dFact * i); ;
+    
+    $res = nFact / (kFact * dFact); 
+}; 
+    
+choose_op @returns [val]
+    : NUMBER { $val = int.Parse($NUMBER.text); }
+    | LEFT_PAR sum RIGHT_PAR { $val = $sum.val; };    
 
 PLUS: "\+";
 MINUS: "-";
 DIVIDE: "/";
 MULTIPLY: "\*";
+CHOOSE: "choose";
 
 LEFT_PAR: "\(";
 RIGHT_PAR: "\)";

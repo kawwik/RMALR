@@ -1,3 +1,4 @@
+using System.Numerics;
 using Lab4.Lexis.Lexers;
 using Lab4.Syntax.Nodes;
 using Lab4.Syntax.Parser;
@@ -126,6 +127,56 @@ public class CalculatorParser : ParserBase
     public NonTerminalNode ReadFactNode()
     {
         var result = new NonTerminalNode("fact");
+        result.AddChildren(ReadChoose_opNode());
+        result.AddChildren(ReadChoose_additionNode(result.GetChild("choose_op", 1)["val"]));
+        result["val"] = result.GetChild("choose_addition", 1)["val"];
+        return result;
+    }
+
+    public NonTerminalNode ReadChoose_additionNode(dynamic i)
+    {
+        var result = new NonTerminalNode("choose_addition");
+        switch (CurrentToken.Type)
+        {
+            case "CHOOSE":
+                result.AddChildren(ReadTerminal("CHOOSE"));
+                result.AddChildren(ReadChoose_opNode());
+                result.AddChildren(ReadChooseNode(i, result.GetChild("choose_op", 1)["val"]));
+                result.AddChildren(ReadChoose_additionNode(result.GetChild("choose", 1)["res"]));
+                result["val"] = result.GetChild("choose_addition", 1)["val"];
+                break;
+            case "MULTIPLY" or "DIVIDE" or "PLUS" or "MINUS" or "RIGHT_PAR" or "@FINISH":
+                result["val"] = i;
+                break;
+            default:
+                throw new UnexpectedTokenException(CurrentToken);
+                break;
+        }
+
+        return result;
+    }
+
+    public NonTerminalNode ReadChooseNode(dynamic n, dynamic k)
+    {
+        var result = new NonTerminalNode("choose");
+        long nFact = 1;
+        for (int i = 2; i <= n;
+        i++ ) nFact  =  checked ( nFact * i ) ; 
+        long kFact = 1;
+        for (int i = 2; i <= k;
+        i++ ) kFact  =  checked ( kFact * i ) ;
+        ;
+        long dFact = 1;
+        for (int i = 2; i <= n - k;
+        i++ ) dFact  =  checked ( dFact * i ) ;
+        ;
+        result["res"] = nFact / (kFact * dFact);
+        return result;
+    }
+
+    public NonTerminalNode ReadChoose_opNode()
+    {
+        var result = new NonTerminalNode("choose_op");
         switch (CurrentToken.Type)
         {
             case "NUMBER":
